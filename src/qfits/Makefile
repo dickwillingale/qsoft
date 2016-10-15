@@ -7,7 +7,7 @@ PYMODDIR = $(QSOFT)/python_modules
 RLIBDIR = $(QSOFT)/R_libraries
 LIBDIR = $(QSOFT)/lib
 # Python modules
-TARGET = qfits
+MODNAME = qfits
 # Python Fortran/C object library
 LIB = libqfits.a
 # Source files for module
@@ -47,10 +47,10 @@ LOBJECTS = $(LSOURCES:.f=.o)
 
 shareables: $(FSOURCES) $(LIB) $(OBJECTS)
 ifdef F2PY
-	$(F2PY) -c -m $(TARGET)for $(FSOURCES) $(SKIP) $(LIB)
+	$(F2PY) -c -m $(MODNAME)for $(FSOURCES) $(SKIP) $(LIB)
 endif
 ifdef R
-	$(R) CMD SHLIB -o $(TARGET)R.so $(OBJECTS) $(LIB)
+	$(R) CMD SHLIB -o $(MODNAME)R.so $(OBJECTS) $(LIB)
 endif
 
 $(LIB): $(COBJECTS) $(LOBJECTS)
@@ -62,7 +62,7 @@ $(LIB): $(COBJECTS) $(LOBJECTS)
 .c.o:
 	$(CC) $(CFLAGS) $(LARGEFLAGS) -c $<
 
-install: $(TARGET).py $(TARGET).R
+install: $(MODNAME).py $(MODNAME).R
 ifdef F2PY
 	cp $(MODNAME)for*.so $(PYMODDIR)
 	cp $(MODNAME).py $(PYMODDIR)
