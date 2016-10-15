@@ -1,0 +1,8 @@
+# object and library files
+*.o
+*.so
+*.a
+# editor temporaries
+*~
+# large data file
+*.fits

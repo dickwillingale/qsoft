@@ -1,7 +1,0 @@
-*+QRS_INIT        Initialise/reset the XSCAT environment
-        SUBROUTINE QRS_INIT()
-        IMPLICIT NONE
-*ISTAT        in/out        returned status
-*-Author Dick Willingale 2012-May-04
-	CALL QR_INIT()
-        END
