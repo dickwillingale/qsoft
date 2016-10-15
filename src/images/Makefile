@@ -54,12 +54,12 @@ $(LIB): $(OBJECTS)
 
 install: $(MODNAME).R $(MODNAME).py
 ifdef F2PY
-        cp $(MODNAME)for*.so $(PYMODDIR)
-        cp $(MODNAME).py $(PYMODDIR)
+	cp $(MODNAME)for*.so $(PYMODDIR)
+	cp $(MODNAME).py $(PYMODDIR)
 endif   
 ifdef R 
-        cp $(MODNAME)R.so $(RLIBDIR)
-        cp $(MODNAME).R $(RLIBDIR)
+	cp $(MODNAME)R.so $(RLIBDIR)
+	cp $(MODNAME).R $(RLIBDIR)
 endif   
 	cp $(LIB) $(LIBDIR)
 
