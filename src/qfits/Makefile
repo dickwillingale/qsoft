@@ -63,10 +63,14 @@ $(LIB): $(COBJECTS) $(LOBJECTS)
 	$(CC) $(CFLAGS) $(LARGEFLAGS) -c $<
 
 install: $(TARGET).py $(TARGET).R
-	cp $(TARGET)for*.so $(PYMODDIR)
-	cp $(TARGET).py $(PYMODDIR)
-	cp $(TARGET)R.so $(RLIBDIR)
-	cp $(TARGET).R $(RLIBDIR)
+ifdef F2PY
+        cp $(MODNAME)for*.so $(PYMODDIR)
+        cp $(MODNAME).py $(PYMODDIR)
+endif   
+ifdef R 
+        cp $(MODNAME)R.so $(RLIBDIR)
+        cp $(MODNAME).R $(RLIBDIR)
+endif   
 	cp $(LIB) $(LIBDIR)
 
 clean:

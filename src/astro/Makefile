@@ -54,10 +54,14 @@ $(LIB): $(OBJECTS)
 	$(CC) $(CFLAGS) -c $<
 
 install: $(MODNAME).R $(MODNAME).py
-	cp $(MODNAME)for*.so $(PYMODDIR)
-	cp $(MODNAME).py $(PYMODDIR)
-	cp $(MODNAME)R.so $(RLIBDIR)
-	cp $(MODNAME).R $(RLIBDIR)
+ifdef F2PY
+        cp $(MODNAME)for*.so $(PYMODDIR)
+        cp $(MODNAME).py $(PYMODDIR)
+endif   
+ifdef R 
+        cp $(MODNAME)R.so $(RLIBDIR)
+        cp $(MODNAME).R $(RLIBDIR)
+endif   
 	cp $(LIB) $(LIBDIR)
 
 clean:
