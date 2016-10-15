@@ -45,7 +45,7 @@ COBJECTS= $(CSOURCES:.c=.o)
 OBJECTS = $(FSOURCES:.f=.o)
 LOBJECTS = $(LSOURCES:.f=.o)
 
-$(TARGET)for.so: $(FSOURCES) $(LIB) $(OBJECTS)
+shareables: $(FSOURCES) $(LIB) $(OBJECTS)
 ifdef F2PY
 	$(F2PY) -c -m $(TARGET)for $(FSOURCES) $(SKIP) $(LIB)
 endif
