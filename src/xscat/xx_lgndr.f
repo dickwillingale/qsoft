@@ -1,0 +1,38 @@
+*+XX_LGNDR	Used by XX_CROMER
+*-Author Dick Willingale
+      SUBROUTINE XX_LGNDR(M,K,AA,Z)
+C
+C     ROUTINE TO PROVIDE WEIGHTS AND ABSCISSAE FOR GAUSSIAN-LEGENDRE
+C     QUADRATURE FORMULA
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      DIMENSION A(5),X(5)
+      DATA X(1)/  .06943184420297/
+      DATA X(2)/  .33000947820757/
+      DATA X(3)/  .04691007703067/
+      DATA X(4)/  .23076534494716/
+      DATA X(5)/  .03376524289992/
+      DATA A(1)/  .17392742256873/
+      DATA A(2)/  .32607257743127/
+      DATA A(3)/  .11846344252810/
+      DATA A(4)/  .23931433524968/
+      DATA A(5)/  .28444444444444/
+      KK=K
+      IF((M.GT.16).OR.(M.LT.4)) KK=4
+1     IS=0
+      IH=(M+1)/2
+      Z=.5
+      IF(MOD(M,2).EQ.1) IS=-1
+      IP=KK
+      T=0.
+      IF(IP.LE.IH) GOTO 3
+      IP=M+1-IP
+      T=-1.
+3     I4=M-4
+      IA=(I4*(M+4)+IS)/4+IP
+      AA=A(IA)
+      IF((IP.EQ.IH).AND.(IS.LT.0)) RETURN
+      IA=IA-(I4+IS)/2
+      Z=-T+SIGN(X(IA),T)
+      RETURN
+      END

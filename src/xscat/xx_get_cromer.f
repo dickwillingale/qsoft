@@ -1,0 +1,42 @@
+*+XX_GET_CROMER	Read Cromer et al atomic x-section data from file
+	SUBROUTINE XX_GET_CROMER(ID,IO,ATOM,ICOMP,NAT)
+	INTEGER ID,IO,NAT,ICOMP(NAT)
+	CHARACTER ATOM*(*)
+	DIMENSION ATOM(NAT)
+*ID	input channel
+*IO	output channel
+*ATOM	array of atomic types
+*ICOMP	composition
+*NAT	number of atomic types
+*-Author Dick Willingale 1986-Feb-4
+	CHARACTER A*2,XTEMP*80
+C
+C     SELECTS ATOMIC DATA FROM CROMER AND LIBERMANN LIBRARY
+C     FOR SPECIFIED ELEMENTS.
+C
+C Formats
+1	FORMAT(A2,I3,3F10.5)
+2	FORMAT(A)
+	DO K=1,NAT
+		REWIND ID
+150		READ(ID,1,IOSTAT=IERR) A,NO,ATWT,ETERM,ANU
+		IF(IERR.NE.0) THEN
+			WRITE(6,*) 'Atomic data not available for ',ATOM(K)
+			STOP
+		ENDIF
+		NL=NO*11+1
+		IF(ATOM(K).NE.A) THEN
+			DO J=1,NL
+				READ(ID,2) XTEMP
+			ENDDO
+			GOTO 150
+		ELSE
+			WRITE(IO,1) A,NO,ATWT,ETERM,ANU
+			DO J=1,NL
+				READ(ID,2) XTEMP
+				WRITE(IO,2) XTEMP
+			ENDDO
+		ENDIF
+	ENDDO
+	RETURN
+	END

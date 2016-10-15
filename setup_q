@@ -1,0 +1,10 @@
+#!/bin/sh
+# Set up for Qsoft
+# Dick Willingale 2016-Sep-26
+# Get directory of this script
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export QSOFT=$DIR
+export QVERSION=`cat $QSOFT/version`
+# Set Python path
+export PYTHONPATH=$QSOFT/python_modules
+echo "Q set up version $QVERSION $QSOFT"

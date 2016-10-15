@@ -1,0 +1,13 @@
+*+XX_SIGMA1	Function used by XX_CROMER
+*-Author Dick Willingale
+      FUNCTION XX_SIGMA1(X)
+C
+C     FUNCTION USED IF BE.GE.70 KEV
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      COMMON/GAUS/CX,BB,SG(5),RX,ICOUNT
+      ICOUNT=ICOUNT-1
+      XX_SIGMA1=0.5*BB**3*SG(ICOUNT)/(DSQRT(X)*(RX**2*X**2-
+     +BB**2*X))
+      RETURN
+      END

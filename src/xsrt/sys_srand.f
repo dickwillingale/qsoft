@@ -1,0 +1,8 @@
+*+SYS_SRAND	Set seed for random number function SYS_RAND
+	SUBROUTINE SYS_SRAND(ISEED)
+	INTEGER ISEED
+*-Author Dick Willingale 1996_Jan_23
+	INTEGER IDUM
+	COMMON/RSEED/IDUM
+	IDUM=ISEED
+	END

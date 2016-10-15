@@ -1,0 +1,17 @@
+*+AX_GALCON	Converts Galactic longitude and latitude to RA,DEC (rads).
+	SUBROUTINE AX_GALCON(GL,GB,RA,DEC)
+	REAL RA, DEC, GL, GB
+*GL	INPUT	new galactic longitude, 0 - 2*PI, radians.
+*GB	INPUT	new galactic latitude.
+*RA	OUTPUT	R.A. in radians, 1950.0 coords.
+*DEC	OUTPUT	Declination, radians, 1950.0
+*-
+*Author: MGW 1989, using AX_CONGAL (Clive Page, 1972).
+	REAL CTOG(3,3),GTOC(3,3)
+	DATA CTOG /
+     &	 -0.06698873942545,-0.87275576585633,-0.48353891462292,
+     &	 0.492728466065,-0.4503469580191,0.744584633291,
+     &	 -0.86760081115674,-0.18837460170498,0.46019978478119/
+	CALL AX_CONMIN(CTOG,GTOC)
+	CALL AX_CONVRT(GL,GB,GTOC,RA,DEC)
+	END

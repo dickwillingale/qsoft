@@ -1,0 +1,226 @@
+*+DO_PROMPTFIT fit function to GRB X-ray prompt curve by minimum chi-squared
+	SUBROUTINE DO_PROMPTFIT(IMES,NCBAT,NTBAT,TBAT,RBAT,ERBAT,IBAT,
+     +	NCXRT,NTXRT,TXRT,RXRT,ERXRT,IXRT,NP,PAR,EPAR,LFIT,ILIM,
+     +	GRBN,CHIMIN,NDOF,
+     +	PF,PL,PH,NLOOK,ISTAT)
+	INTEGER IMES,NCBAT,NTBAT,NCXRT,NTXRT,IBAT(NTBAT)
+	INTEGER IXRT(NTXRT),NP,LFIT,ILIM,NDOF,NLOOK,ISTAT
+        CHARACTER*(*) GRBN
+	REAL TBAT(NTBAT),RBAT(NCBAT,NTBAT),ERBAT(NCBAT,NTBAT)
+	REAL TXRT(NTXRT),RXRT(NCXRT,NTXRT),ERXRT(NCXRT,NTXRT)
+	REAL PAR(NP),EPAR(NP),CHIMIN,PF(NP),PL(NP),PH(NP)
+*IMES	input	message unit
+*NCBAT	input	number of BAT energy channels
+*NTBAT	input	number of BAT time samples
+*TBAT	input	array BAT times
+*RBAT	input	array BAT rates
+*ERBAT	input	array BAT rate errors
+*IBAT	input	array mode values for BAT times (1 OK, 0 ignore)
+*NCXRT	input	number of XRT energy channels
+*NTXRT	input	number of XRT time samples
+*TXRT	input	array XRT times
+*RXRT	input	array XRT rates
+*ERXRT	input	array XRT rate errors
+*IXRT	input	array mode values for XRT times (1 WT, 2 PC, 0 ignore)
+*NP	input	number of parameters
+*PAR	input	model parameters (see routine grbrates for details)
+*EPAR	input	model parameter errors (0 to fix parameter in fit)
+*LFIT	input	0=linear fit, 1=logarithmic fit
+*ILIM	input	1 for error estimation, 0 for none
+*GRBN	input	GRB name
+*CHIMIN	output	minimum Chi-squared found
+*NDOF	output	number of degrees of freedom
+*PF	output	array of best fit parameters
+*PL	output	array of low parameter values
+*PH	output	array of high parameter value
+*NLOOK	output	number of times look-up table used
+*ISTAT	in/out	status (0 OK)
+*-Author Dick Willingale 2008-Oct-11
+	EXTERNAL CHISQ_PROM
+	include 'GRBS_COM'
+C
+	real p(maxp),pe(maxp)
+	real pfit(maxp),plo(maxp),phi(maxp)
+	real CONL,DELS,Tin,eTin,Tpk,Tf
+	INTEGER J,I,NPUL,kk,k,k1
+c
+	integer xgood,bgood
+C
+	IF(ISTAT.NE.0) RETURN
+	IF(NCBAT.GT.nc1) THEN
+		call Q_ERROR('DIMER - PROMPTFIT too many BAT channels',ISTAT)
+		RETURN
+	ENDIF
+	IF(NCXRT.GT.nc2) THEN
+		call Q_ERROR('DIMER - PROMPTFIT too many XRT channels',ISTAT)
+		RETURN
+	ENDIF
+	IF(NP.GT.maxp) THEN
+		call Q_ERROR('DIMER - PROMPTFIT too many fit parameters',ISTAT)
+		RETURN
+	ENDIF
+C Set GRB name in common
+	grbname=GRBN	
+C Find number of prompt pulses and the earliest injection time Tin
+	NPUL=par(1)
+	Tf=par(7)
+	Tpk=par(9)
+	Tin=Tpk-Tf
+	eTin=epar(7)+epar(9)
+	kk=NPUL*9+1
+	if(imes.gt.0) then
+		write(imes,*) 'total number of paramters',np
+		write(imes,*) 'number of prompt parameters',kk
+		write(imes,*) 'number of prompt pulses',NPUL
+		write(imes,*) '1st injection time',Tin
+		write(imes,*) '1st injection time error',eTin
+	endif
+C Choose logarithim or linear flux fitting
+	il=LFIT
+C Find good data points and put into common
+C Note if fitting in log flux then only accept +ve flux values and
+C times after Tin
+	IF(NTBAT.GT.n1) THEN
+		call Q_ERROR('DIMER - PROMPTFIT too many BAT times',ISTAT)
+		RETURN
+	ENDIF
+	mc1=NCBAT
+	m1=NTBAT
+	bgood=0
+	DO J=1,NTBAT
+		IF(IBAT(J).NE.0) THEN
+		    if(il.eq.0.or.(il.eq.1.and.RBAT(1,J).gt.0.0
+     +			.and.TBAT(J).gt.Tin)) then
+		   	bgood=bgood+1
+		   	x1(J)=TBAT(J)
+			DO I=1,mc1
+		   		y1(I,J)=RBAT(I,J)
+		   		ye1(I,J)=ERBAT(I,J)
+			ENDDO
+			ix1(J)=1
+		    else
+			ix1(J)=0
+		    endif
+		ELSE
+		    ix1(J)=0
+		ENDIF
+	ENDDO
+	IF(NTXRT.GT.n2) THEN
+		call Q_ERROR('DIMER - PROMPTFIT too many XRT times',ISTAT)
+		RETURN
+	ENDIF
+	mc2=NCXRT
+	m2=NTXRT
+	xgood=0
+	DO J=1,NTXRT
+		IF(IXRT(J).NE.0) THEN
+		    if(il.eq.0.or.(il.eq.1.and.RXRT(1,J).gt.0.0
+     +			.and.TXRT(J).gt.Tin)) then
+		   	xgood=xgood+1
+		   	x2(J)=TXRT(J)
+			mx2(J)=IXRT(J)
+		        ix2(J)=1
+			DO I=1,mc2
+		   		y2(I,J)=RXRT(I,J)
+		   		ye2(I,J)=ERXRT(I,J)
+			ENDDO
+		    endif
+		ELSE
+		    mx2(J)=0
+		    ix2(J)=0
+		ENDIF
+	ENDDO
+	if(imes.gt.0) then
+		write(imes,*) 'number of BAT channels times',mc1,m1,bgood
+		write(imes,*) 'number of XRT channels times',mc2,m2,xgood
+	endif
+C Initialise number of calls to look-up table
+	ncall=0
+	NFREE=0
+C set parameter offsets
+	do j=1,np
+		offset(j)=0.0
+	enddo
+	k1=1
+	do k=1,npul
+C b1
+		k1=k1+1
+		offset(k1)=2.5
+C amb
+		k1=k1+1
+C d
+		k1=k1+1
+		offset(k1)=10.0
+C a
+		k1=k1+1
+		offset(k1)=10.0
+C Tr
+		k1=k1+1
+C Tf
+		k1=k1+1
+C Epk
+		k1=k1+1
+C Tpk
+		k1=k1+1
+		offset(k1)=-TBAT(1)
+C Fpk
+		k1=k1+1
+	enddo
+C Afterglow spectral indices ba
+	if(np.gt.kk) then
+		offset(kk+1)=2.5
+	endif
+	if(imes.gt.0) then
+		write(imes,*) (offset(k),k=1,np)
+	endif
+C transfer parameters into parameter arrays
+	DO J=1,NP
+		p(J)=par(J)
+		pe(J)=epar(J)
+		p(J)=p(J)+offset(J)
+		IF(pe(J).GT.0.0) NFREE=NFREE+1	
+	ENDDO
+C Change search from Tf to Tzero-Tf/10=Tf-Tr-Tf/10
+	k1=1
+	do k=1,npul
+		k1=k1+6
+		p(k1)=max(p(k1)*0.9-p(k1-1),0.0)
+		k1=k1+3
+	enddo
+	NDOF=mc1*bgood+mc2*xgood-NFREE
+	if(imes.gt.0) then
+		write(imes,*) 'NDOF',NDOF
+	endif
+	nsteps=100
+	IFAIL=0
+	LIMITS=ILIM
+	CONL=0.90
+	DELS=SX_CHISQD(1.0-CONL,NFREE)
+C search for chi-square minimum
+        call DX_SRCHMN(IMES,NSTEPS,LIMITS,DELS,P,PE,NP,CHISQ_PROM,
+     +  CHIMIN,PFIT,PLO,PHI,IFAIL)
+C get final chisq and set final parameters
+	CALL CHISQ_PROM(PFIT,NP,CHIMIN)
+C save best fit
+	do j=1,np
+		PF(J)=PFIT(J)-offset(J)
+		if(ILIM.gt.0.and.pe(j).gt.0.0) then
+			PL(J)=PLO(J)-offset(j)
+			PH(J)=PHI(J)-offset(j)
+		else
+			PL(J)=PFIT(j)
+			PH(J)=PFIT(j)
+		endif
+	enddo
+C Change Tf-Tr-Tf/10 to Tf
+	k1=1
+	do k=1,npul
+		k1=k1+6
+		PF(k1)=(PF(k1)+PF(k1-1))/0.9
+		PL(k1)=(PL(k1)+PL(k1-1))/0.9
+		PH(k1)=(PH(k1)+PH(k1-1))/0.9
+		k1=k1+3
+	enddo
+C Set number of calls to look-up table
+	NLOOK=ncall
+	END

@@ -1,0 +1,13 @@
+*+XX_SIGMA0	Function used by XX_CROMER
+*-Author Dick Willingale
+      FUNCTION XX_SIGMA0(X)
+C
+C     FUNCTION USED IF 1.LT.BE.LT.70 KEV
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      COMMON/GAUS/CX,BB,SG(5),RX,ICOUNT
+      ICOUNT=ICOUNT-1
+      XX_SIGMA0=SG(ICOUNT)*BB**3/X**2/(RX**2*X**2-BB**2)-
+     +BB*CX*RX**2/(RX**2*X**2-BB**2)
+      RETURN
+      END

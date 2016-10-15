@@ -1,0 +1,53 @@
+*SRT_COM        Common blocks and parameters for sequential ray tracing
+*-Author Dick Willingale 1996-Nov-29
+*Added concom RW 2012-Jul-6
+C Surface deformation table
+        INTEGER MAXDF,MAXDSAM,IDUM1
+        PARAMETER (MAXDF=20,MAXDSAM=50000)
+        INTEGER IDFP(5,MAXDF)
+        INTEGER IDFM(3,MAXDF),IDSAM
+        DOUBLE PRECISION DSAM(MAXDSAM)
+C Surface quality
+        INTEGER MAXST
+        PARAMETER (MAXST=20)
+        INTEGER ISQP(3,MAXST)
+C Surface parameters
+        INTEGER MAXPAR,NPAR
+        PARAMETER (MAXPAR=50000)
+        DOUBLE PRECISION PAR(MAXPAR)
+C Surface parameters index
+        INTEGER MAXSUR,NSUR
+        PARAMETER (MAXSUR=3000)
+        INTEGER IPAR(MAXSUR),MPAR(MAXSUR)
+C Surface type index
+        INTEGER ISURS(MAXSUR)
+C Surface deformation index
+        INTEGER ISDF(2,MAXSUR)
+C Surface quality index
+        INTEGER ISTY(MAXSUR)
+C Surface miss index
+        INTEGER IMISS(MAXSUR)
+C Surface hit index
+        INTEGER IHIT(MAXSUR)
+C Channel number for rays file, source information, number of detections
+C and surface index of detector
+        INTEGER ITRA,NRAYS,ISRC(3),NDET,NPOS,IDET
+C Debugging flag
+        INTEGER IDEBUG
+C Useful constants
+        DOUBLE PRECISION PI,PIBY2
+        PARAMETER (PIBY2=1.5707963267949,PI=PIBY2*2.D0)
+C
+        COMMON/SRTCOM/IDFP,IDFM,IDSAM,IDUM1,
+     +  DSAM,PAR,NPAR,NSUR,ISQP,IPAR,MPAR,
+     +  ISURS,ISDF,ISTY,IMISS,IHIT,ITRA,NRAYS,ISRC,NDET,NPOS,IDEBUG,IDET
+C 
+        integer nrofelts,maxlist,iptype
+        parameter (maxlist=2000)
+        double precision inrad,outrad,rlist(maxlist)
+        double precision philist(maxlist)
+        double precision thlist(maxlist),wlist(maxlist)
+        double precision hlist(maxlist),llist(maxlist)
+        double precision clist(maxlist),glist(maxlist)
+        common/concom/inrad,outrad,rlist,philist,thlist,
+     +  wlist,hlist,llist,clist,glist,nrofelts,iptype

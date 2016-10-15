@@ -1,0 +1,21 @@
+*+Common blocks for SPX
+*-Author Dick Willingale 2014-Apr-08
+C Abundance data
+        integer nabu,nels,iabu,iabundset
+        parameter (nabu=7,nels=30)
+        real abund(nabu,nels),metalicity
+        common/spxabund/abund,metalicity,iabu,iabundset
+C Warm absorber data
+        integer maxatom,maxion,maxenerg,maxcoef
+        parameter (maxatom=10,maxion=102,maxcoef=10,maxenerg=721)
+        real ion(maxion,maxcoef),num(maxion)
+        real Energy(maxenerg),sigma(maxion,maxenerg),spec(maxenerg)
+        real mul(maxion),ratio(maxion),AtomAbunds(maxatom)
+        integer iels,AtomicNumber(maxatom),iwarmset
+        common/spxwarm/ion,num,Energy,sigma,spec,
+     +        mul,ratio,AtomAbunds,iels,AtomicNumber,iwarmset
+C Character data
+        character*2 element(nels)
+        character*4 abundance(nabu),xsection
+        character*2 ElementNames(maxatom)
+        common/spxinfo/element,abundance,xsection,ElementNames

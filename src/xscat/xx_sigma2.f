@@ -1,0 +1,15 @@
+
+*+XX_SIGMA2	Function used by XX_CROMER
+*-Author Dick Willingale
+      FUNCTION XX_SIGMA2(X)
+C
+C     FUNCTION USED IF BE.LE.1 KEV
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      COMMON/GAUS/CX,BB,SG(5),RX,ICOUNT
+      ICOUNT=ICOUNT-1
+      DENOM=X**3*RX**2-BB**2/X
+      XX_SIGMA2=2.*BB*SG(ICOUNT)*BB**2/DENOM/X**4-
+     +2.*BB*CX*RX**2/DENOM
+      RETURN
+      END

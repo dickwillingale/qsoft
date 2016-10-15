@@ -1,0 +1,54 @@
+Qsoft
+_____
+
+Dick Willingale 2016 Oct 1
+
+Qsoft is a collection of data analysis and modelling applications for use
+in X-ray astronomy and related disciplines.
+
+The modules available are:
+
+qfits	to read and write FITS files
+astro	astronomical/astrophysical applications
+images	image display and manipulation
+xscat	X-ray scattering and X-ray optical constant calculations
+xsrt	sequential ray tracing code for the simulation of X-ray telescope optics
+
+The applications are run as commands/functions within the scripting languages
+R and/or Python.
+
+The core code is written in Fortran and C which is compiled to produce
+shareable object libraries. The commands/functions are defined in
+R scripts or Python module scripts. The shareable objects are
+loaded by R or accessed as modules by Python.
+
+The Qsoft collection should be built using the gcc and gfortran compilers.
+R and/or the Python module f2py must be available to create the
+shareable objects.
+
+Build and Installation
+______________________
+
+1) Unpack source code to some top directory /your/files/top/qsoft
+
+2) Move into /your/files/top/qsoft and execute build
+$ cd /your/files/top/qsoft
+$ ./build
+
+This will check you have gcc gfortran and R and/or Python with f2py.
+It will then create the src/compiler.config file for make and
+compile the shareable objects.
+
+3) Put the following line into your /home/.profile
+
+. /your/files/top/qsoft/setup_q
+
+Qsoft will be available when you launch a login terminal.
+
+4) That's it.
+
+When you start R (or Rscript) it will automatically load the Qsoft applications
+using the /home/.Rprofile file.
+
+The environment variable PYTHONPATH will point to the qsoft/python_modules
+directory so you can load the modules into Python.

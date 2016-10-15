@@ -1,0 +1,5 @@
+*+Q_STATUS	Status values for Q
+*-Author Dick Willingale 1987-Oct-12
+	INTEGER Q_OK,Q_BAD
+	PARAMETER (Q_OK=0)
+	PARAMETER (Q_BAD=1)

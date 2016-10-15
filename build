@@ -1,0 +1,89 @@
+#!/bin/sh
+# Qsoft build - Dick Willingale 2016-Oct-2
+export QSOFT=`pwd`
+# Set up compiler configuration for Qsoft build
+CC=`command -v gcc`
+F77=`command -v gfortran`
+if [ -z $CC ]; then
+	echo "Compiler GCC required but not available."
+	echo "Install GNU GCC and try again."
+	exit 1
+else
+	echo "C compiler: "$CC
+fi
+if [ -z $F77 ]; then
+	echo "Compiler Gfortran required but not available."
+	echo "Install GNU Gfortran and try again."
+	echo "Gfortran is included in the recent GNU GCC distributions."
+	exit 1
+else
+	echo "Fortran compiler: "$F77
+fi
+R=`command -v R`
+F2PY=`command -v f2py`
+if [ -z $R ]; then
+	echo "R not installed."
+else
+	echo "R: "$R
+fi
+if [ -z $F2PY ]; then
+	echo "Python module f2py not installed."
+else
+	echo "Python f2py: "$F2PY
+fi
+if [ -z $F2PY ] && [ -z $R ]; then
+	echo "R and/or Python with f2py required."
+	echo "Install R and/or Python with f2py and try again."
+	exit 1
+fi
+# Create compiler configuration file
+cfile="$QSOFT/src/compiler.config"
+echo "# compiler.config file for Qsoft - used by make for build" >$cfile
+echo "# Both C and Fortran compilers are required." >>$cfile
+echo "CC = "$CC >>$cfile
+echo "F77 = "$F77 >>$cfile
+echo "CFLAGS = -fPIC -Wall --pedantic -Wno-long-long" >>$cfile
+echo "LARGEFLAGS = -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" >>$cfile
+echo "FFLAGS = -fPIC -fno-second-underscore -fno-backslash -ffixed-line-length-none -O" >>$cfile
+echo "# Shareable objects will be produced for R and/or Python" >>$cfile
+echo "# depending on which variables are set." >>$cfile
+echo "# To skip production of a shareable set variable empty." >>$cfile
+echo "# The R CMD SHLIB command is used to produce the R shareable." >>$cfile
+echo "R = "$R >>$cfile
+echo "# The Python f2py module is used to produce the Python shareable." >>$cfile
+echo "F2PY = "$F2PY >>$cfile
+# Compile the shareables
+cd $QSOFT/src/astro
+make clean
+make
+make install
+cd $QSOFT/src/images
+make clean
+make
+make install
+cd $QSOFT/src/qfits
+make clean
+make
+make install
+cd $QSOFT/src/xscat
+make clean
+make
+make install
+cd $QSOFT/src/xsrt
+make clean
+make
+make install
+# list shareable files built
+echo
+echo "R shareable object libraries:"
+ls $QSOFT/R_libraries/*.so
+echo
+echo "Python shareable object modules:"
+ls $QSOFT/python_modules/*.so
+# Copy Rprofile to home directory
+cp $QSOFT/Rprofile $HOME/.Rprofile
+echo
+echo ".Rprofile copied to your /home"
+echo
+echo "Insert the following line into your /home/.profile"
+echo ". "$QSOFT"/setup_q"

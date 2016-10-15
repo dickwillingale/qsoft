@@ -1,0 +1,366 @@
+# qR xsrt routines
+if(!exists("qrt_init")) {
+qrt_init<-function() {
+	.Fortran("qrt_init")
+	invisible()
+}
+qrt_init()
+qr_rseed<-function(iseed) {
+	.Fortran("qr_rseed",
+	as.integer(iseed))
+	invisible()
+}
+qrt_reset<-function() {
+	.Fortran("qrt_init")
+	invisible()
+}
+qrt_list<-function() {
+	.Fortran("qrt_list")
+	invisible()
+}
+qrt_shift<-function(is,pl) {
+	.Fortran("qrt_shift",
+	as.integer(is),
+	as.double(pl))
+	invisible()
+}
+qrt_rotate<-function(is,pl,ax,angle) {
+	.Fortran("qrt_rotate",
+	as.integer(is),
+	as.double(pl),
+	as.double(ax),
+	as.double(angle))
+	invisible()
+}
+qrt_kbs<-function(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,pitch,wall,
+		plmin,plmax,idf,iq) {
+	.Fortran("qrt_kbs",
+	as.double(pcen),
+	as.double(pnor),
+	as.double(raxi),
+	as.integer(ipack),
+	as.double(rmin),
+	as.double(rmax),
+	as.double(flen),
+	as.double(csize),
+	as.double(pitch),
+	as.double(wall),
+	as.double(plmin),
+	as.double(plmax),
+	as.integer(idf),
+	as.integer(iq),
+	as.integer(2000),
+	rc=double(length=2000),
+	pc=double(length=2000),
+	tc=double(length=2000),
+	ac=double(length=2000),
+	nset=integer(length=1))
+}
+qrt_surface<-function(is,it,ekev,srgh,fmin,pind,alpha,gamma,angs,refs,
+			gpitch,dhub,order) {
+	.Fortran("qrt_surface",
+	as.integer(is),
+	as.integer(it),
+	as.double(ekev),
+	as.double(srgh),
+	as.double(fmin),
+	as.double(pind),
+	as.double(alpha),
+	as.double(gamma),
+	as.integer(length(angs)),
+	as.double(angs),
+	as.double(refs),
+	as.double(gpitch),
+	as.double(dhub),
+	as.double(order))
+	invisible()
+}
+qrt_mirror<-function(id,idf,iq,anml,arfx,apos,alim) {
+	.Fortran("qrt_mirror",
+	as.integer(id),
+	as.integer(idf),
+	as.integer(iq),
+	as.double(anml),
+	as.double(arfx),
+	as.double(apos),
+	as.integer(length(alim)),
+	as.double(alim))
+	invisible()
+}
+qrt_moa<-function(pcen,pno,rax,rcur,xyap,pitch,wall,plen,idf,iq) {
+	.Fortran("qrt_moa",
+	as.double(pcen),
+	as.double(pno),
+	as.double(rax),
+	as.double(rcur),
+	as.double(xyap),
+	as.double(pitch),
+	as.double(wall),
+	as.double(plen),
+	as.integer(idf),
+	as.integer(iq))
+	invisible()
+}
+qrt_baffle<-function(xmin,xmax,rad,ax,ar,rp,iq) {
+	.Fortran("qrt_baffle",
+	as.double(xmin),
+	as.double(xmax),
+	as.double(rad),
+	as.double(ax),
+	as.double(ar),
+	as.double(rp),
+	as.integer(iq))
+	invisible()
+}
+qrt_lens<-function(id,idf,iq,anml,arfx,apos,rap,r1,r2,refind,thick) {
+	.Fortran("qrt_lens",
+	as.integer(id),
+	as.integer(idf),
+	as.integer(iq),
+	as.double(anml),
+	as.double(arfx),
+	as.double(apos),
+	as.double(rap),
+	as.double(r1),
+	as.double(r2),
+	as.double(refind),
+	as.double(thick))
+	invisible()
+}
+qrt_prism<-function(id,idf,iq,anml,arfx,apos,rap,d1,d2,refind,thick) {
+	.Fortran("qrt_prism",
+	as.integer(id),
+	as.integer(idf),
+	as.integer(iq),
+	as.double(anml),
+	as.double(arfx),
+	as.double(apos),
+	as.double(rap),
+	as.double(d1),
+	as.double(d2),
+	as.double(refind),
+	as.double(thick))
+	invisible()
+}
+qrt_opgrat<-function(id,idf,iq,alpha,fp,zp,gp,al) {
+	nl<- length(al)
+	a<- .Fortran("qrt_opgrat",
+	atype=as.integer(id),
+	defi=as.integer(idf),
+	iqual=as.integer(iq),
+	alpha=as.double(alpha),
+	fpos=as.double(fp),
+	zpos=as.double(zp),
+	gpos=as.double(gp),
+	nlim=as.integer(nl),
+	alim=as.double(al),
+	adir=double(length=3),
+	rdir=double(length=3),
+	hpos=double(length=3),
+	graz=double(length=1),
+	gamma=double(length=1),
+	dhub=double(length=1))
+	return(a)
+}
+qrt_c1nest<-function(xj,pl,ph,hl,hh,rpl,rph,rhl,rhh,tin,tj,tout,
+			ax,ar,ff,idf,iq,ib) {
+	nw<-(length(rpl)-1)*2+12
+	.Fortran("qrt_c1nest",
+	as.double(ax),
+	as.double(ar),
+	as.double(ff),
+	as.integer(iq),
+	as.integer(ib),
+	as.integer(idf),
+	as.integer(length(rpl)),
+	as.double(xj),
+	as.double(pl),
+	as.double(ph),
+	as.double(hl),
+	as.double(hh),
+	as.double(rpl),
+	as.double(rph),
+	as.double(rhl),
+	as.double(rhh),
+	as.double(tin),
+	as.double(tj),
+	as.double(tout),
+	as.integer(nw),
+	double(length=nw))
+	invisible()
+}
+qrt_w1nest<-function(xj,rj,ra,pl,ph,hl,hh,tin,tj,tout,ax,ar,ff,idf,iq,ib) {
+	.Fortran("qrt_w1nest",
+	as.integer(length(rj)),
+	as.double(xj),
+	as.double(rj),
+	as.double(ra),
+	as.double(pl),
+	as.double(ph),
+	as.double(hl),
+	as.double(hh),
+	as.double(tin),
+	as.double(tj),
+	as.double(tout),
+	as.double(ax),
+	as.double(ar),
+	as.double(ff),
+	as.integer(idf),
+	as.integer(iq),
+	as.integer(ib))
+	invisible()
+}
+qrt_wolter2<-function(rp,gp,rh,gh,rm,fovr,ax,ar,ff,idf,iq) {
+	.Fortran("qrt_wolter2",
+	as.double(rp),
+	as.double(gp),
+	as.double(rh),
+	as.double(gh),
+	as.double(rm),
+	as.double(fovr),
+	as.double(ax),
+	as.double(ar),
+	as.double(ff),
+	as.integer(idf),
+	as.integer(iq))
+	invisible()
+}
+qrt_spider<-function(cone,apos,anml,arfx,nsec,cwid,awid) {
+	.Fortran("qrt_spider",
+	as.double(cone),
+	as.double(apos),
+	as.double(anml),
+	as.double(arfx),
+	as.integer(nsec),
+	as.double(cwid),
+	as.double(awid))
+	invisible()
+}
+qrt_trace<-function(ideb,riris,iadju) {
+	.Fortran("qrt_trace",
+	as.integer(ideb),
+	as.double(riris),
+	as.integer(iadju),
+	area=double(length=1),
+	dshft=double(length=1),
+	ybar=double(length=1),
+	zbar=double(length=1),
+	rms=double(length=1))
+}
+qrt_source<-function(it,sd,sp,ap,an,ar,al,apry,nr,idef) {
+	.Fortran("qrt_source",
+	as.integer(it),
+	as.double(sd),
+	as.double(sp),
+	as.double(ap),
+	as.double(an),
+	as.double(ar),
+	as.double(al),
+	as.double(apry),
+	as.integer(nr),
+	as.integer(idef))
+	invisible()
+}
+qrt_detector <- function(id,dpos,dnml,drfx,dlim,radet) {
+	.Fortran("qrt_detector",
+	as.integer(id),
+	as.double(dpos),
+	as.double(dnml),
+	as.double(drfx),
+	as.double(dlim),
+	as.double(radet))
+	invisible()
+}
+qrt_fresnel<-function(nreal,kimag,angs) {
+	.Fortran("qrt_fresnel",
+	as.double(nreal),
+	as.double(kimag),
+	as.integer(length(angs)),
+	as.double(angs),
+	rs=double(length(angs)),
+	rp=double(length(angs)),
+	runp=double(length(angs)))
+}
+qrt_deform<-function(id,it,nm,nx,ny) {
+	.Fortran("qrt_defs",
+	as.integer(id),
+	as.integer(it),
+	as.integer(nm),
+	as.integer(nx),
+	as.integer(ny))
+	invisible()
+}
+qrt_defmat<-function(id,im,x,y,z) {
+	.Fortran("qrt_mats",
+	as.integer(id),
+	as.integer(im),
+	as.integer(length(x)),
+	as.integer(length(y)),
+	as.double(x),
+	as.double(y),
+	as.double(z),
+	as.integer(length(x)*length(y)),
+	double(length(x)*length(y)),
+	double(length(x)*length(y)))
+	invisible()
+}
+qrt_sqpore<-function(pcen,pnorm,raxis,rcur,ipack,rap,pitch,wall,plen,
+			idf,iq,plmin,plmax,fibre,ar) {
+	.Fortran("qrt_sqpore",
+	as.double(pcen),
+	as.double(pnorm),
+	as.double(raxis),
+	as.double(rcur),
+	as.integer(ipack),
+	as.double(rap),
+	as.double(pitch),
+	as.double(wall),
+	as.double(plen),
+	as.integer(idf),
+	as.integer(iq),
+	as.double(plmin),
+	as.double(plmax),
+	as.double(fibre),
+	as.integer(length(ar)),
+	as.double(ar))
+	invisible()
+}
+qrt_sipore<-function(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
+			rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq) {
+	.Fortran("qrt_sipore",
+	as.double(pcen),
+	as.double(pnorm),
+	as.double(raxis),
+	as.double(flen),
+	as.double(rpitch),
+	as.double(apitch),
+	as.double(wall),
+	as.integer(length(rm)),
+	as.double(rm),
+	as.double(pm),
+	as.double(tm),
+	as.double(wm),
+	as.double(hm),
+	as.double(am),
+	as.double(cm),
+	as.double(gm),
+	as.double(wfr),
+	as.double(a2j),
+	as.integer(idf),
+	as.integer(iq))
+	invisible()
+}
+qrt_aperture<-function(id,idf,ap,an,ar,alim,nsurf) {
+	.Fortran("qrt_aperture",
+	as.integer(id),
+	as.integer(idf),
+	as.double(ap),
+	as.double(an),
+	as.double(ar),
+	as.integer(length(alim)),
+	as.double(alim),
+	as.integer(nsurf))
+	invisible()
+}
+cat("Rxsrt",Sys.getenv("QRVERSION"),"loaded\n")
+}
