@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Point spread function of Kirpatrick-Baez stacks
 from __future__ import print_function
 import numpy as np
@@ -33,13 +33,13 @@ rmin=0
 rmax=1900
 pnor=np.array([1,0,0])
 raxi=np.array([0,1,0])
-pd=0.610
+pdd=0.610
 wall=0.15
-pitch=pd+wall
+pitch=pdd+wall
 csize=(rmax-rmin)/10
 grdeg=1.0
 gr=grdeg*np.pi/180
-pl=pd/gr
+pl=pdd/gr
 print("grazing angle",grdeg,"degrees, axial length",pl,"mm")
 pcen1=np.array([fl+pl,0,0])
 pcen2=np.array([fl,0,0])
@@ -75,18 +75,18 @@ ymin= -halfd
 ymax= halfd
 nx=100
 ny=100
-a=images.binxy(detpos["YDET"],detpos["ZDET"],0,detpos["AREA"],
-xmin,xmax,nx,ymin,ymax,ny)
+arr=images.binxy(detpos["YDET"],detpos["ZDET"],0,detpos["AREA"],
+xmin,xmax,ymin,ymax,nx,ny)
 xsam=(xmax-xmin)/nx
 #
 plt.figure()
 #cm=plt.get_cmap("gnuplot2")
 cm=plt.get_cmap("hot")
-plt.imshow(a,extent=[xmin,xmax,ymin,ymax],origin="lower",cmap=cm)
-images.setfield(nx,xmin,xmax,ymin,ymax)
-rbeam=pd*5
+plt.imshow(arr,extent=[xmin,xmax,ymin,ymax],origin="lower",cmap=cm)
+images.setfield(nx,xmin,xmax,ny,ymin,ymax)
+rbeam=pdd*5
 ibeam=rbeam/xsam
-b=images.beam(a,ibeam,0,0)
+b=images.beam(arr,ibeam,0,0)
 hew=(b.hew*xsam/fl)*(180/np.pi)*3600
 print("HEW arc sec",hew)
 fwhm=(b.fwhm*xsam/fl)*(180/np.pi)*3600
@@ -96,3 +96,5 @@ print("area",area,"cm2")
 psfarea=(b.hew*xsam/10)**2
 fgain=area/psfarea
 print("focusing gain",fgain)
+#
+plt.show()

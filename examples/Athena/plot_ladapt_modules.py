@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Plot the Athena large adaptor SPO module layout
 from __future__ import print_function
 import numpy as np

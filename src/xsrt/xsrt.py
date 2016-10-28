@@ -58,7 +58,7 @@ def rotate(iss,pl,ax,angle):
     xsrtfor.qrt_rotate(iss,pl,ax,angle)
 def kbs(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,pitch,wall,
     plmin,plmax,idf,iq):
-    nmax=1
+    nmax=2000
     a=xsrtfor.qrt_kbs(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,pitch,wall,
     plmin,plmax,idf,iq,nmax)
     return a

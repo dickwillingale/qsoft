@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Plot the reflectivity curves for Ir with B4C overcoat
 from __future__ import print_function
 import numpy as np

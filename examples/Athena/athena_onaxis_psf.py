@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Test of the sequential ray tracing routines
 from __future__ import print_function
 import numpy as np

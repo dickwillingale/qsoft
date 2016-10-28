@@ -6,3 +6,6 @@
 *~
 # large data file
 *.fits
+# python compiled files
+*.pyc
+__pycache__

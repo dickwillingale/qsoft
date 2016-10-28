@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Function to calculate reflectivity of Ir with B4C overcoat
 import numpy as np
 import xscat
