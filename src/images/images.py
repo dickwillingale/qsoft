@@ -1,11 +1,35 @@
 # Image processing routines
+from __future__ import print_function
 import imagesfor 
+import numpy as np
+import matplotlib.pylab as plt
 # Initialisation and reseting
 def init():
     imagesfor.qri_init()
 def reset():
     imagesfor.qri_init()
 init()
+def rectangles(x,y,w,h,t):
+    cth=np.cos(t)
+    sth=np.sin(t)
+    print("length x",len(x))
+    print("length t",len(t))
+    xa=w*cth
+    xb=w*sth
+    ya=h*cth
+    yb=h*sth
+    x1=x+xa+yb
+    x2=x+xa-yb
+    x3=x-xa-yb
+    x4=x-xa+yb
+    y1=y+xb-ya
+    y2=y+xb+ya
+    y3=y-xb+ya
+    y4=y-xb-ya
+    for i in range(len(x1)):
+        plt.plot([x1[i],x2[i],x3[i],x4[i],x1[i]],
+        [y1[i],y2[i],y3[i],y4[i],y1[i]],
+        color='k',linestyle='-',linewidth=1)
 def binxy(x,y,iq,w,xleft,xright,ybot,ytop,nx,ny):
     a=imagesfor.qri_binxy(x,y,iq,w,xleft,xright,ybot,ytop,nx,ny)
     return a

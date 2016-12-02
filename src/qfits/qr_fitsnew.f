@@ -12,6 +12,7 @@ Cf2py  intent(in) fname
         LOGICAL LVAL
 C
         IF(ISTAT.NE.0) RETURN
+	write(*,*) 'start qr_fitsnew',FNAME(1:in)
 C
         IF(IFITS.GT.0) THEN
                 CALL FTCLOS(IFITS,ISTAT)

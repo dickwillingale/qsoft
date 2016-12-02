@@ -59,8 +59,8 @@ def rotate(iss,pl,ax,angle):
 def kbs(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,pitch,wall,
     plmin,plmax,idf,iq):
     nmax=2000
-    a=xsrtfor.qrt_kbs(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,pitch,wall,
-    plmin,plmax,idf,iq,nmax)
+    a=xsrtfor.qrt_kbs(pcen,pnor,raxi,ipack,rmin,rmax,flen,csize,
+    pitch,wall,plmin,plmax,idf,iq,nmax)
     return a
 def surface(iss,it,ekev,srgh,fmin,pind,alpha,gamma,
     angs,refs,gpitch,dhub,order):

@@ -44,7 +44,7 @@ print("grazing angle",grdeg,"degrees, axial length",pl,"mm")
 pcen1=np.array([fl+pl,0,0])
 pcen2=np.array([fl,0,0])
 # set off-axis direction
-offarcmin=0.0
+offarcmin=-2.0
 offrad=(offarcmin/60)*np.pi/180.
 ccy=np.sin(offrad)
 di=np.array([-np.sqrt(1.0-ccy**2),-ccy,0.0])
@@ -52,7 +52,8 @@ rlim=np.array([rmin-10,rmax+10,0,0,0,0])
 spos=np.array([fl+pl+3,0,0])
 nray=1000000
 # Detector - spherical with radius of curvature equal focal length
-dnorm=-di
+#dnorm=-di
+dnorm=np.array([1,0,0])
 dpos=np.array([-fl,0,0])+dnorm*fl
 dlim=np.array([0,rmax,0,0])
 radet=fl
@@ -64,6 +65,7 @@ s2=xsrt.kbs(pcen2,pnor,raxi,ipack,rmin,rmax,-fl,csize,pitch,wall,pl,pl,idd,iss)
 xsrt.source(1,di,nn,spos,sn,rx,rlim,0,nray,0)
 xsrt.detector(3,dpos,dnorm,rx,dlim,radet)
 xsrt.surface(iss,1,ekev,rough,brk,rind,alpha,gamma,angs,refs,0,0,0)
+xsrt.srtlist()
 results=xsrt.trace(0,100,2)
 print("detector axial shift",results.dshft)
 # Get detected postions
@@ -86,6 +88,7 @@ plt.imshow(arr,extent=[xmin,xmax,ymin,ymax],origin="lower",cmap=cm)
 images.setfield(nx,xmin,xmax,ny,ymin,ymax)
 rbeam=pdd*5
 ibeam=rbeam/xsam
+images.setpos(2,np.array([offrad*fl,0]))
 b=images.beam(arr,ibeam,0,0)
 hew=(b.hew*xsam/fl)*(180/np.pi)*3600
 print("HEW arc sec",hew)

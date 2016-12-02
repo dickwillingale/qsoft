@@ -41,7 +41,7 @@ srt_wlt2.f      srt_sph1.f      srt_save.f      srt_moa.f \
 srt_shift.f     srt_rotate.f    srt_pore.f      srt_getpix.f    srt_nxtshft.f \
 srt_sipore.f    srt_kbs.f       srt_kbmakeconstellation.f \
 srt_bfield.f    srt_bdipole.f   srt_scat.f srt_frnl.f \
-srt_trace.f     srt_kbfindmodule.f \
+srt_trace.f     srt_kbfindmodule.f  \
 srt_idfrm.f     srt_iin2d.f     srt_changeaxes.f  \
 srt_setkbscom.f srt_findmod.f   srt_sfindmod.f srt_setconcom.f \
 sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f

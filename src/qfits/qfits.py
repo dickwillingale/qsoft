@@ -288,7 +288,7 @@ class fitsfile:
         for i in range(self.nhdu):
             hdu=self.hdu[i]
             if hdu.htype==0:
-                if hdu.data_array==None:
+                if hdu.data_array is None:
                     qfitsfor.qr_fitsempty()
                 else:
                     fitsparr(hdu.data_array)
