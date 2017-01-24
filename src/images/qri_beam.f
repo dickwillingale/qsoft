@@ -205,6 +205,9 @@ C Find FWHM and HEW and W90 about peak
 C Find FWHM and HEW and W90 about centroid
         CALL QRI_WBEAM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,
      +        BLEV,CEN(1),CEN(2),RBEAM,HEWC,FWHMC,W90C)
+C Load common block ready for peak fitting
+        CALL QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,BLEV,
+     +        BVAR,CEN(1),CEN(2),FWHMC*1.1)
         END
 *+QRI_WBEAM        Calculate HEW and FWHM of source in beam about given centre
         SUBROUTINE QRI_WBEAM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,BLEV,
@@ -304,5 +307,117 @@ C Scan to find HEW and W90
                         W90=(DBLE(J-2)+FRAC)*2.0
                         RETURN
                 ENDIF
+        ENDDO
+        END
+*+QRI_LOADBEAMCOM        Load beam common block
+        SUBROUTINE QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,
+     +        BLEV,BVAR,XCEN,YCEN,RPEAK)
+        IMPLICIT NONE
+        INTEGER NELS1,NELS2,NXL,NXH,NYL,NYH
+        DOUBLE PRECISION  ARRAY(NELS1,NELS2),BLEV,BVAR,XCEN,YCEN,RPEAK
+*NELS1       input        dimension of array
+*NELS2       input        dimension of array
+*ARRAY       input        data array
+*NXL,NXH     input        x pixel range (column range) of box
+*NYL,NYH     input        y pixel range (row range) of box
+*BLEV        input        average background level (to be subtracted)
+*BVAR        input        variance on BLEV (-ve for counting statistics)
+*XCEN        input        x centre
+*YCEN        input        y centre
+*RPEAK       input        radius of beam about centre to be fitted
+*-Author Dick Willingale 2017-Jan-5
+        INTEGER NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC,NCOMC
+        DOUBLE PRECISION RMAX
+        PARAMETER (RMAX=49.0,NCOMC=10000)
+        DOUBLE PRECISION BLEVC,BVARC,XCENC,YCENC,RPEAKC
+        DOUBLE PRECISION DATC(NCOMC),VARC(NCOMC),FUNC(NCOMC)
+        COMMON/BEAMFIT/BLEVC,BVARC,XCENC,YCENC,RPEAKC,DATC,VARC,FUNC,
+     +     NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC
+        DOUBLE PRECISION XP,YP,RAD
+        INTEGER J,K,JK
+C Transfer parameters into common
+        RPEAKC=MIN(RPEAK,RMAX)
+        NBOXC=NINT(RPEAKC)*2+1
+        BLEVC=BLEV
+        BVARC=BVAR
+        XCENC=XCEN
+        YCENC=YCEN
+        NELS1C=NELS1
+        NELS2C=NELS2
+        NXLC=NXL
+        NXHC=NXH
+        NYLC=NYL
+        NYHC=NYH
+C Initialize common buffers
+        DO J=1,NCOMC
+                DATC(J)=0.0
+                VARC(J)=0.0
+        ENDDO
+C Transfer data and variance of peak box into common
+        DO J=NYLC,NYHC
+                YP=(DBLE(J)-0.5)-YCENC
+                DO K=NXLC,NXHC
+                        XP=(DBLE(K)-0.5)-XCENC
+                        RAD=SQRT(XP**2+YP**2)
+                        IF(RAD.LE.RPEAKC) THEN
+                                JK=K-NXLC+(J-NYLC)*NBOXC+1
+                                DATC(JK)=ARRAY(K,J)-BLEVC
+                                IF(BVARC.LT.0) THEN
+                                        VARC(JK)=ARRAY(K,J)
+                                        IF(VARC(JK).LT.1.0) VARC(JK)=1.0
+                                ELSE
+                                        VARC(JK)=BVARC
+                                ENDIF
+                        ENDIF
+                ENDDO
+        ENDDO
+        END
+*+QRI_PEAKCHISQ calculate Chi-squared for given peak fit parameters
+        SUBROUTINE QRI_PEAKCHISQ(NPF,FPARS,CHISQ)
+        IMPLICIT NONE
+        INTEGER NPF
+        DOUBLE PRECISION FPARS(NPF),CHISQ
+Cf2py  intent(in) NPF,FPARS
+Cf2py  intent(out) CHISQ
+*NPF        input        number of peak parameters to be fitted
+*FPARS        input        fitting parameter values
+*                parameter 1 normalisation (value at peak)
+*                parameter 2 x-centre (pixel position)
+*                parameter 3 y-centre (pixel position)
+*                parameter 4 Gaussian sigma (pixels)
+*CHISQ        output        Chi-squared value
+*-Author Dick Willingale 2017-Jan-11
+        INTEGER NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC,NCOMC
+        DOUBLE PRECISION RMAX
+        PARAMETER (RMAX=49.0,NCOMC=10000)
+        DOUBLE PRECISION BLEVC,BVARC,XCENC,YCENC,RPEAKC
+        DOUBLE PRECISION DATC(NCOMC),VARC(NCOMC),FUNC(NCOMC)
+        COMMON/BEAMFIT/BLEVC,BVARC,XCENC,YCENC,RPEAKC,DATC,VARC,FUNC,
+     +     NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC
+        INCLUDE 'QR_COM'
+        DOUBLE PRECISION XP,YP,RAD,RC
+        INTEGER J,K,JK
+        DOUBLE PRECISION XPP,YPP
+C
+        IF(ISTAT.NE.0) RETURN
+C
+        CHISQ=0.0
+C Loop over peak box
+        DO J=NYLC,NYHC
+                YP=(DBLE(J)-0.5)-YCENC
+                DO K=NXLC,NXHC
+                        XP=(DBLE(K)-0.5)-XCENC
+                        RAD=SQRT(XP**2+YP**2)
+                        IF(RAD.LE.RPEAKC) THEN
+                                JK=K-NXLC+(J-NYLC)*NBOXC+1
+                                XPP=(DBLE(K)-0.5)-FPARS(2)
+                                YPP=(DBLE(J)-0.5)-FPARS(3)
+                                RC=XPP**2+YPP**2
+                                FUNC(JK)=EXP(-RC/2.0/FPARS(4)**2)
+                                FUNC(JK)=FUNC(JK)*FPARS(1)
+                                CHISQ=CHISQ+
+     +                          (DATC(JK)-FUNC(JK))**2/VARC(JK)
+                        ENDIF
+                ENDDO
         ENDDO
         END

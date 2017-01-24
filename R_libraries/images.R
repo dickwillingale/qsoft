@@ -61,6 +61,146 @@ qr_xyztrans<-function(x,y,z,cen,aer) {
         zp=double(length(z)))
         return(list(xp=a$xp,yp=a$yp,zp=a$zp))
 }
+qr_quaderr<-function(x0,y0,x1,y1,y) {
+# Quadratic estimator for confidence limit
+# x0,y0		parameter and statistic at minimum
+# x1,y1		parameter and statistic near minimum
+# y		required statistic value
+# returns	estimate of parameter corresponding to y
+	a<- (y1-y0)/(x1-x0)^2
+	b<- -2*a*x0
+	c<- y0-a*x0^2-b*x0
+	ba<- b^2-4*a*(c-y)
+	if((ba>=0)&(a!=0)) {
+		return(sqrt(ba)/(2*a))
+	} else {
+		return(0)
+	}
+}
+qr_srchmin<-function(pars,pl,ph,stat,delstat,derr) {
+# Search for minimum statistic and return best fit parameters and
+# confidence limits of the parameters
+# pars		initial parameter values
+# pl		hard lower limit of parameter values
+# ph		hard upper limit of parameter values
+# stat		the statistic function to be minimised
+# delstat	the change in statistic for confidence limits
+# derr		logical array to specify parameters for confidence estimates
+# returns	list from optim() plus confidence limits parlo and parhi
+	np<-length(pars)
+# make local copies of hard limits
+	prl<-pl
+	prh<-ph
+# find statistic minimum and estimate hessian matrix
+	ft<-optim(pars,stat,gr=NULL,method="L-BFGS-B",
+	lower=prl,upper=prh,hessian=T)
+# estimate errors on parameters
+	ft$delstat<-delstat
+	dig<- abs(diag(ft$hessian))
+	delpar<- double(length=np)
+# fix hard limits of parameters for which we don't want error estimate
+	for(k in 1:np) {
+# Trap zero on hessian diagonal
+		if(dig[k]==0) {
+			delpar[k]<- 0
+			if(!derr[k]) {
+				prl[k]<-ft$par[k]-ft$par[k]/200
+				prh[k]<-ft$par[k]+ft$par[k]/200
+			}
+		} else {
+			delpar[k]<-sqrt(2*delstat/dig[k])
+			if(!derr[k]) {
+				prl[k]<-ft$par[k]-delpar[k]/200
+				prh[k]<-ft$par[k]+delpar[k]/200
+			}
+		}
+	}
+	cat("Min statistic",ft$value,"\n")
+	cat("best fit parameters",ft$par,"\n")
+	cat("diag",dig,"\n")
+	cat("delpar",delpar,"\n")
+	nfr<- sum(derr)
+	cat("Find limits for ",nfr," parameters\n")
+	parhi<-double(length=np)
+	parlo<-double(length=np)
+	for(k in 1:np) {
+		if(derr[k]&&delpar[k]>0) {
+			cat("searching for error range",k,ft$par[k],delpar[k],
+			prl[k],prh[k],"\n")
+# upper limit
+			epar<- 0
+			while(epar==0) {
+				pval<-ft$par[k]+delpar[k]*nfr
+				part<-ft$par
+				partl<-prl
+				parth<-prh
+				part[k]<-pval
+				partl[k]<-pval-delpar[k]/200
+				parth[k]<-pval+delpar[k]/200
+				ftp<-optim(part,stat,gr=NULL,method="L-BFGS-B",
+				lower=partl,upper=parth)
+				if(ftp$value<ft$value) {
+					ft$par<- ftp$par
+					ft$value<- ftp$value
+					cat("new min found",ft$value,"\n")
+					cat("new fit parameters",ftp$par,"\n")
+					if(ftp$par[k]>prh[k]) {
+						epar<- 999
+					}
+				} else {
+					if(ftp$par[k]>prh[k]) {
+					 epar<- 999
+					} else {
+					 epar<-qr_quaderr(ft$par[k],ft$value,
+					 pval,ftp$value,ft$value+delstat)
+					}
+				}
+			}
+			cat("upper",ft$par[k],ft$value,pval,ftp$value,
+			ft$value+delstat,epar,"\n")
+			parhi[k]=min(ft$par[k]+epar,prh[k])
+# lower limit
+			epar<- 0
+			while(epar==0) {
+				pval<-ft$par[k]-delpar[k]*nfr
+				part<-ft$par
+				partl<-prl
+				parth<-prh
+				part[k]<-pval
+				partl[k]<-pval-delpar[k]/200
+				parth[k]<-pval+delpar[k]/200
+				ftp<-optim(part,stat,gr=NULL,method="L-BFGS-B",
+				lower=partl,upper=parth)
+				if(ftp$value<ft$value) {
+					ft$par<- ftp$par
+					ft$value<- ftp$value
+					cat("new min found",ft$value,"\n")
+					if(ftp$par[k]<prl[k]) {
+						epar<- 999
+					}
+					cat("new fit parameters",ftp$par,
+					prl[k],epar,"\n")
+				} else {
+					if(ftp$par[k]<prl[k]) {
+					 epar<- 999
+					} else {
+					 epar<-qr_quaderr(ft$par[k],ft$value,
+					 pval,ftp$value,ft$value+delstat)
+					}
+				}
+			}
+			cat("lower",ft$par[k],ft$value,pval,ftp$value,
+			ft$value+delstat,epar,"\n")
+			parlo[k]=max(ft$par[k]-epar,prl[k])
+		} else {
+    			parhi[k]=0.0
+    			parlo[k]=0.0
+    		}
+	}
+	ft$parlo<-parlo
+	ft$parhi<-parhi
+	return(ft)
+}
 qr_rawread<-function(filename,scale,linearize,linfile) {
 # Read .raw MCP event files
 # Adrian Martindale's version 21st July 2015
@@ -278,6 +418,13 @@ qri_displayrays<-function(a,nmax,az,el,rl,lims=NA) {
 	axis(1);axis(2)
 	invisible()
 }
+qri_peakchisq<-function(fpars) {
+	npf<-length(fpars)
+        .Fortran("qri_peakchisq",
+        as.integer(npf),
+        as.double(fpars),
+        chisq=double(length=1))$chisq
+}
 qri_beam<-function(arr,rbeam,blev,bvar) {
 	a<-.Fortran("qri_beam",
 	as.integer(dim(arr)[1]),
@@ -305,13 +452,31 @@ qri_beam<-function(arr,rbeam,blev,bvar) {
 	fwhmc=double(length=1),
 	hewc=double(length=1),
 	w90c=double(length=1))
+# Do peak fit
+	if(bvar!=0) {
+	  delstat<- qchisq(0.9,4)
+	  pval<- arr[a$cen[1],a$cen[2]]
+	  spars<- c(pval,a$cen[1],a$cen[2],a$fwhmc/2.36)
+	  lpars<- c(pval/2,a$cen[1]-a$fwhmc/2,a$cen[2]-a$fwhmc/2,a$fwhmc/2.36/2)
+	  upars<- c(pval*2,a$cen[1]+a$fwhmc/2,a$cen[2]+a$fwhmc/2,a$fwhmc/2.36*2)
+	  derr<- c(F,T,T,T)
+	  f<- qr_srchmin(spars,lpars,upars,qri_peakchisq,delstat,derr)
+	} else {
+	  f<- F
+	}
+# The fit parameters are saved in the list fit returned
+#	1	peak value (no error range calculated)
+#	2	peak X pixel position including 90% upper and lower bounds
+#	3	peak Y pixel position including 90% upper and lower bounds
+#	4	Gaussian sigma including 90% upper and lower bounds
 # construct list of results
 	return(list(nsam=a$nsam,bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
 	fsigma=a$fsigma,peak=a$peak,cen=a$cen,tha=a$tha,
 	rmsa=a$rmsa,rmsb=a$rmsb,
 	fwhm=a$fwhm,hew=a$hew,w90=a$w90,
 	fwhmp=a$fwhmp,hewp=a$hewp,w90p=a$w90p,
-	fwhmc=a$fwhmc,hewc=a$hewc,w90c=a$w90c))
+	fwhmc=a$fwhmc,hewc=a$hewc,w90c=a$w90c,
+	fit=f))
 }
 qri_annulus<-function(arr,rmin,rmax) {
 	a<-.Fortran("qri_annulus",
