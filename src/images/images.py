@@ -3,6 +3,8 @@ from __future__ import print_function
 import imagesfor 
 import numpy as np
 import matplotlib.pylab as plt
+from scipy.stats import chi2
+from scipy import optimize
 # Initialisation and reseting
 def init():
     imagesfor.qri_init()
@@ -158,6 +160,9 @@ def srchmin(pars,pl,ph,stat,delstat,derr):
     ft.parhi=parhi
     return ft
 class bdata: pass
+def peakchisq(fpars):
+    chis=imagesfor.qri_peakchisq(fpars)
+    return chis
 def beam(arr,rbeam,blev,bvar):
     a=imagesfor.qri_beam(arr,rbeam,blev,bvar)
     b=bdata()
@@ -180,6 +185,26 @@ def beam(arr,rbeam,blev,bvar):
     b.fwhmc=a[16]
     b.hewc=a[17]
     b.w90c=a[18]
+    if bvar!=0:
+        delstat= chi2.isf(0.1,4)
+        iix=int(np.rint(b.cen[0]))
+        iiy=int(np.rint(b.cen[1]))
+        pval=arr[iix,iiy]
+        spars=np.array([pval,b.cen[0],b.cen[1],b.fwhmc/2.36])
+        lpars=np.array([pval/2,b.cen[0]-b.fwhmc/2,
+        b.cen[1]-b.fwhmc/2,b.fwhmc/2.36/2])
+        upars=np.array([pval*2,b.cen[0]+b.fwhmc/2,
+        b.cen[1]+b.fwhmc/2,b.fwhmc/2.36*2])
+#       derr=np.array([False,True,True,True])
+        derr=np.array([False,False,False,False])
+        b.fit=srchmin(spars,lpars,upars,peakchisq,delstat,derr)
+    else:
+        b.fit=False
+# The fit parameters are saved in the list fit returned
+#       1       peak value (no error range calculated)
+#       2       peak X pixel position including 90% upper and lower bounds
+#       3       peak Y pixel position including 90% upper and lower bounds
+#       4       Gaussian sigma including 90% upper and lower bounds
     return b
 def setfield(nx,xleft,xright,ny,ybot,ytop):
     imagesfor.qri_setfield(nx,xleft,xright,ny,ybot,ytop)
