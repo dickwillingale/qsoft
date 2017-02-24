@@ -29,7 +29,11 @@ shareable objects.
 Build and Installation
 ______________________
 
-1) Unpack source code to some top directory /your/files/top/qsoft
+1) Download from GitHub
+
+$ git clone git://github.com/dickwillingale/qsoft.git
+
+This will create a directory qsoft/
 
 2) Move into /your/files/top/qsoft and execute build
 $ cd /your/files/top/qsoft

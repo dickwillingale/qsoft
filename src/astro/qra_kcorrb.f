@@ -1,23 +1,25 @@
 *+QRA_KCORRB        K-correction using numerical integration of Band function
         SUBROUTINE QRA_KCORRB(e1src,e2src,n,e1obs,e2obs,z,gamma1,
      +  gamma2,ecobs,c,oi,si)
-             implicit none
+        implicit none
         integer n
         double precision z(n),e1obs(n),e2obs(n),e1src,e2src
         double precision gamma1(n),gamma2(n),ecobs(n)
         double precision c(n),oi(n),si(n)
-*e1src        input                lower source frame energy
-*e2src        input                upper source frame energy
+Cf2py  intent(in) e1src,e2src,n,e1obs,e2obs,z,gamma1,gamma2,ecobs
+Cf2py  intent(out) c,oi,si
+*e1src    input                lower source frame energy
+*e2src    input                upper source frame energy
 *n        input                number of objects
-*e1obs        input                lower observed energies
-*e2obs        input                upper observed energies
+*e1obs    input                lower observed energies
+*e2obs    input                upper observed energies
 *z        input                redshift of objects
-*gamma1        input                photon indices below Ec
-*gamma2        input                photon indices above Ec
-*ecobs        input                observed Ec energies for each object
-*c        output                correction factor for each object
-*oi        output                integral over observed band
-*si        output                integral over Eiso band in observed frame
+*gamma1   input                photon indices below Ec
+*gamma2   input                photon indices above Ec
+*ecobs    input                observed Ec energies for each object
+*c        output               correction factor for each object
+*oi       output               integral over observed band
+*si       output               integral over Eiso band in observed frame
 *-Author Dick Willingale 2013-Feb-24
               include 'QR_COM'
         integer i

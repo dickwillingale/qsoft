@@ -66,3 +66,19 @@ def cosmo(h0,omegam,omegal,zmax):
     b.thgyr=a[11]
     b.dhmpc=a[12]
     return b
+class kcorr: pass
+def kcorrb(e1src,e2src,e1obs,e2obs,z,gamma1,gamma2,ecobs):
+    a=astrofor.qra_kcorrb(e1src,e2src,e1obs,e2obs,z,gamma1,gamma2,ecobs)
+    b=kcorr()
+    b.e1src=e1src
+    b.e2src=e2src
+    b.e1obs=e1obs
+    b.e2obs=e2obs
+    b.z=z
+    b.gamma1=gamma1
+    b.gamma2=gamma2
+    b.ecobs=ecobs
+    b.kcorr=a[0]
+    b.obint=a[1]
+    b.boint=a[2]
+    return b
