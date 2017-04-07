@@ -206,7 +206,7 @@ C Find FWHM and HEW and W90 about centroid
         CALL QRI_WBEAM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,
      +        BLEV,CEN(1),CEN(2),RBEAM,HEWC,FWHMC,W90C)
 C Load common block ready for peak fitting
-        CALL QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,BLEV,
+        CALL QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,BLEV,
      +        BVAR,CEN(1),CEN(2),FWHMC*1.1)
         END
 *+QRI_WBEAM        Calculate HEW and FWHM of source in beam about given centre
@@ -310,16 +310,14 @@ C Scan to find HEW and W90
         ENDDO
         END
 *+QRI_LOADBEAMCOM        Load beam common block
-        SUBROUTINE QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,NXL,NXH,NYL,NYH,
+        SUBROUTINE QRI_LOADBEAMCOM(NELS1,NELS2,ARRAY,
      +        BLEV,BVAR,XCEN,YCEN,RPEAK)
         IMPLICIT NONE
-        INTEGER NELS1,NELS2,NXL,NXH,NYL,NYH
+        INTEGER NELS1,NELS2
         DOUBLE PRECISION  ARRAY(NELS1,NELS2),BLEV,BVAR,XCEN,YCEN,RPEAK
 *NELS1       input        dimension of array
 *NELS2       input        dimension of array
 *ARRAY       input        data array
-*NXL,NXH     input        x pixel range (column range) of box
-*NYL,NYH     input        y pixel range (row range) of box
 *BLEV        input        average background level (to be subtracted)
 *BVAR        input        variance on BLEV (-ve for counting statistics)
 *XCEN        input        x centre
@@ -334,20 +332,23 @@ C Scan to find HEW and W90
         COMMON/BEAMFIT/BLEVC,BVARC,XCENC,YCENC,RPEAKC,DATC,VARC,FUNC,
      +     NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC
         DOUBLE PRECISION XP,YP,RAD
-        INTEGER J,K,JK
+        INTEGER J,K,JK,NHB,IXCN,IYCN
 C Transfer parameters into common
         RPEAKC=MIN(RPEAK,RMAX)
-        NBOXC=NINT(RPEAKC)*2+1
+        NHB=NINT(RPEAKC)
         BLEVC=BLEV
         BVARC=BVAR
         XCENC=XCEN
         YCENC=YCEN
+        IXCN=INT(XCEN)+1
+        IYCN=INT(YCEN)+1
+        NXLC=MAX(IXCN-NHB,1)
+        NXHC=MIN(IXCN+NHB,NELS1)
+        NYLC=MAX(IYCN-NHB,1)
+        NYHC=MIN(IYCN+NHB,NELS2)
+        NBOXC=NYHC-NYLC+1
         NELS1C=NELS1
         NELS2C=NELS2
-        NXLC=NXL
-        NXHC=NXH
-        NYLC=NYL
-        NYHC=NYH
 C Initialize common buffers
         DO J=1,NCOMC
                 DATC(J)=0.0
