@@ -18,7 +18,8 @@ qrt_c1nest.f    qrt_list.f      qrt_prism.f     qrt_sqpore.f    \
 qrt_defs.f      qrt_mats.f      qrt_rotate.f    qrt_surface.f \
 qrt_detector.f  qrt_mirror.f    qrt_shift.f     qrt_trace.f \
 qrt_fresnel.f   qrt_sipore.f    qrt_w1nest.f \
-qrt_bfield.f    qrt_bdipole.f   qrt_prtathena.f qrt_eltmxt.f
+qrt_bfield.f    qrt_bdipole.f   qrt_prtathena.f qrt_eltmxt.f \
+qrt_elips.f
 # Internal object library source files
 LSOURCES = \
 srt_cnic.f      srt_cnin.f      srt_dalr.f      srt_dfrm.f      srt_didi.f \
