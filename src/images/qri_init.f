@@ -89,24 +89,33 @@ C
         INCLUDE 'QRI_TRANSCOM'
         INCLUDE 'QR_COM'
         DOUBLE PRECISION PIBY2
+        DOUBLE PRECISION XY(2)
         INTEGER STATUS
 C
         IF(ISTAT.NE.0) RETURN
 C
-        PIBY2=ASIN(1.0D0)
         STATUS=0
-C
+        PIBY2=ASIN(1.0D0)
+C Scale to local radians and check range
+        XY(1)=XYP(1)*XYTORAD(1)
+        XY(2)=XYP(2)*XYTORAD(2)
+        IF(XY(1).GT.PIBY2*2.D0) THEN
+            XY(1)=XY(1)-PIBY2*4.D0
+        ELSEIF(XY(1).LT.-PIBY2*2.D0) THEN
+            XY(1)=XY(1)+PIBY2*4.D0
+        ENDIF
+        IF(XY(2).GT.PIBY2) THEN
+             XY(2)=PIBY2
+        ELSEIF(XY(2).LT.-PIBY2) THEN
+             XY(2)=-PIBY2
+        ENDIF
         IF(IPROJ.EQ.0) THEN
-                LOC(1)=XYP(1)*XYTORAD(1)
-                LOC(2)=XYP(2)*XYTORAD(2)
-                IF(ABS(LOC(1)).GT.PIBY2*2.D0.OR.
-     +            ABS(LOC(2)).GT.PIBY2) THEN
-                    STATUS=1
-                ENDIF
+                LOC(1)=XY(1)
+                LOC(2)=XY(2)
         ELSEIF(IPROJ.EQ.1) THEN
-                CALL AX_DAMMERINV(XYP(1),XYP(2),LOC(1),LOC(2),STATUS)
+                CALL AX_DAMMERINV(XY(1),XY(2),LOC(1),LOC(2),STATUS)
         ELSEIF(IPROJ.EQ.2) THEN
-                CALL AX_LAMBERTINV(XYP(1),XYP(2),LOC(1),LOC(2),STATUS)
+                CALL AX_LAMBERTINV(XY(1),XY(2),LOC(1),LOC(2),STATUS)
         ENDIF
         IF(STATUS.NE.0) THEN
                 LOC(1)=0.0
@@ -116,23 +125,29 @@ C
 *+QRI_STOL        local spherical radians to local XYs coordinate transformation
         SUBROUTINE QRI_STOL(LOC,XYP)
 *LOC        input        local position Azimuth,Elevation radians
-*XYP        output        local XY position
+*XYP        output       local XY position
         IMPLICIT NONE
         DOUBLE PRECISION XYP(2),LOC(2)
 *-Author Dick Willingale 2012-May-11
         INCLUDE 'QRI_TRANSCOM'
         INCLUDE 'QR_COM'
+        DOUBLE PRECISION PIBY2
+        DOUBLE PRECISION XY(2)
 C
         IF(ISTAT.NE.0) RETURN
+        PIBY2=ASIN(1.0D0)
 C
         IF(IPROJ.EQ.0) THEN
-                XYP(1)=LOC(1)/XYTORAD(1)
-                XYP(2)=LOC(2)/XYTORAD(2)
+                XY(1)=LOC(1)
+                XY(2)=LOC(2)
         ELSEIF(IPROJ.EQ.1) THEN
-                CALL AX_DAMMER(LOC(1),LOC(2),XYP(1),XYP(2))
+                CALL AX_DAMMER(LOC(1),LOC(2),XY(1),XY(2))
         ELSEIF(IPROJ.EQ.2) THEN
-                CALL AX_LAMBERT(LOC(1),LOC(2),XYP(1),XYP(2))
+                CALL AX_LAMBERT(LOC(1),LOC(2),XY(1),XY(2))
         ENDIF
+C Scale from radians to local units
+        XYP(1)=XY(1)/XYTORAD(1)
+        XYP(2)=XY(2)/XYTORAD(2)
         END
 *+QRI_STOC        Local to Celestial coordinate transformation
         SUBROUTINE QRI_STOC(LOC,CEL)

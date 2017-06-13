@@ -100,29 +100,25 @@ def fitshduinfo(ihdu):
     b.nkeys=a[3]
     return b
 # Get key data
-class fitskey: pass
 def fitsgetkey(ikey):
     a=qfitsfor.qr_fitsgetkey(ikey)
-    b=fitskey()
-    b.key=a[0][:]
-    b.ki=a[1]
-    b.sval=a[2][:]
-    b.si=a[3]
-    b.jval=a[4]
-    b.dval=a[5]
-    b.lval=a[6]
-    b.ktype=a[7]
-    b.cval=a[8][:]
-    b.ci=a[9]
-    return b
+    ki=a[1]
+    key=a[0][:ki].decode()
+    si=a[3]
+    sval=a[2][:si].decode()
+    jval=a[4]
+    dval=a[5]
+    lval=a[6]
+    ktype=a[7]
+    ci=a[9]
+    cval=a[8][:ci].decode()
+    return key,ki,sval,si,jval,dval,lval,ktype,cval,ci
 # Get data types
-class fitsdata: pass
 def fitstypes(hdutype,ncols):
     a=qfitsfor.qr_fitstypes(hdutype,ncols)
-    b=fitsdata()
-    b.ctype=a[0]
-    b.rp=a[1]
-    return b
+    ctype=a[0]
+    rp=a[1]
+    return ctype,rp
 # Open fits file for read/write
 def fitsupdate(filename):
     return qfitsfor.qr_fitsopen(len(filename),filename,1)
@@ -131,7 +127,7 @@ class fitstab: pass
 def fitscolnam(ic,rr,nrows):
     a=qfitsfor.qr_fitscolnam(ic,rr,nrows,255)
     b=fitstab()
-    b.colnam=a[0]
+    b.colnam=a[0].decode()
     b.iname=a[1]
     b.vrep=a[2]
     return b
@@ -176,10 +172,10 @@ class fitshdu:
             else:
                 print(key," = ",self.kw[key])
         if self.htype==0:
-            if self.data_array!=None:
-                print("hdu.data_array",self.data_array.dtype)
-            else:
+            if self.data_array is None:
                 print("hdu.data_array")
+            else:
+                print("hdu.data_array",self.data_array.dtype)
             print(self.data_array)
         else:
             print("hdu.table")
@@ -204,7 +200,7 @@ class fitsfile:
         self.hdu=[]
 # Creating a new file return
         if filename=="new": return
-# Read contents of existing fits file into R object
+# Read contents of existing fits file into object
 # Open file and get number of header units
         nhdu=qfitsfor.qr_fitsopen(len(filename),filename,0)
         self.nhdu=nhdu
@@ -225,32 +221,29 @@ class fitsfile:
             self.hdu.append(hdu)
 # Loop for all keywords/records (including comments etc)
             for k in range(nkeys):
-                v=fitsgetkey(k+1)
-                key=v.key[:v.ki]
-                if v.ktype==1:
-                    val=v.jval
-                elif v.ktype==2:
-                    val=v.dval
-                elif v.ktype==3:
-                    val=bool(v.lval)
-                elif v.ktype==4:
-                    if v.si>0:
-                        val=v.sval[:v.si]
+                key,ki,sval,si,jval,dval,lval,ktype,cval,ci=fitsgetkey(k+1)
+                if ktype==1:
+                    val=jval
+                elif ktype==2:
+                    val=dval
+                elif ktype==3:
+                    val=bool(lval)
+                elif ktype==4:
+                    if si>0:
+                        val=sval[:si]
                     else:
                         val=" "
                 if key==""or key=="COMMENT"or key=="HISTORY"or key=="CONTINUE":
-                    if v.ci>0:
-                        hdu.cr.append(v.cval[:v.ci])
+                    if ci>0:
+                        hdu.cr.append(cval[:ci])
                 else:
                     hdu.kw[key]=val
-                    if v.ci>0:
-                        hdu.kc[key]=v.cval[:v.ci]
+                    if ci>0:
+                        hdu.kc[key]=cval[:ci]
                     else:
                         hdu.kc[key]=None
 # Get data types
-            b=fitstypes(hdutype,ncols)
-            rp=b.rp
-            ctype=b.ctype
+            ctype,rp=fitstypes(hdutype,ncols)
             if hdutype==0 and naxis>0:
 # Primary data array
                 if ctype==1:
@@ -317,8 +310,10 @@ class fitsfile:
 def fitsptab(hdu):
     tab=hdu.table
     units=hdu.units
-    names=tab.keys()
+#    names=tab.keys()
+    names=list(tab)
     ncols=len(names)
+    print(names)
     nrows=len(tab[names[0]])
     ity=np.empty(ncols,int)
     ire=np.empty(ncols,int)

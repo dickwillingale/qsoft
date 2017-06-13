@@ -1,12 +1,12 @@
 *+QR_FITSOPEN        Open FITS data file
-        SUBROUTINE QR_FITSOPEN(IN,NAME,NRW,NHDU)
+        SUBROUTINE QR_FITSOPEN(IN,NAM,NRW,NHDU)
         IMPLICIT NONE
         INTEGER IN,NHDU,NRW
-        CHARACTER NAME*(IN)
+        CHARACTER NAM*(IN)
 *IN        input        length of name
 Cf2py  intent(in) in
-*NAME        input        file name
-Cf2py  intent(in) name
+*NAM        input        file name
+Cf2py  intent(in) nam
 *NRW        input        readonly 0, read/write 1
 Cf2py  intent(in) nrw
 *NDHU        output        number of HDU in file
@@ -23,10 +23,15 @@ C
         ENDIF
 C
         CALL SYS_GETLUN(IFITS,ISTAT)
-        CALL FTOPEN(IFITS,NAME,NRW,IBLOCK,ISTAT)
+C        write(*,*) 'qr_fitsopen',nam(1:in),nrw,ifits
+
+        CALL FTOPEN(IFITS,NAM(1:IN),NRW,IBLOCK,ISTAT)
+C        write(*,*) 'qr_fitsopen',nam(1:in),nrw,ifits
         IF(ISTAT.NE.0) THEN
-                WRITE(*,*) 'QR_FITSOPEN failed ',NAME
-                RETURN
+              WRITE(*,*) 'QR_FITSOPEN failed ',NAM(1:IN)
+              RETURN
+C        ELSE
+C             write(*,*) 'qr_fitsopen done'
         ENDIF
         CALL FTTHDU(IFITS,NHDU,ISTAT)
         END

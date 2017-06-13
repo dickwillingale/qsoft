@@ -9,6 +9,8 @@ Cf2py   intent(in) XTODEG,YTODEG,IPR,MJD,RA,DEC,ROLL
 *IPR        input    projection between local XY and local spherical
 *                0 Plate Carre
 *                1 Aitoff (Hammer)
+*		 2 Lambert (equatorial aspect of Azimuthal equal-area
+*		 projection)
 *MJD        input    Modified Julian date 
 *R          input    Right Ascension (degrees J2000 at local origin)
 *DEC        input    Declination (degrees J2000 at local origin)

@@ -2,7 +2,7 @@
         SUBROUTINE QR_FITSNEW(IN,FNAME)
         IMPLICIT NONE
         INTEGER IN
-        CHARACTER FNAME*(IN)
+        CHARACTER FNAME*(255)
 *IN        input        length of name
 Cf2py  intent(in) in
 *FNAME        input        file name
@@ -12,7 +12,7 @@ Cf2py  intent(in) fname
         LOGICAL LVAL
 C
         IF(ISTAT.NE.0) RETURN
-	write(*,*) 'start qr_fitsnew',FNAME(1:in)
+        write(*,*) 'start qr_fitsnew',FNAME(1:in)
 C
         IF(IFITS.GT.0) THEN
                 CALL FTCLOS(IFITS,ISTAT)
@@ -26,7 +26,7 @@ CALL SYS_UNLINK(FNAME(1:IN),ISTAT)
         ENDIF
 C Open new file
         CALL SYS_GETLUN(IFITS,ISTAT)
-        CALL FTINIT(IFITS,FNAME,0,ISTAT)
+        CALL FTINIT(IFITS,FNAME(1:IN),0,ISTAT)
         IF(ISTAT.NE.0) THEN
                 WRITE(*,*) 'QR_FITSNEW failed to open ',FNAME
                 IFITS=0

@@ -223,3 +223,58 @@ def getpos():
     b.ecl=a[4]
     b.gal=a[5]
     return b
+# Convert position to local XY coords
+def toxy(ipos,p):
+    n=len(p[:,0])
+    pout=np.empty([n,2])
+    for i in range(n):
+        setpos(ipos,p[i])
+        a=getpos()
+        pout[i]=a.xyl
+    return pout
+# Plot a Hammer projection grid on figure pic
+def hamgrid(pic):
+    n=45
+    gap=10
+    fixe=np.ones(n)*gap
+    fixa=np.ones(n)*gap
+    wa=360
+    sama=np.arange(n)*wa/(n-1)-wa/2
+    we=180
+    same=np.arange(n)*we/(n-1)-we/2
+    pp=np.empty([n,2])
+    na=int(wa/2/gap)
+    for i in range(-na,na):
+        pp[:,0]=fixa*i
+        pp[:,1]=same
+        xy=toxy(3,pp)
+        pic.plot(xy[:,0],xy[:,1],"w--")
+    ne=int(we/2/gap)
+    for i in range(-ne,ne):
+        pp[:,0]=sama
+        pp[:,1]=fixe*i
+        xy=toxy(3,pp)
+        pic.plot(xy[:,0],xy[:,1],"w--")
+# Plot a Lambert projection grid on figure pic
+def lamgrid(pic):
+    n=45
+    gap=10
+    fixe=np.ones(n)*gap
+    fixa=np.ones(n)*gap
+    wa=180
+    sama=np.arange(n)*wa/(n-1)-wa/2
+    we=180
+    same=np.arange(n)*we/(n-1)-we/2
+    pp=np.empty([n,2])
+    na=int(wa/2/gap)
+    for i in range(-na,na):
+        pp[:,0]=fixa*i
+        pp[:,1]=same
+        xy=toxy(3,pp)
+        pic.plot(xy[:,0],xy[:,1],"w--")
+    ne=int(we/2/gap)
+    for i in range(-ne,ne):
+        pp[:,0]=sama
+        pp[:,1]=fixe*i
+        xy=toxy(3,pp)
+        pic.plot(xy[:,0],xy[:,1],"w--")

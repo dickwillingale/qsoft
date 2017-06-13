@@ -73,6 +73,10 @@ ifdef R
 endif   
 	cp $(LIB) $(LIBDIR)
 
+test:
+	$(F77) testf77.f $(LIB) -o testf77        
+	$(CC) testprog.c $(LIB) -o testprog
+
 clean:
 	rm $(OBJECTS)
 	rm *.so

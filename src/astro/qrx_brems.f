@@ -3,6 +3,8 @@
         IMPLICIT NONE
         INTEGER NE
         DOUBLE PRECISION E(NE),T,PH(NE)
+Cf2py  intent(in) NE,E,T
+Cf2py  intent(out) PH
 *NE              number of energies
 *E               Energies keV
 *T               Temperature keV

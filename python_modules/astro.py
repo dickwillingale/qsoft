@@ -18,6 +18,9 @@ def ctob(x):
 def btoc(x):
     n=len(x)
     return (x[1:n]+x[0:n-1])/2.0
+# Continua spectra
+def brems(ekev,t):
+    return astrofor.qrx_brems(ekev,t)
 # Interstellar absorption
 def habs(cd,ekev):
     return astrofor.qra_habs(cd,ekev)
