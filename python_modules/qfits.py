@@ -125,7 +125,7 @@ def fitsupdate(filename):
 # Get column info
 class fitstab: pass
 def fitscolnam(ic,rr,nrows):
-    a=qfitsfor.qr_fitscolnam(ic,rr,nrows,255)
+    a=qfitsfor.qr_fitscolnam(ic,rr,nrows,500)
     b=fitstab()
     b.colnam=a[0].decode()
     b.iname=a[1]
