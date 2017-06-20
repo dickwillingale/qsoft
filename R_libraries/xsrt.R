@@ -362,4 +362,19 @@ qrt_aperture<-function(id,idf,ap,an,ar,alim,nsurf) {
 	as.integer(nsurf))
 	invisible()
 }
+qrt_elips<-function(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq) {
+	.Fortran("qrt_elips",
+	as.double(org),
+	as.double(axs),
+	as.double(cen),
+	as.double(xmin),
+	as.double(xmax),
+	as.double(amin),
+	as.double(amax),
+	as.double(smb),
+	as.double(rab),
+	as.integer(ide),
+	as.integer(iq))
+	invisible()
+}
 }

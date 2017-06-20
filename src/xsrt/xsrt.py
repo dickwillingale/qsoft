@@ -128,3 +128,5 @@ def sipore(pcen,pnorm,raxis,flen_bn,rpitch,apitch,wall,
     rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq)
 def aperture(idd,idf,ap,an,ar,alim,nsurf):
     xsrtfor.qrt_aperture(idd,idf,ap,an,ar,alim,nsurf)
+def elips(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq):
+    xsrtfor.qrt_elips(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq)
