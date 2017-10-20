@@ -385,7 +385,8 @@ Cf2py  intent(out) CHISQ
 *                parameter 1 normalisation (value at peak)
 *                parameter 2 x-centre (pixel position)
 *                parameter 3 y-centre (pixel position)
-*                parameter 4 Gaussian sigma (pixels)
+*                parameter 4 Lorentian width (pixels) 24th Sept. 2017 RW
+* Deprecated     parameter 4 Gaussian sigma (pixels)
 *CHISQ        output        Chi-squared value
 *-Author Dick Willingale 2017-Jan-11
         INTEGER NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC,NCOMC
@@ -396,7 +397,7 @@ Cf2py  intent(out) CHISQ
         COMMON/BEAMFIT/BLEVC,BVARC,XCENC,YCENC,RPEAKC,DATC,VARC,FUNC,
      +     NELS1C,NELS2C,NXLC,NXHC,NYLC,NYHC,NBOXC
         INCLUDE 'QR_COM'
-        DOUBLE PRECISION XP,YP,RAD,RC
+        DOUBLE PRECISION XP,YP,RAD
         INTEGER J,K,JK
         DOUBLE PRECISION XPP,YPP
 C
@@ -413,8 +414,10 @@ C Loop over peak box
                                 JK=K-NXLC+(J-NYLC)*NBOXC+1
                                 XPP=(DBLE(K)-0.5)-FPARS(2)
                                 YPP=(DBLE(J)-0.5)-FPARS(3)
-                                RC=XPP**2+YPP**2
-                                FUNC(JK)=EXP(-RC/2.0/FPARS(4)**2)
+C                               RC=XPP**2+YPP**2
+C                               FUNC(JK)=EXP(-RC/2.0/FPARS(4)**2)
+                                FUNC(JK)=1.0/((XPP/FPARS(4))**2+1.0)/
+     +                          ((YPP/FPARS(4))**2+1.0)
                                 FUNC(JK)=FUNC(JK)*FPARS(1)
                                 CHISQ=CHISQ+
      +                          (DATC(JK)-FUNC(JK))**2/VARC(JK)

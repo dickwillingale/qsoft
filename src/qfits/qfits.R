@@ -372,8 +372,8 @@ qr_fitsprint<-function(fits) {
 			if(nams[j]=="DATA_ARRAY") {
 				cat("DATA_ARRAY",typeof(hdu[[j]]),
 				dim(hdu[[j]]),"\n")
-				DATA_ARRAY<-hdu[[j]]
-				print(DATA_ARRAY)
+				DATA_ARRAY<-hdu$DATA_ARRAY
+				cat(DATA_ARRAY[1:10,1:1],"...\n")
 				cat("minval",min(DATA_ARRAY),
 				"maxval",max(DATA_ARRAY),"\n")
 			} else if(nams[j]=="table") {

@@ -13,7 +13,8 @@ LIB = libimages.a
 # Python Fortran module source files
 FSOURCES = qr_init.f qri_init.f qr_xyztrans.f \
 qri_binxy.f qri_setfield.f qri_setsky.f qri_setpos.f qri_getpos.f \
-qri_beam.f qri_annulus.f qri_blur.f
+qri_beam.f qri_annulus.f qri_blur.f qri_lecbeam.f qri_lecimage.f \
+qri_lebin.f qri_lepsf.f
 
 # Internal object library source files
 LSOURCES = \

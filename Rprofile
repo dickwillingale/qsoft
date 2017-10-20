@@ -12,17 +12,19 @@
   dyn.load(paste(qsoft,"/R_libraries/astroR.so",sep=""))
   dyn.load(paste(qsoft,"/R_libraries/xsrtR.so",sep=""))
   dyn.load(paste(qsoft,"/R_libraries/xscatR.so",sep=""))
+  dyn.load(paste(qsoft,"/R_libraries/biomarkR.so",sep=""))
 # Source the R definitions
   source(paste(qsoft,"/R_libraries/qfits.R",sep=""))
   source(paste(qsoft,"/R_libraries/images.R",sep=""))
   source(paste(qsoft,"/R_libraries/astro.R",sep=""))
   source(paste(qsoft,"/R_libraries/xsrt.R",sep=""))
   source(paste(qsoft,"/R_libraries/xscat.R",sep=""))
+  source(paste(qsoft,"/R_libraries/biomark.R",sep=""))
 #
 # Quick get out of jail
   qq<-function() {
     q(save="no")
     invisible()
   }
-  cat("Q version",qversion,": qfits images astro xsrt xscat loaded\n")
+  cat("Q version",qversion,": qfits images astro xsrt xscat biomark loaded\n")
 }

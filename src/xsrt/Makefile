@@ -47,9 +47,11 @@ srt_idfrm.f     srt_iin2d.f     srt_changeaxes.f  \
 srt_setkbscom.f srt_findmod.f   srt_sfindmod.f srt_setconcom.f \
 sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f
 
+CSOURCES = stray_xray_psf.c
 # Routines to skip in Python Fortran module
 SKIP = skip: qr_init escale arcsinh scatfun diffsec :
 
+COBJECTS= $(CSOURCES:.c=.o)
 OBJECTS = $(LSOURCES:.f=.o)
 FOBJECTS= $(FSOURCES:.f=.o)
 
@@ -61,12 +63,14 @@ ifdef R
 	$(R) CMD SHLIB -o $(MODNAME)R.so $(FOBJECTS) $(LIB) 
 endif
 
-$(LIB): $(OBJECTS)
-	ar rsu $(LIB) $(OBJECTS)
+$(LIB): $(OBJECTS) $(COBJECTS)
+	ar rsu $(LIB) $(OBJECTS) $(COBJECTS)
 
-.SUFFIXES: .o .f
+.SUFFIXES: .o .f .c
 .f.o:
 	$(F77) $(FFLAGS) -c $<
+.c.o:
+	$(CC) $(CFLAGS) $(LARGEFLAGS) -c $<
 
 
 install: $(MODNAME).R $(MODNAME).py

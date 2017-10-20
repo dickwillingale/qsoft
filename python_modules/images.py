@@ -190,11 +190,11 @@ def beam(arr,rbeam,blev,bvar):
         iix=int(np.rint(b.cen[0]))
         iiy=int(np.rint(b.cen[1]))
         pval=arr[iix,iiy]
-        spars=np.array([pval,b.cen[0],b.cen[1],b.fwhmc/2.36])
+        spars=np.array([pval,b.cen[0],b.cen[1],b.fwhmc/2.])
         lpars=np.array([pval/2,b.cen[0]-b.fwhmc/2,
-        b.cen[1]-b.fwhmc/2,b.fwhmc/2.36/2])
+        b.cen[1]-b.fwhmc/2,b.fwhmc/2./2])
         upars=np.array([pval*2,b.cen[0]+b.fwhmc/2,
-        b.cen[1]+b.fwhmc/2,b.fwhmc/2.36*2])
+        b.cen[1]+b.fwhmc/2,b.fwhmc/2.*2])
 #       derr=np.array([False,True,True,True])
         derr=np.array([False,False,False,False])
         b.fit=srchmin(spars,lpars,upars,peakchisq,delstat,derr)
@@ -206,6 +206,34 @@ def beam(arr,rbeam,blev,bvar):
 #       3       peak Y pixel position including 90% upper and lower bounds
 #       4       Gaussian sigma including 90% upper and lower bounds
     return b
+def lecbeam(arr,s,h,blev,bvar,nt):
+    a=imagesfor.qri_lecbeam(arr,s,h,blev,bvar,nt)
+    b=bdata()
+    b.qua=a[0]
+    a.quan=a[1]
+    b.nsam=a[2]
+    b.bflux=a[3]
+    b.bsigma=a[4]
+    b.flux=a[5]
+    b.fsigma=a[6]
+    b.peak=a[7]
+    b.cen=a[8]
+    b.hew=a[9]
+    b.w90=a[10]
+    b.ahew=a[11]
+    b.aw90=a[12]
+    b.eta=a[13]
+    b.fpeak=a[13]
+    return b
+def lecimage(s,h,b,nx,ny):
+    a=imagesfor.qri_lecimage(s,h,b,nx,ny)
+    return a
+def lepsf(s,h,g,eta,xcen,ycen,nx,ny):
+    a=imagesfor.qri_lepsf(s,h,g,eta,xcen,ycen,nx,ny)
+    return a
+def lebin(xe,ye,s,h,g,eta,nx,ny):
+    a=imagesfor.qri_lebin(xe,ye,s,h,g,eta,nx,ny)
+    return a
 def setfield(nx,xleft,xright,ny,ybot,ytop):
     imagesfor.qri_setfield(nx,xleft,xright,ny,ybot,ytop)
 def setsky(xtodeg,ytodeg,ipr,mjd,ra,dec,roll):

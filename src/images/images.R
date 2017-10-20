@@ -456,9 +456,9 @@ qri_beam<-function(arr,rbeam,blev,bvar) {
 	if(bvar!=0) {
 	  delstat<- qchisq(0.9,4)
 	  pval<- arr[a$cen[1],a$cen[2]]
-	  spars<- c(pval,a$cen[1],a$cen[2],a$fwhmc/2.36)
-	  lpars<- c(pval/2,a$cen[1]-a$fwhmc/2,a$cen[2]-a$fwhmc/2,a$fwhmc/2.36/2)
-	  upars<- c(pval*2,a$cen[1]+a$fwhmc/2,a$cen[2]+a$fwhmc/2,a$fwhmc/2.36*2)
+	  spars<- c(pval,a$cen[1],a$cen[2],a$fwhmc/2.)
+	  lpars<- c(pval/2,a$cen[1]-a$fwhmc/2,a$cen[2]-a$fwhmc/2,a$fwhmc/2./2)
+	  upars<- c(pval*2,a$cen[1]+a$fwhmc/2,a$cen[2]+a$fwhmc/2,a$fwhmc/2.*2)
 	  derr<- c(F,T,T,T)
 	  f<- qr_srchmin(spars,lpars,upars,qri_peakchisq,delstat,derr)
 	} else {
@@ -477,6 +477,111 @@ qri_beam<-function(arr,rbeam,blev,bvar) {
 	fwhmp=a$fwhmp,hewp=a$hewp,w90p=a$w90p,
 	fwhmc=a$fwhmc,hewc=a$hewc,w90c=a$w90c,
 	fit=f))
+}
+qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
+	a<-.Fortran("qri_lecbeam",
+	as.integer(dim(arr)[1]),
+	as.integer(dim(arr)[2]),
+	as.double(arr),
+	as.double(s),
+	as.double(h),
+	as.double(blev),
+	as.double(bvar),
+	as.integer(nt),
+	qua=double(length=nt*nt),
+	nqua=double(length=nt*nt),
+	nsam=integer(length=1),
+	bflux=double(length=1),
+	bsigma=double(length=1),
+	flux=double(length=1),
+	fsigma=double(length=1),
+	peak=double(length=2),
+	cen=double(length=2),
+	hew=double(length=1),
+	w90=double(length=1),
+	ahew=double(length=1),
+	aw90=double(length=1),
+	fpeak=double(length=1))
+# functions for fitting the lobster eye quadrant
+        quafun<- function(xp,yp,par) {
+	 #par[1] peak value
+         #par[2] G width of Lorentzian central spot
+         #par[3] eta strength of cross-arm wrt central spot
+         eg<- par[3]*par[2]/hqua
+	 x1<-1/(1+(xp*2.0/par[2])^2)
+	 x2<-eg*(1-(xp/hqua)^2)
+         y1<-1/(1+(yp*2.0/par[2])^2)
+	 y2<-eg*(1-(yp/hqua)^2)
+         return((x1*y1+x1*y2+x2*y1+x2*y2)*par[1]/(1+eg)^2)
+        }
+        quastat<- function(p) {
+	   mm<-outer(xqua,yqua,quafun,p)
+           return(sum((zqua-mm)^2/mm*(nqua>0)))
+        }
+# Do fit to quadrant profile
+        delstat<- qchisq(0.9,2)
+        zqua<- a$qua
+	nqua<- a$nqua
+        xqua<- (1:nt)-0.5
+        yqua<- xqua
+        hqua<- h
+        spars<- c(a$qua[1],a$hew,1.0)
+        lpars<- c(a$qua[1]/10,a$hew/10,0.1)
+        upars<- c(a$qua[1]*10,a$hew*10,10.0)
+        derr<- c(F,F,F)
+        f<- qr_srchmin(spars,lpars,upars,quastat,delstat,derr)
+        mod<- outer(xqua,yqua,quafun,f$par)
+	dim(mod)<- c(nt,nt)
+# construct list of results
+	dim(a$qua)<-c(nt,nt)
+	return(list(qua=a$qua,
+	nsam=a$nsam,bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
+	fsigma=a$fsigma,peak=a$peak,cen=a$cen,
+	hew=a$hew,w90=a$w90,ahew=a$ahew,aw90=a$aw90,fpeak=a$fpeak,
+	norm=f$par[1],G=f$par[2],eta=f$par[3],xqua=xqua,yqua=yqua,mod=mod))
+}
+qri_lecimage<-function(s,h,b,xcen,ycen,nx,ny) {
+	b<-.Fortran("qri_lecimage",
+	as.double(s),
+	as.double(h),
+	as.double(b),
+	as.double(xcen),
+	as.double(ycen),
+	as.integer(nx),
+	as.integer(ny),
+	arr=double(length=nx*ny))
+	dim(b$arr)<-c(nx,ny)
+	invisible(b$arr)
+}
+qri_lepsf<-function(s,h,g,eta,xcen,ycen,nx,ny) {
+	b<-.Fortran("qri_lepsf",
+	as.double(s),
+	as.double(h),
+	as.double(g),
+	as.double(eta),
+	as.double(xcen),
+	as.double(ycen),
+	as.integer(nx),
+	as.integer(ny),
+	arr=double(length=nx*ny))
+	dim(b$arr)<-c(nx,ny)
+	invisible(b$arr)
+}
+qri_lebin<-function(xe,ye,s,h,g,eta,nx,ny) {
+	ne<-length(xe)
+	b<-.Fortran("qri_lebin",
+	as.integer(ne),
+	as.double(xe),
+	as.double(ye),
+	as.double(s),
+	as.double(h),
+	as.double(g),
+	as.double(eta),
+	as.integer(nx),
+	as.integer(ny),
+	arr=double(length=nx*ny))
+	dim(b$arr)<-c(nx,ny)
+	invisible(b$arr)
 }
 qri_annulus<-function(arr,rmin,rmax) {
 	a<-.Fortran("qri_annulus",

@@ -49,7 +49,8 @@
 		refs[1:na,k:k]<- (mdat$rsig+mdat$rpi)*0.5
 	}
 #
-	X11()
+#	X11()
+	quartz()
 #
 	plot(ekev,refs[1:1,1:ne],type="l",log="x",xlab="keV",ylab="Ref")
 	for(k in 2:na) {

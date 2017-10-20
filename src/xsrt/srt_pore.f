@@ -43,16 +43,16 @@
 	PARAMETER (PI=3.14159265359,SMALL=1.D-4)
 	DOUBLE PRECISION VY(3),X,Y,Z,XP(3),YP(3),ZP(3),RXY,CTH,STH
 	DOUBLE PRECISION T,POS(3)
-	DOUBLE PRECISION RNM(3),RPOS,DA,DC,XPP(3),YPP(3),DB,DB1,DB2,RAN(2)
+	DOUBLE PRECISION RNM(3),RPOS,DA,DC,XPP(3),YPP(3),DB,DB1,DB2,RAN(3)
 	DOUBLE PRECISION PP(14),HX,HY,HL,THETA,DTHETA,DX,DY,DT,DDX,DDY
         DOUBLE PRECISION DE,DS
 	DOUBLE PRECISION PWAFFLE,X0,XX,SS,Y0,TWAFFLE,RP,RPS,RLO,RHI
 	DOUBLE PRECISION GAP,FIBRE,XFIB,YFIB,RFIB,SFIB
 	DOUBLE PRECISION ATHETA,T1,T2,T3,T4,PIBY4,ABIT,YY,S45,PL,COST,TGAP
-        DOUBLE PRECISION SSHR,DSHR,TFIB,EDGFACT,BAND
+        DOUBLE PRECISION SSHR,DSHR,TFIB,CRFACT,BAND,WFR
 	DOUBLE PRECISION RMOD,PMOD,TMOD,WMOD,HMOD,LMOD,CM,GM
-	DOUBLE PRECISION SYS_DRAND
-	DOUBLE PRECISION RPLATE,TPLATE,XPLATE,YPLATE,DDD,RMP,WPL,QQQ
+	DOUBLE PRECISION SYS_DRAND,PPP
+	DOUBLE PRECISION RPLATE,TPLATE,XPLATE,YPLATE,DDD,RMP,WPL,QQQ,TTT
 	INTEGER IXF,IYF,IIF
 	INTEGER IX,IY,I,KSUR,IQ,IPACK,NRAD,NWAFFLE,IP
 	INTEGER NANUL,NSEC,IAPER
@@ -467,36 +467,56 @@ C QQQ is profile of the thermoelasic errors
 			DDD=(RMP-RPLATE)/(RMP-WPL)
 			QQQ=DDD
 		endif
-C Intrinsic slump error
+C Intrinsic slump tilt error 
 		DX=DS*COS(TPLATE)*DDD*RPLATE**2/2.0/RP
 		DY=DS*SIN(TPLATE)*DDD*RPLATE**2/2.0/RP
-C Thermoelastic axial pointing errors
+C Set correlation factor
+C		WFR=0.5
+C		IF(SYS_DRAND().LT.WFR) THEN
+C			CRFACT=4.0
+C		ELSE
+C			CRFACT=1.0
+C		ENDIF
+		CRFACT=RPLATE/WPL
+C Thermoelastic axial pointing errors if DE +ve
 		IF(DE.GE.0.0) THEN
 			DX=DX+DE*COS(TPLATE)*QQQ*RP
 			DY=DY+DE*SIN(TPLATE)*QQQ*RP
 		ELSE
 C If negative then use as rms pointing error in radians on just
 C one axis chosen at random
-	        	CALL SYS_GAUSS(2,RAN,0.0D0,1.0D0,ISTAT)
-			IF(RAN(1).GT.0.0) THEN
-				DX=DE*RAN(2)*Z
-				DY=0.0
-			ELSE
-				DX=0.0
-				DY=DE*RAN(2)*Z
-			ENDIF
+C	        	CALL SYS_GAUSS(2,RAN,0.0D0,1.0D0,ISTAT)
+C			IF(RAN(1).GT.0.0) THEN
+C				DX=DX+DE*RAN(2)*Z*CRFACT
+C			ELSE
+C				DY=DY+DE*RAN(2)*Z*CRFACT
+C			ENDIF
+C Tilt errors with minima on diagonals, maxima at middle of edges
+C			TTT=-DE*Z*(RPLATE/WPL)**2*(COS(TPLATE*2.0)**2-0.5)
+C			DX=DX+TTT*COS(TPLATE)
+C			DY=DY+TTT*SIN(TPLATE)
+C Chess board pattern of tilt errors
+			TTT=PI/5.0
+			PPP=SIN(TTT*XPLATE+TTT*YPLATE/4.0)
+     +			*SIN(TTT*YPLATE+TTT*XPLATE/4.0)
+			PPP=SIGN(ABS(PPP)**2.0,PPP)
+			DX=DX+DE*PPP*Z*SIN(RPLATE*TTT)
+			DY=DY+DE*PPP*Z*COS(RPLATE*TTT)
 		ENDIF
 C DA is the pore axis rotation error
 		IDEF(2)=3
 		CALL SRT_IDFRM(IDEF,IAPER,1,DA,DDX,DDY,ISTAT)
+C Fix pattern twist 
+C		DA=DA*RPLATE/WPL
 C Combine the shear deformation with the shear expected from the slump
 C Also include the likelihood of a shear error within the multifibre
 C structure
 		IDEF(2)=4
 		CALL SRT_IDFRM(IDEF,IAPER,1,DC,DDX,DDY,ISTAT)
 		SFIB=PC(3)*3.0
+C Shear errors within the multifibre structure
 		DC=DC*EXP(-RFIB**2/2.0/SFIB**2)*SIGN(1.0D0,TAN(TFIB))
-C *(SYS_DRAND()*0.5+0.5)
+C Shear errors intrinsic to the slump
 		DC=DC+DS*RPLATE*ABS(SIN(2.0*TPLATE))/RP*(PC(4)-PC(6))*
      +		SIGN(1.0D0,TAN(TPLATE))*DDD
 		DSHR=DC/(PC(4)-PC(6))
@@ -504,20 +524,26 @@ C DB is the pore rms figure error radians
 C Increase rms figure errors for a fraction of the pores
 C		BAND=5.0
 C		IF(ABS(XFIB).LT.PC(3)*BAND.OR.ABS(YFIB).LT.PC(3)*BAND) THEN
-C			EDGFACT=4.0
+C			CRFACT=4.0
 C		ELSE
-C			EDGFACT=1.0
+C			CRFACT=1.0
 C		ENDIF
-		IF(SYS_DRAND().LT.0.3) THEN
-			EDGFACT=4.0
-		ELSE
-			EDGFACT=1.0
-		ENDIF
 		IDEF(2)=5
 		CALL SRT_IDFRM(IDEF,IAPER,1,DB,DDX,DDY,ISTAT)
-	        CALL SYS_GAUSS(2,RAN,0.0D0,1.0D0,ISTAT)
-		DB1=RAN(1)*DB*EDGFACT
-		DB2=RAN(2)*DB*EDGFACT
+		IF(DB.GT.0.0) THEN
+	                CALL SYS_GAUSS(3,RAN,0.0D0,1.0D0,ISTAT)
+			DB1=RAN(1)*DB*CRFACT
+			DB2=RAN(2)*DB*CRFACT
+		ELSE
+C Use Cauchy PDF to set tilt errors - DB is the scaling (2*DB=FWHM)
+                        DB1=DB*TAN((SYS_DRAND()-0.5)*PI)
+                        DB2=DB*TAN((SYS_DRAND()-0.5)*PI)
+C			DB1=0.0
+C			DB2=0.0
+C			DX=DX*(1.0+DB*RAN(1))
+C			DY=DY*(1.0+DB*RAN(2))
+C			DSHR=DSHR*(1.0+DB*RAN(3))
+		ENDIF
 	    ENDIF
 C Apply deformations to change effective centre of sphere
 	    ZP(1)=Z*CAX(1)+(X-DX+DB1*Z)*CAR(1)+(Y-DY+DB2*Z)*VY(1)

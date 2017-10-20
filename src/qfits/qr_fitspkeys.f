@@ -4,8 +4,8 @@
         CHARACTER KEY*(*),STR*(*),COM*(*)
 *KEY        input        keyword name
 Cf2py  intent(in) key
-*STL        input        keyword string value
-Cf2py  intent(in) stl
+*STR        input        keyword string value
+Cf2py  intent(in) str
 *COM        input        comments string
 Cf2py  intent(in) com
 *-Author: Dick Willingale 2013-Feb-09
