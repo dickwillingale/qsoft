@@ -122,6 +122,8 @@ def sqpore(pcen,pnorm,raxis,rcur,ipack,rap,pitch,wall,plen,idf,
     iq,plmin,plmax,fibre,ar):
     xsrtfor.qrt_sqpore(pcen,pnorm,raxis,rcur,ipack,rap,pitch,wall,plen,
     idf,iq,plmin,plmax,fibre,ar)
+def sqmpoarr(pcen,pnorm,raxis,rcur,hwid,idf,ar):
+    xsrtfor.qrt_sqmpoarr(pcen,pnorm,raxis,rcur,hwid,idf,ar)
 def sipore(pcen,pnorm,raxis,flen_bn,rpitch,apitch,wall,
     rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq):
     xsrtfor.qrt_sipore(pcen,pnorm,raxis,flen_bn,rpitch,apitch,wall,

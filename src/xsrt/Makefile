@@ -19,7 +19,7 @@ qrt_defs.f      qrt_mats.f      qrt_rotate.f    qrt_surface.f \
 qrt_detector.f  qrt_mirror.f    qrt_shift.f     qrt_trace.f \
 qrt_fresnel.f   qrt_sipore.f    qrt_w1nest.f \
 qrt_bfield.f    qrt_bdipole.f   qrt_prtathena.f qrt_eltmxt.f \
-qrt_elips.f
+qrt_elips.f	qrt_sqmpoarr.f
 # Internal object library source files
 LSOURCES = \
 srt_cnic.f      srt_cnin.f      srt_dalr.f      srt_dfrm.f      srt_didi.f \
@@ -32,7 +32,7 @@ srt_su6.f       srt_su7.f       srt_su8.f       srt_su9.f       srt_su10.f \
 srt_su11.f      srt_su12.f      srt_su13.f      srt_su14.f      srt_su15.f \
 srt_su16.f      srt_su17.f      srt_su18.f      srt_su19.f      srt_su20.f \
 srt_su21.f      srt_su22.f      srt_su23.f      srt_su24.f      srt_su25.f \
-srt_su26.f      srt_su27.f \
+srt_su26.f      srt_su27.f 	srt_su28.f \
 srt_setf.f      srt_sett.f      srt_setd.f      srt_sets.f \
 srt_mats.f      srt_cone.f      srt_fleg.f      srt_scrn.f      srt_list.f \
 srt_tdef.f      srt_grad.f      srt_mcm.f       srt_mltr.f \
@@ -45,7 +45,8 @@ srt_bfield.f    srt_bdipole.f   srt_scat.f srt_frnl.f \
 srt_trace.f     srt_kbfindmodule.f  \
 srt_idfrm.f     srt_iin2d.f     srt_changeaxes.f  \
 srt_setkbscom.f srt_findmod.f   srt_sfindmod.f srt_setconcom.f \
-sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f
+srt_sqmpoarr.f srt_findmpo.f srt_setmpoarr.f \
+sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f 
 
 CSOURCES = stray_xray_psf.c
 # Routines to skip in Python Fortran module

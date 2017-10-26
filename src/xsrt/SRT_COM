@@ -44,10 +44,15 @@ C
 C 
         integer nrofelts,maxlist,iptype
         parameter (maxlist=2000)
-        double precision inrad,outrad,rlist(maxlist)
-        double precision philist(maxlist)
+        double precision inrad,outrad
+        double precision rlist(maxlist),philist(maxlist)
         double precision thlist(maxlist),wlist(maxlist)
         double precision hlist(maxlist),llist(maxlist)
         double precision clist(maxlist),glist(maxlist)
+        double precision olist(maxlist),plist(maxlist)
+        double precision qlist(maxlist),ulist(maxlist)
+        double precision vlist(maxlist),zlist(maxlist)
+        double precision slist(maxlist)
         common/concom/inrad,outrad,rlist,philist,thlist,
-     +  wlist,hlist,llist,clist,glist,nrofelts,iptype
+     +  wlist,hlist,llist,clist,glist,
+     +  olist,plist,qlist,ulist,vlist,zlist,slist,nrofelts,iptype

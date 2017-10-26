@@ -325,6 +325,18 @@ qrt_sqpore<-function(pcen,pnorm,raxis,rcur,ipack,rap,pitch,wall,plen,
 	as.double(ar))
 	invisible()
 }
+qrt_sqmpoarr<-function(pcen,pnorm,raxis,rcur,hwid,idf,ar) {
+	.Fortran("qrt_sqmpoarr",
+	as.double(pcen),
+	as.double(pnorm),
+	as.double(raxis),
+	as.double(rcur),
+	as.double(hwid),
+	as.integer(idf),
+	as.integer(length(ar)),
+	as.double(ar))
+	invisible()
+}
 qrt_sipore<-function(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
 			rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq) {
 	.Fortran("qrt_sipore",

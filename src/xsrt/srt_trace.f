@@ -188,6 +188,9 @@ C Find intersection of ray with surface
                         ELSEIF(ISURS(KSUR).EQ.27) THEN
                                 CALL SRT_SU27(IPAR(KSUR),ISDF(1,KSUR),
      +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
+                        ELSEIF(ISURS(KSUR).EQ.28) THEN
+                                CALL SRT_SU28(IPAR(KSUR),ISDF(1,KSUR),
+     +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
 			ELSEIF(ISURS(KSUR).EQ.0) THEN
 C Null surface
 				HIT=.FALSE.
