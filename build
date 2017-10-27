@@ -73,6 +73,10 @@ cd $QSOFT/src/xsrt
 make clean
 make
 make install
+cd $QSOFT/src/biomark
+make clean
+make
+make install
 # list shareable files built
 echo
 echo "R shareable object libraries:"
