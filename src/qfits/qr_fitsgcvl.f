@@ -1,4 +1,4 @@
-*+QR_FITSGCVL        Get FITS column locical
+*+QR_FITSGCVL        Get FITS column logical
         SUBROUTINE QR_FITSGCVL(ICOL,IROW,NEL,VAL)
         IMPLICIT NONE
         INTEGER ICOL,IROW,NEL

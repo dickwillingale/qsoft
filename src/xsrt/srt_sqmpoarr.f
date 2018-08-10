@@ -24,8 +24,8 @@
 * PC(10) this surface index
 * All pore parameters are set for the individual modules in the MPO array 
 *-Author Dick Willingale 2017-Oct-23
-	DOUBLE PRECISION PI,SMALL
-	PARAMETER (PI=3.14159265359,SMALL=1.D-4)
+	DOUBLE PRECISION PI
+	PARAMETER (PI=3.14159265359)
 	DOUBLE PRECISION VY(3),X,Y,Z,XP(3),YP(3),ZP(3),RXY,CTH,STH
 	DOUBLE PRECISION T,POS(3)
 	DOUBLE PRECISION MPC(3),RPOS,DA,DC,XPP(3),YPP(3),DB,RAN(3)
@@ -40,8 +40,8 @@
 	DOUBLE PRECISION RPLATE,TPLATE,XPLATE,YPLATE,DDD,RMP,WPL,QQQ,TTT
         DOUBLE PRECISION BU,BV,BZ
 	INTEGER IXF,IYF,IIF
-	INTEGER IX,IY,I,KSUR,IQ,NRAD,NWAFFLE,IP
 	INTEGER NANUL,NSEC,IAPER
+	INTEGER IX,IY,I,KSUR,IQ,NWAFFLE,IP
 	LOGICAL HIT
 C Set spherical radius of the MPO array
 	RP=PC(1)
@@ -49,16 +49,14 @@ C Use local intersection position to find centre of nearest pore
 C The impact point is on the spherical reference surface
 C Here we find the rectangular aperture containing the ray
 C PC(8) and PC(9) are the local intersection point on spherical surface
-	CALL SRT_FINDMPO(PC(8),PC(9),IAPER,XMOD,YMOD,TMOD,
-     +	WMOD,HMOD,PL,RMOD,FIBRE,PITCH,WALL,DIQ,BU,BV,BZ,SP,XPLATE,YPLATE)
-C Set surface quality for this MPO IQ as integer
-	IQ=INT(DIQ)
-C Get half width of plate
-	WPL=WMOD*0.5
-C Set polar coordinates on plate
-	RPLATE=SQRT(XPLATE**2+YPLATE**2)
-	TPLATE=ATAN2(YPLATE,XPLATE)
+	CALL SRT_FINDMPO(PC(8),PC(9),IAPER,XMOD,YMOD,TMOD,WMOD,
+     +	HMOD,PL,RMOD,FIBRE,PITCH,WALL,DIQ,BU,BV,BZ,SP,XPLATE,YPLATE)
 	IF(IAPER.GT.0) THEN
+C Set surface quality for this MPO IQ as integer
+		IQ=INT(DIQ)
+C Set polar coordinates on plate
+		RPLATE=SQRT(XPLATE**2+YPLATE**2)
+		TPLATE=ATAN2(YPLATE,XPLATE)
 C Find centre of pore on spherical surface
 		IF(PC(8).GT.0.0) THEN
 			X=(INT(PC(8)/PITCH)+0.5)*PITCH
@@ -71,8 +69,6 @@ C Find centre of pore on spherical surface
 			Y=(INT(PC(9)/PITCH)-0.5)*PITCH
 		ENDIF
 		RXY=SQRT(X**2+Y**2)
-C set NRAD for cartesian packing so that dont loose central pores
-		NRAD=1
 C Now find position within multifibre structure
 		XFIB=MOD(ABS(XPLATE),FIBRE)-FIBRE*0.5
 		YFIB=MOD(ABS(YPLATE),FIBRE)-FIBRE*0.5
@@ -83,9 +79,25 @@ C Generate unique integer for each multi-fibre
 		IYF=INT((YPLATE+HMOD*0.5)/FIBRE)
 		IIF=ABS(IXF+IYF*10000)
 	ELSE
-C Pore centre outside aperture so move pore so that ray misses
-		X=PC(2)*2.0
-		Y=PC(2)*2.0
+C Set vector parameters for pore aperture so ray misses
+		PP(1)=CAX(1)
+		PP(2)=CAX(2)
+		PP(3)=CAX(3)
+	        PP(4)=CAR(1)
+		PP(5)=CAR(2)
+		PP(6)=CAR(3)
+	        PP(7)=HPOS(1)+CAR(1)*PC(2)
+	        PP(8)=HPOS(2)+CAR(2)*PC(2)
+		PP(9)=HPOS(3)+CAR(3)*PC(2)
+        	PP(10)=-1.0
+        	PP(11)=-1.0
+        	PP(12)=1.0
+                PP(13)=1.0
+		PP(14)=0.0
+C Find surface index of pore aperture and set that surface element
+		KSUR=PC(10)+1
+		CALL SRT_SETF(KSUR,27,14,PP,0,0,0,KSUR+1,ISTAT)
+		RETURN
 	ENDIF
 C X and Y are now the position of the pore axis on spherical surface
 C Find Y reference axis at local origin on spherical surface
@@ -110,7 +122,7 @@ C DY in direction NORM X CAR
 C Add MPO bias angle shift
         DX=DX+BU*RP
         DY=DY+BV*RP
-C Set shear error
+C Set shear error DSHR is angle, DC is shift of corner
     	DSHR=0.0
     	DC=0.0
 C Set pore rotation TPORE for cartesian plate
@@ -124,6 +136,7 @@ C DS scaling of intrinsic slump, 1.0 gives model amplitude
 		CALL SRT_IDFRM(IDEF,IAPER,1,DS,DDX,DDY,ISTAT)
 C DDD is the reduction factor applied in the corners of the plate
 C QQQ is profile of the thermoelasic errors
+                WPL=WMOD*0.5
                 if(RPLATE.LT.WPL) then
 		        DDD=1.0
 			QQQ=RPLATE/WPL
@@ -143,9 +156,9 @@ C DE -ve chess-board pattern of tilt errors
 			DX=DX+DE*COS(TPLATE)*QQQ*RMOD
 			DY=DY+DE*SIN(TPLATE)*QQQ*RMOD
 		ELSE
-			TTT=PI/5.0
-			PPP=SIN(TTT*XPLATE+TTT*YPLATE/4.0)
-     +			*SIN(TTT*YPLATE+TTT*XPLATE/4.0)
+			TTT=2.0*PI/15.0
+			PPP=SIN(TTT*XPLATE+TTT*YPLATE/8)
+     +			*SIN(TTT*YPLATE+TTT*XPLATE/8)
 			PPP=SIGN(ABS(PPP)**2.0,PPP)
 			DX=DX+DE*PPP*RMOD*SIN(RPLATE*TTT)
 			DY=DY+DE*PPP*RMOD*COS(RPLATE*TTT)
@@ -168,13 +181,12 @@ C DB -ve amplitude Cauchy pore tilt/figure errors (2*DB=FWHM)
 		IDEF(2)=5
 		CALL SRT_IDFRM(IDEF,IAPER,1,DB,DDX,DDY,ISTAT)
 		IF(DB.GT.0.0) THEN
-			CRFACT=RPLATE/WPL
 	                CALL SYS_GAUSS(3,RAN,0.0D0,1.0D0,ISTAT)
-			DX=DX+RAN(1)*DB*CRFACT*RMOD
-			DX=DX+RAN(2)*DB*CRFACT*RMOD
+			DX=DX+RAN(1)*DB*RMOD
+			DY=DY+RAN(2)*DB*RMOD
 		ELSE
                         DX=DX+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
-                        DX=DX+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
+                        DY=DY+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
 		ENDIF
 	ENDIF
 C Apply displacements to change effective centre of sphere
@@ -215,14 +227,9 @@ C Set vector parameters for pore aperture
 	PP(8)=POS(2)
 	PP(9)=POS(3)
 C Set dimensions of pore aperture
-	IF(NRAD.GT.0) THEN
-		HX=(PITCH-WALL)*0.5
-		HY=(PITCH-WALL)*0.5
-	ELSE
-C If at centre of radial packing then block off
-		HX=0.0
-		HY=0.0
-	ENDIF
+	HX=(PITCH-WALL)*0.5
+	HY=(PITCH-WALL)*0.5
+C
 	HL=PL*0.5
         PP(10)=-HX
         PP(11)=-HY

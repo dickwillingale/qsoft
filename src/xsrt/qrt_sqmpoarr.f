@@ -7,7 +7,7 @@
 *HWID       input        half width of array aperture
 *IDF        input        deformation index for array
 *NAR        input        number of additional parameters
-*AP         input        array of additional parameters for each MPO in array
+*AR         input        array of additional parameters for each MPO in array
 Cf2py  intent(in) PCEN,PNORM,RAXIS,RCUR,HWID,IDF,NAR,AR
         IMPLICIT NONE
         INTEGER IDF,NAR
@@ -43,8 +43,10 @@ C Pack parameters into single array
                 PP(J+3)=RAXIS(J)
                 PP(J+6)=SCEN(J)
         ENDDO
+C Radius of curvature of the frame
         PP(10)=RCUR
-        PP(11)=HWID
+C Maximum radius on the spherical frame surface 
+        PP(11)=HWID*SQRT(2.0)
 C The following are void (spare) 
         PP(12)=0.0
         PP(13)=0.0

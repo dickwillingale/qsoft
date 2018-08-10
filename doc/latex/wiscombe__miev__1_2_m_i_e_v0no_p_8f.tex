@@ -1,0 +1,72 @@
+\hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f}{}\section{xscat/wiscombe\+\_\+miev/wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0noP.f File Reference}
+\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f}\index{xscat/wiscombe\+\_\+miev/wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{xscat/wiscombe\+\_\+miev/wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a48092e733ab76cc9db0501ed3b28d9ff}{miev0} (XX, C\+R\+E\+F\+IN, P\+E\+R\+F\+CT, M\+I\+M\+C\+UT, A\+N\+Y\+A\+NG, N\+U\+M\+A\+NG, X\+MU, N\+M\+OM, I\+P\+O\+L\+ZN, M\+O\+M\+D\+IM, P\+R\+NT, Q\+E\+XT, Q\+S\+CA, G\+Q\+SC, P\+M\+OM, S\+F\+O\+RW, S\+B\+A\+CK, S1, S2, T\+F\+O\+RW, T\+B\+A\+CK, S\+P\+I\+KE)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a06fe91ee97b1295c97915feaad0d2e13}{ckinmi} (N\+U\+M\+A\+NG, M\+A\+X\+A\+NG, XX, P\+E\+R\+F\+CT, C\+R\+E\+F\+IN, N\+M\+OM, A\+N\+Y\+A\+NG, X\+MU)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_affcbe26d3e8beb59e07c207f2b0da43a}{biga} (C\+I\+OR, XX, N\+T\+RM, N\+O\+A\+BS, Y\+E\+S\+A\+NG, R\+B\+I\+GA, C\+B\+I\+GA)
+\item 
+complex function \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ad91aace4d77229d367c28c78965a0bd5}{confra} (N, Z\+I\+NV)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ae5c893640b8e33659ca8a9eb3c3c26ce}{miprnt} (P\+R\+NT, XX, P\+E\+R\+F\+CT, C\+R\+E\+F\+IN, N\+U\+M\+A\+NG, X\+MU, Q\+E\+XT, Q\+S\+CA, G\+Q\+SC, S\+F\+O\+RW, S\+B\+A\+CK, T\+F\+O\+RW, T\+B\+A\+CK, S1, S2)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a42db51d8245d25e068704071519e108f}{small1} (XX, N\+U\+M\+A\+NG, X\+MU, Q\+E\+XT, Q\+S\+CA, G\+Q\+SC, S\+F\+O\+RW, S\+B\+A\+CK, S1, S2, T\+F\+O\+RW, T\+B\+A\+CK, A, B)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a4bae82b3142e7b49e6b14b735ea23988}{small2} (XX, C\+I\+OR, C\+A\+L\+C\+QE, N\+U\+M\+A\+NG, X\+MU, Q\+E\+XT, Q\+S\+CA, G\+Q\+SC, S\+F\+O\+RW, S\+B\+A\+CK, S1, S2, T\+F\+O\+RW, T\+B\+A\+CK, A, B)
+\item 
+subroutine \hyperlink{wiscombe__miev__1_2_m_i_e_v0no_p_8f_aa46efb14b8780b792d5cdaecc7693068}{testmi} (C\+O\+M\+P\+AR, XX, C\+R\+E\+F\+IN, M\+I\+M\+C\+UT, P\+E\+R\+F\+CT, A\+N\+Y\+A\+NG, N\+U\+M\+A\+NG, X\+MU, Q\+E\+XT, Q\+S\+CA, G\+Q\+SC, S\+F\+O\+RW, S\+B\+A\+CK, S1, S2, T\+F\+O\+RW, T\+B\+A\+CK)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_affcbe26d3e8beb59e07c207f2b0da43a}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_affcbe26d3e8beb59e07c207f2b0da43a}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!biga@{biga}}
+\index{biga@{biga}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{biga()}{biga()}}
+{\footnotesize\ttfamily subroutine biga (\begin{DoxyParamCaption}\item[{complex}]{C\+I\+OR,  }\item[{real}]{XX,  }\item[{integer}]{N\+T\+RM,  }\item[{logical}]{N\+O\+A\+BS,  }\item[{logical}]{Y\+E\+S\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{R\+B\+I\+GA,  }\item[{complex, dimension( $\ast$ )}]{C\+B\+I\+GA }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a06fe91ee97b1295c97915feaad0d2e13}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a06fe91ee97b1295c97915feaad0d2e13}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!ckinmi@{ckinmi}}
+\index{ckinmi@{ckinmi}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{ckinmi()}{ckinmi()}}
+{\footnotesize\ttfamily subroutine ckinmi (\begin{DoxyParamCaption}\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{integer}]{M\+A\+X\+A\+NG,  }\item[{real}]{XX,  }\item[{logical}]{P\+E\+R\+F\+CT,  }\item[{complex}]{C\+R\+E\+F\+IN,  }\item[{integer}]{N\+M\+OM,  }\item[{logical}]{A\+N\+Y\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{X\+MU }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ad91aace4d77229d367c28c78965a0bd5}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ad91aace4d77229d367c28c78965a0bd5}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!confra@{confra}}
+\index{confra@{confra}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{confra()}{confra()}}
+{\footnotesize\ttfamily complex function confra (\begin{DoxyParamCaption}\item[{integer}]{N,  }\item[{complex}]{Z\+I\+NV }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a48092e733ab76cc9db0501ed3b28d9ff}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a48092e733ab76cc9db0501ed3b28d9ff}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!miev0@{miev0}}
+\index{miev0@{miev0}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{miev0()}{miev0()}}
+{\footnotesize\ttfamily subroutine miev0 (\begin{DoxyParamCaption}\item[{real}]{XX,  }\item[{complex}]{C\+R\+E\+F\+IN,  }\item[{logical}]{P\+E\+R\+F\+CT,  }\item[{real}]{M\+I\+M\+C\+UT,  }\item[{logical}]{A\+N\+Y\+A\+NG,  }\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{real, dimension($\ast$)}]{X\+MU,  }\item[{integer}]{N\+M\+OM,  }\item[{integer}]{I\+P\+O\+L\+ZN,  }\item[{integer}]{M\+O\+M\+D\+IM,  }\item[{logical, dimension($\ast$)}]{P\+R\+NT,  }\item[{real}]{Q\+E\+XT,  }\item[{real}]{Q\+S\+CA,  }\item[{real}]{G\+Q\+SC,  }\item[{real, dimension( 0\+:momdim, $\ast$ )}]{P\+M\+OM,  }\item[{complex}]{S\+F\+O\+RW,  }\item[{complex}]{S\+B\+A\+CK,  }\item[{complex, dimension($\ast$)}]{S1,  }\item[{complex, dimension($\ast$)}]{S2,  }\item[{complex, dimension($\ast$)}]{T\+F\+O\+RW,  }\item[{complex, dimension($\ast$)}]{T\+B\+A\+CK,  }\item[{real}]{S\+P\+I\+KE }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ae5c893640b8e33659ca8a9eb3c3c26ce}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_ae5c893640b8e33659ca8a9eb3c3c26ce}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!miprnt@{miprnt}}
+\index{miprnt@{miprnt}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{miprnt()}{miprnt()}}
+{\footnotesize\ttfamily subroutine miprnt (\begin{DoxyParamCaption}\item[{logical, dimension( $\ast$ )}]{P\+R\+NT,  }\item[{real}]{XX,  }\item[{logical}]{P\+E\+R\+F\+CT,  }\item[{complex}]{C\+R\+E\+F\+IN,  }\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{X\+MU,  }\item[{real}]{Q\+E\+XT,  }\item[{real}]{Q\+S\+CA,  }\item[{real}]{G\+Q\+SC,  }\item[{complex}]{S\+F\+O\+RW,  }\item[{complex}]{S\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{T\+F\+O\+RW,  }\item[{complex, dimension( $\ast$ )}]{T\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{S1,  }\item[{complex, dimension( $\ast$ )}]{S2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a42db51d8245d25e068704071519e108f}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a42db51d8245d25e068704071519e108f}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!small1@{small1}}
+\index{small1@{small1}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{small1()}{small1()}}
+{\footnotesize\ttfamily subroutine small1 (\begin{DoxyParamCaption}\item[{real}]{XX,  }\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{X\+MU,  }\item[{real}]{Q\+E\+XT,  }\item[{real}]{Q\+S\+CA,  }\item[{real}]{G\+Q\+SC,  }\item[{complex}]{S\+F\+O\+RW,  }\item[{complex}]{S\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{S1,  }\item[{complex, dimension( $\ast$ )}]{S2,  }\item[{complex, dimension( $\ast$ )}]{T\+F\+O\+RW,  }\item[{complex, dimension( $\ast$ )}]{T\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{A,  }\item[{complex, dimension( $\ast$ )}]{B }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a4bae82b3142e7b49e6b14b735ea23988}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_a4bae82b3142e7b49e6b14b735ea23988}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!small2@{small2}}
+\index{small2@{small2}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{small2()}{small2()}}
+{\footnotesize\ttfamily subroutine small2 (\begin{DoxyParamCaption}\item[{real}]{XX,  }\item[{complex}]{C\+I\+OR,  }\item[{logical}]{C\+A\+L\+C\+QE,  }\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{X\+MU,  }\item[{real}]{Q\+E\+XT,  }\item[{real}]{Q\+S\+CA,  }\item[{real}]{G\+Q\+SC,  }\item[{complex}]{S\+F\+O\+RW,  }\item[{complex}]{S\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{S1,  }\item[{complex, dimension( $\ast$ )}]{S2,  }\item[{complex, dimension( $\ast$ )}]{T\+F\+O\+RW,  }\item[{complex, dimension( $\ast$ )}]{T\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{A,  }\item[{complex, dimension( $\ast$ )}]{B }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{wiscombe__miev__1_2_m_i_e_v0no_p_8f_aa46efb14b8780b792d5cdaecc7693068}\label{wiscombe__miev__1_2_m_i_e_v0no_p_8f_aa46efb14b8780b792d5cdaecc7693068}} 
+\index{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}!testmi@{testmi}}
+\index{testmi@{testmi}!wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f@{wiscombe\+\_\+miev\+\_\+1/\+M\+I\+E\+V0no\+P.\+f}}
+\subsubsection{\texorpdfstring{testmi()}{testmi()}}
+{\footnotesize\ttfamily subroutine testmi (\begin{DoxyParamCaption}\item[{logical}]{C\+O\+M\+P\+AR,  }\item[{real}]{XX,  }\item[{complex}]{C\+R\+E\+F\+IN,  }\item[{real}]{M\+I\+M\+C\+UT,  }\item[{logical}]{P\+E\+R\+F\+CT,  }\item[{logical}]{A\+N\+Y\+A\+NG,  }\item[{integer}]{N\+U\+M\+A\+NG,  }\item[{real, dimension( $\ast$ )}]{X\+MU,  }\item[{real}]{Q\+E\+XT,  }\item[{real}]{Q\+S\+CA,  }\item[{real}]{G\+Q\+SC,  }\item[{complex}]{S\+F\+O\+RW,  }\item[{complex}]{S\+B\+A\+CK,  }\item[{complex, dimension( $\ast$ )}]{S1,  }\item[{complex, dimension( $\ast$ )}]{S2,  }\item[{complex, dimension( $\ast$ )}]{T\+F\+O\+RW,  }\item[{complex, dimension( $\ast$ )}]{T\+B\+A\+CK }\end{DoxyParamCaption})}
+

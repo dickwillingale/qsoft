@@ -1,0 +1,225 @@
+\hypertarget{struct_parse_data}{}\section{Parse\+Data Struct Reference}
+\label{struct_parse_data}\index{Parse\+Data@{Parse\+Data}}
+
+
+{\ttfamily \#include $<$eval\+\_\+defs.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structfitsfile}{fitsfile} $\ast$ \hyperlink{struct_parse_data_a048ddfac08cac2e108b4ffa5251adc05}{def\+\_\+fptr}
+\item 
+int($\ast$ \hyperlink{struct_parse_data_a90eeba5b9a1963ad3e8ca4fde995b4d5}{get\+Data} )(char $\ast$data\+Name, void $\ast$data\+Value)
+\item 
+int($\ast$ \hyperlink{struct_parse_data_a2a675163f5363ca4fcee687a52fe655e}{load\+Data} )(int var\+Num, long f\+Row, long \hyperlink{struct_parse_data_ab3c5bfc5827fa18b813cc25ade560dfa}{n\+Rows}, void $\ast$data, char $\ast$undef)
+\item 
+int \hyperlink{struct_parse_data_a33dc296a783fc4c3f17df73305945712}{compressed}
+\item 
+int \hyperlink{struct_parse_data_af6201fbd1560e2978526904f79540e75}{time\+Col}
+\item 
+int \hyperlink{struct_parse_data_ab292a0178648071b74b9473618a683a4}{par\+Col}
+\item 
+int \hyperlink{struct_parse_data_a89d994138494a49fafbd10338c670301}{val\+Col}
+\item 
+char $\ast$ \hyperlink{struct_parse_data_a83ea2e0151f87c9f5e7fe4572f2a0127}{expr}
+\item 
+int \hyperlink{struct_parse_data_a1e5d7545a2b38a513e8a572f25410daa}{index}
+\item 
+int \hyperlink{struct_parse_data_adc63cd751218ad5abfd8ba3d28d91d4a}{is\+\_\+eobuf}
+\item 
+\hyperlink{struct_node}{Node} $\ast$ \hyperlink{struct_parse_data_a4106ba5eda84779411fd9cf84038cfa5}{Nodes}
+\item 
+int \hyperlink{struct_parse_data_acb16ab0b4078cf54f5637ca50c4c51ad}{n\+Nodes}
+\item 
+int \hyperlink{struct_parse_data_a0636743f130eb7577815ef3820bf04a2}{n\+Nodes\+Alloc}
+\item 
+int \hyperlink{struct_parse_data_a19a3e04918ad221706325a927285c956}{result\+Node}
+\item 
+long \hyperlink{struct_parse_data_a213526cc256748049f96f595b3b2da9d}{first\+Row}
+\item 
+long \hyperlink{struct_parse_data_ab3c5bfc5827fa18b813cc25ade560dfa}{n\+Rows}
+\item 
+int \hyperlink{struct_parse_data_ac154871966118175e3b1d12f1d95910f}{n\+Cols}
+\item 
+\hyperlink{structiterator_col}{iterator\+Col} $\ast$ \hyperlink{struct_parse_data_a62315b409c8ac58398aeb389841c33bb}{col\+Data}
+\item 
+\hyperlink{struct_data_info}{Data\+Info} $\ast$ \hyperlink{struct_parse_data_a089f0abc9f363773235bde9dc5871cea}{var\+Data}
+\item 
+\hyperlink{struct_pixel_filter}{Pixel\+Filter} $\ast$ \hyperlink{struct_parse_data_a0a13aa422421ab65962b18be54913579}{pix\+Filter}
+\item 
+long \hyperlink{struct_parse_data_ab3eef14822a4bc7bc3cb0bf77075c2d9}{first\+Data\+Row}
+\item 
+long \hyperlink{struct_parse_data_ab75b5ea966c7aabe61d140f2f41fbba6}{n\+Data\+Rows}
+\item 
+long \hyperlink{struct_parse_data_acd47c533582f0e7eecfcb398c518bf16}{total\+Rows}
+\item 
+int \hyperlink{struct_parse_data_ae4da4ba748b05fd5aff37244705722ad}{datatype}
+\item 
+int \hyperlink{struct_parse_data_a7f5b895e61f9b606ea0d8afea7e7c57b}{hdutype}
+\item 
+int \hyperlink{struct_parse_data_a8a4a0f72437c1787aded1039e2d9e3c4}{status}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_parse_data_a62315b409c8ac58398aeb389841c33bb}\label{struct_parse_data_a62315b409c8ac58398aeb389841c33bb}} 
+\index{Parse\+Data@{Parse\+Data}!col\+Data@{col\+Data}}
+\index{col\+Data@{col\+Data}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{col\+Data}{colData}}
+{\footnotesize\ttfamily \hyperlink{structiterator_col}{iterator\+Col}$\ast$ Parse\+Data\+::col\+Data}
+
+\mbox{\Hypertarget{struct_parse_data_a33dc296a783fc4c3f17df73305945712}\label{struct_parse_data_a33dc296a783fc4c3f17df73305945712}} 
+\index{Parse\+Data@{Parse\+Data}!compressed@{compressed}}
+\index{compressed@{compressed}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{compressed}{compressed}}
+{\footnotesize\ttfamily int Parse\+Data\+::compressed}
+
+\mbox{\Hypertarget{struct_parse_data_ae4da4ba748b05fd5aff37244705722ad}\label{struct_parse_data_ae4da4ba748b05fd5aff37244705722ad}} 
+\index{Parse\+Data@{Parse\+Data}!datatype@{datatype}}
+\index{datatype@{datatype}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{datatype}{datatype}}
+{\footnotesize\ttfamily int Parse\+Data\+::datatype}
+
+\mbox{\Hypertarget{struct_parse_data_a048ddfac08cac2e108b4ffa5251adc05}\label{struct_parse_data_a048ddfac08cac2e108b4ffa5251adc05}} 
+\index{Parse\+Data@{Parse\+Data}!def\+\_\+fptr@{def\+\_\+fptr}}
+\index{def\+\_\+fptr@{def\+\_\+fptr}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{def\+\_\+fptr}{def\_fptr}}
+{\footnotesize\ttfamily \hyperlink{structfitsfile}{fitsfile}$\ast$ Parse\+Data\+::def\+\_\+fptr}
+
+\mbox{\Hypertarget{struct_parse_data_a83ea2e0151f87c9f5e7fe4572f2a0127}\label{struct_parse_data_a83ea2e0151f87c9f5e7fe4572f2a0127}} 
+\index{Parse\+Data@{Parse\+Data}!expr@{expr}}
+\index{expr@{expr}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{expr}{expr}}
+{\footnotesize\ttfamily char$\ast$ Parse\+Data\+::expr}
+
+\mbox{\Hypertarget{struct_parse_data_ab3eef14822a4bc7bc3cb0bf77075c2d9}\label{struct_parse_data_ab3eef14822a4bc7bc3cb0bf77075c2d9}} 
+\index{Parse\+Data@{Parse\+Data}!first\+Data\+Row@{first\+Data\+Row}}
+\index{first\+Data\+Row@{first\+Data\+Row}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{first\+Data\+Row}{firstDataRow}}
+{\footnotesize\ttfamily long Parse\+Data\+::first\+Data\+Row}
+
+\mbox{\Hypertarget{struct_parse_data_a213526cc256748049f96f595b3b2da9d}\label{struct_parse_data_a213526cc256748049f96f595b3b2da9d}} 
+\index{Parse\+Data@{Parse\+Data}!first\+Row@{first\+Row}}
+\index{first\+Row@{first\+Row}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{first\+Row}{firstRow}}
+{\footnotesize\ttfamily long Parse\+Data\+::first\+Row}
+
+\mbox{\Hypertarget{struct_parse_data_a90eeba5b9a1963ad3e8ca4fde995b4d5}\label{struct_parse_data_a90eeba5b9a1963ad3e8ca4fde995b4d5}} 
+\index{Parse\+Data@{Parse\+Data}!get\+Data@{get\+Data}}
+\index{get\+Data@{get\+Data}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{get\+Data}{getData}}
+{\footnotesize\ttfamily int($\ast$ Parse\+Data\+::get\+Data) (char $\ast$data\+Name, void $\ast$data\+Value)}
+
+\mbox{\Hypertarget{struct_parse_data_a7f5b895e61f9b606ea0d8afea7e7c57b}\label{struct_parse_data_a7f5b895e61f9b606ea0d8afea7e7c57b}} 
+\index{Parse\+Data@{Parse\+Data}!hdutype@{hdutype}}
+\index{hdutype@{hdutype}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{hdutype}{hdutype}}
+{\footnotesize\ttfamily int Parse\+Data\+::hdutype}
+
+\mbox{\Hypertarget{struct_parse_data_a1e5d7545a2b38a513e8a572f25410daa}\label{struct_parse_data_a1e5d7545a2b38a513e8a572f25410daa}} 
+\index{Parse\+Data@{Parse\+Data}!index@{index}}
+\index{index@{index}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily int Parse\+Data\+::index}
+
+\mbox{\Hypertarget{struct_parse_data_adc63cd751218ad5abfd8ba3d28d91d4a}\label{struct_parse_data_adc63cd751218ad5abfd8ba3d28d91d4a}} 
+\index{Parse\+Data@{Parse\+Data}!is\+\_\+eobuf@{is\+\_\+eobuf}}
+\index{is\+\_\+eobuf@{is\+\_\+eobuf}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{is\+\_\+eobuf}{is\_eobuf}}
+{\footnotesize\ttfamily int Parse\+Data\+::is\+\_\+eobuf}
+
+\mbox{\Hypertarget{struct_parse_data_a2a675163f5363ca4fcee687a52fe655e}\label{struct_parse_data_a2a675163f5363ca4fcee687a52fe655e}} 
+\index{Parse\+Data@{Parse\+Data}!load\+Data@{load\+Data}}
+\index{load\+Data@{load\+Data}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{load\+Data}{loadData}}
+{\footnotesize\ttfamily int($\ast$ Parse\+Data\+::load\+Data) (int var\+Num, long f\+Row, long \hyperlink{struct_parse_data_ab3c5bfc5827fa18b813cc25ade560dfa}{n\+Rows}, void $\ast$data, char $\ast$undef)}
+
+\mbox{\Hypertarget{struct_parse_data_ac154871966118175e3b1d12f1d95910f}\label{struct_parse_data_ac154871966118175e3b1d12f1d95910f}} 
+\index{Parse\+Data@{Parse\+Data}!n\+Cols@{n\+Cols}}
+\index{n\+Cols@{n\+Cols}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{n\+Cols}{nCols}}
+{\footnotesize\ttfamily int Parse\+Data\+::n\+Cols}
+
+\mbox{\Hypertarget{struct_parse_data_ab75b5ea966c7aabe61d140f2f41fbba6}\label{struct_parse_data_ab75b5ea966c7aabe61d140f2f41fbba6}} 
+\index{Parse\+Data@{Parse\+Data}!n\+Data\+Rows@{n\+Data\+Rows}}
+\index{n\+Data\+Rows@{n\+Data\+Rows}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{n\+Data\+Rows}{nDataRows}}
+{\footnotesize\ttfamily long Parse\+Data\+::n\+Data\+Rows}
+
+\mbox{\Hypertarget{struct_parse_data_acb16ab0b4078cf54f5637ca50c4c51ad}\label{struct_parse_data_acb16ab0b4078cf54f5637ca50c4c51ad}} 
+\index{Parse\+Data@{Parse\+Data}!n\+Nodes@{n\+Nodes}}
+\index{n\+Nodes@{n\+Nodes}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{n\+Nodes}{nNodes}}
+{\footnotesize\ttfamily int Parse\+Data\+::n\+Nodes}
+
+\mbox{\Hypertarget{struct_parse_data_a0636743f130eb7577815ef3820bf04a2}\label{struct_parse_data_a0636743f130eb7577815ef3820bf04a2}} 
+\index{Parse\+Data@{Parse\+Data}!n\+Nodes\+Alloc@{n\+Nodes\+Alloc}}
+\index{n\+Nodes\+Alloc@{n\+Nodes\+Alloc}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{n\+Nodes\+Alloc}{nNodesAlloc}}
+{\footnotesize\ttfamily int Parse\+Data\+::n\+Nodes\+Alloc}
+
+\mbox{\Hypertarget{struct_parse_data_a4106ba5eda84779411fd9cf84038cfa5}\label{struct_parse_data_a4106ba5eda84779411fd9cf84038cfa5}} 
+\index{Parse\+Data@{Parse\+Data}!Nodes@{Nodes}}
+\index{Nodes@{Nodes}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{Nodes}{Nodes}}
+{\footnotesize\ttfamily \hyperlink{struct_node}{Node}$\ast$ Parse\+Data\+::\+Nodes}
+
+\mbox{\Hypertarget{struct_parse_data_ab3c5bfc5827fa18b813cc25ade560dfa}\label{struct_parse_data_ab3c5bfc5827fa18b813cc25ade560dfa}} 
+\index{Parse\+Data@{Parse\+Data}!n\+Rows@{n\+Rows}}
+\index{n\+Rows@{n\+Rows}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{n\+Rows}{nRows}}
+{\footnotesize\ttfamily long Parse\+Data\+::n\+Rows}
+
+\mbox{\Hypertarget{struct_parse_data_ab292a0178648071b74b9473618a683a4}\label{struct_parse_data_ab292a0178648071b74b9473618a683a4}} 
+\index{Parse\+Data@{Parse\+Data}!par\+Col@{par\+Col}}
+\index{par\+Col@{par\+Col}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{par\+Col}{parCol}}
+{\footnotesize\ttfamily int Parse\+Data\+::par\+Col}
+
+\mbox{\Hypertarget{struct_parse_data_a0a13aa422421ab65962b18be54913579}\label{struct_parse_data_a0a13aa422421ab65962b18be54913579}} 
+\index{Parse\+Data@{Parse\+Data}!pix\+Filter@{pix\+Filter}}
+\index{pix\+Filter@{pix\+Filter}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{pix\+Filter}{pixFilter}}
+{\footnotesize\ttfamily \hyperlink{struct_pixel_filter}{Pixel\+Filter}$\ast$ Parse\+Data\+::pix\+Filter}
+
+\mbox{\Hypertarget{struct_parse_data_a19a3e04918ad221706325a927285c956}\label{struct_parse_data_a19a3e04918ad221706325a927285c956}} 
+\index{Parse\+Data@{Parse\+Data}!result\+Node@{result\+Node}}
+\index{result\+Node@{result\+Node}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{result\+Node}{resultNode}}
+{\footnotesize\ttfamily int Parse\+Data\+::result\+Node}
+
+\mbox{\Hypertarget{struct_parse_data_a8a4a0f72437c1787aded1039e2d9e3c4}\label{struct_parse_data_a8a4a0f72437c1787aded1039e2d9e3c4}} 
+\index{Parse\+Data@{Parse\+Data}!status@{status}}
+\index{status@{status}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily int Parse\+Data\+::status}
+
+\mbox{\Hypertarget{struct_parse_data_af6201fbd1560e2978526904f79540e75}\label{struct_parse_data_af6201fbd1560e2978526904f79540e75}} 
+\index{Parse\+Data@{Parse\+Data}!time\+Col@{time\+Col}}
+\index{time\+Col@{time\+Col}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{time\+Col}{timeCol}}
+{\footnotesize\ttfamily int Parse\+Data\+::time\+Col}
+
+\mbox{\Hypertarget{struct_parse_data_acd47c533582f0e7eecfcb398c518bf16}\label{struct_parse_data_acd47c533582f0e7eecfcb398c518bf16}} 
+\index{Parse\+Data@{Parse\+Data}!total\+Rows@{total\+Rows}}
+\index{total\+Rows@{total\+Rows}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{total\+Rows}{totalRows}}
+{\footnotesize\ttfamily long Parse\+Data\+::total\+Rows}
+
+\mbox{\Hypertarget{struct_parse_data_a89d994138494a49fafbd10338c670301}\label{struct_parse_data_a89d994138494a49fafbd10338c670301}} 
+\index{Parse\+Data@{Parse\+Data}!val\+Col@{val\+Col}}
+\index{val\+Col@{val\+Col}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{val\+Col}{valCol}}
+{\footnotesize\ttfamily int Parse\+Data\+::val\+Col}
+
+\mbox{\Hypertarget{struct_parse_data_a089f0abc9f363773235bde9dc5871cea}\label{struct_parse_data_a089f0abc9f363773235bde9dc5871cea}} 
+\index{Parse\+Data@{Parse\+Data}!var\+Data@{var\+Data}}
+\index{var\+Data@{var\+Data}!Parse\+Data@{Parse\+Data}}
+\subsubsection{\texorpdfstring{var\+Data}{varData}}
+{\footnotesize\ttfamily \hyperlink{struct_data_info}{Data\+Info}$\ast$ Parse\+Data\+::var\+Data}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+qfits/\hyperlink{eval__defs_8h}{eval\+\_\+defs.\+h}\end{DoxyCompactItemize}

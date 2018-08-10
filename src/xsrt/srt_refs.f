@@ -264,7 +264,8 @@ C Use Fresnels equations to calculate reflectivities
 		ENDIF
 		CALL SRT_FRNL(GRAZ,PAR(IP+7),PAR(IP+8),RSI,RPI)
 C		write(*,*) graz,par(ip+7),par(ip+8),rsi,rpi
-		QRY(2)=QRY(2)*(RSI+RPI)*0.5	
+		REF=(RSI+RPI)*0.5
+		QRY(2)=QRY(2)*REF
 	ELSEIF(ISQP(1,ISU).EQ.2.OR.ISQP(1,ISU).EQ.4) THEN
 C Use look-up table to estimate reflectivity
 		NP=(ISQP(3,ISU)-9)/2

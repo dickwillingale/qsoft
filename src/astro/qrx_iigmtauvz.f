@@ -20,7 +20,7 @@ Cf2py  intent(out) tau
 *ekev   input        energy keV
 *nz     input        number of redshift values
 *z      input        array of redshift values
-*tau    output       optical depth for each energy
+*tau    output       optical depth for each redshift
 *-Dick Willingale 2015-May-09
         include 'SPX_COM'
         real cmpermpc,c

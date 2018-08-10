@@ -101,7 +101,7 @@ C Trace rays
 		IF(IDEBUG.EQ.1) THEN
 			WRITE(*,*) 'debug surface position direction rqua'
 			WRITE(*,990) 0,(RPOS(I,NPR),I=1,3),RDIR,RQUA(2)
-990			FORMAT(' debug',I5,1X,3F9.3,1X,3F9.5,F9.1)
+990			FORMAT(' debug',I5,1X,3F9.3,1X,3F9.5,1X,F9.1)
 991			format(' debug',I5,'  missed')
 		ENDIF
                 KSUR=1
@@ -190,6 +190,12 @@ C Find intersection of ray with surface
      +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
                         ELSEIF(ISURS(KSUR).EQ.28) THEN
                                 CALL SRT_SU28(IPAR(KSUR),ISDF(1,KSUR),
+     +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
+                        ELSEIF(ISURS(KSUR).EQ.29) THEN
+                                CALL SRT_SU29(IPAR(KSUR),ISDF(1,KSUR),
+     +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
+                        ELSEIF(ISURS(KSUR).EQ.30) THEN
+                                CALL SRT_SU30(IPAR(KSUR),ISDF(1,KSUR),
      +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
 			ELSEIF(ISURS(KSUR).EQ.0) THEN
 C Null surface

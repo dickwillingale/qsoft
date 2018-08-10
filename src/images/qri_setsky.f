@@ -12,7 +12,7 @@ Cf2py   intent(in) XTODEG,YTODEG,IPR,MJD,RA,DEC,ROLL
 *		 2 Lambert (equatorial aspect of Azimuthal equal-area
 *		 projection)
 *MJD        input    Modified Julian date 
-*R          input    Right Ascension (degrees J2000 at local origin)
+*RA         input    Right Ascension (degrees J2000 at local origin)
 *DEC        input    Declination (degrees J2000 at local origin)
 *ROLL       input    Roll angle (degrees from North to +ve elev. +ve clockwise)
 *-Author Dick Willingale 2012-May-11

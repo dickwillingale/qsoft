@@ -40,7 +40,7 @@
 	DOUBLE PRECISION COST
 C Check status
         IF(ISTAT.NE.0) RETURN
-C Spherical surface with radial limits for all packing types
+C Spherical surface with cartesian limits for all packing types
 	CALL SRT_SPHR(DIR,ORG,PAR(IP),PAR(IP+3),PAR(IP+6),PAR(IP+9),
      +	0,5,HIT,POS,RNM,ISTAT)
 	IF(.NOT.HIT) THEN

@@ -6,7 +6,7 @@
 Cf2py   intent(in) NX,XLEFT,XRIGHT,NY,YBOT,YTOP
 *NX        input        number of columns
 *XLEFT     input        local x left edge
-*XRIGHT    input        local y right edge
+*XRIGHT    input        local x right edge
 *NY        input        number of rows
 *YBOT      input        local y bottom edge
 *YTOP      input        local y top edge

@@ -29,6 +29,9 @@
 *  8		normal		radial/azimuthal sector
 *  9		normal		radial+pores
 * 10		normal		parallelogram
+* 11		none		MCO testing aperture
+* IKON=11 limits are size of inner square aperture, inner and outer edge
+* of outer square aperture - added 2017-1-Nov Dick Willingale
 * If limits parallelogram P(1)=xmin, P(2)=ymin, P(3)=xmax, P(4)=ymax, P(5)=dx
 * If limits cartesian then P(1)=xmin, P(2)=ymin, P(3)=xmax, P(4)=ymax
 * If limits cartesian slats then P(1)=xmin, P(2)=ymin, P(3)=xmax, P(4)=ymax
@@ -50,6 +53,7 @@
 	INCLUDE 'SRT_COM'
 	DOUBLE PRECISION DR(3),S,A,G,VP(3),R,X,Y,VY(3),DN,DM
 	DOUBLE PRECISION DHDX,DHDY,DH,DL,AZ,WS,PS,HW,XX,YY,GR
+        DOUBLE PRECISION HS,DS
 	INTEGER J,JJ,IDL(3),NPASS
 	LOGICAL SEARCH
 	DOUBLE PRECISION SMALL
@@ -199,6 +203,26 @@ C Deformation of low radius is obtained using higher index
 			IF(X.LT.(P(1)+GR).OR.X.GT.(P(3)+GR)
      +			.OR.Y.LT.P(2).OR.Y.GT.P(4)) THEN
 				IH=0
+			ENDIF
+		ELSEIF(IKON.EQ.11) THEN
+			IH=0
+			HS=P(1)
+			DS=P(2)
+			IF(
+     +                  ((ABS(X).LT.HS*2).AND.(ABS(Y).LT.HS*2)).OR.
+     +                  ((ABS(X).GT.DS-HS).AND.(ABS(X).LT.DS+HS).AND.
+     +                  ((ABS(Y).GT.DS-HS).AND.(ABS(Y).LT.DS+HS) ))
+     +                   ) THEN
+C			IF(
+C     +                  ((ABS(X).LT.HS*2).AND.(ABS(Y).LT.HS*2)).OR.
+C     +                  ((ABS(X).GT.DS-HS).AND.(ABS(X).LT.DS+HS).AND.
+C     +                  ((ABS(Y).GT.DS-HS).AND.(ABS(Y).LT.DS+HS) )).OR.
+C     +                  ((ABS(X).GT.DS-HS).AND.(ABS(X).LT.DS+HS).AND.
+C     +                  ((ABS(Y).LT.HS))).OR.
+C     +                  ((ABS(Y).GT.DS-HS).AND.(ABS(Y).LT.DS+HS).AND.
+C     +                  ((ABS(X).LT.HS)))
+C     +                   ) THEN
+				IH=1
 			ENDIF
 		ELSEIF(IKON.LT.0) THEN
 C Nested set of aperture

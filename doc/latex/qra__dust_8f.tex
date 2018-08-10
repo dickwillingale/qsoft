@@ -1,0 +1,40 @@
+\hypertarget{qra__dust_8f}{}\section{xscat/qra\+\_\+dust.f File Reference}
+\label{qra__dust_8f}\index{xscat/qra\+\_\+dust.\+f@{xscat/qra\+\_\+dust.\+f}}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{qra__dust_8f_a46f9c812bf42c0fea75fa91455f98652}{qra\+\_\+dustrings} (nrings, ndata, dat, der, dsou, ne, ekv, srate, dts, td, zd, amin, amax, qa, sig1, angs, ndust, edust, model, chisq, ndof)
+\item 
+subroutine \hyperlink{qra__dust_8f_a40ca5b41eb59b4d866ae8402d69cc74f}{qra\+\_\+dustthetascat} (td, ds, zd, arad)
+\item 
+double precision function \hyperlink{qra__dust_8f_a993fd66229d12e6af7bf7aa8873f4eb5}{scatfun} (agr, ts, lambda)
+\item 
+double precision function \hyperlink{qra__dust_8f_a0fb359a57c070bdf38d7cd2e817cd1fc}{diffsec} (ekv, amin, amax, qa, sig1, ts)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{qra__dust_8f_a0fb359a57c070bdf38d7cd2e817cd1fc}\label{qra__dust_8f_a0fb359a57c070bdf38d7cd2e817cd1fc}} 
+\index{qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}!diffsec@{diffsec}}
+\index{diffsec@{diffsec}!qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}}
+\subsubsection{\texorpdfstring{diffsec()}{diffsec()}}
+{\footnotesize\ttfamily double precision function diffsec (\begin{DoxyParamCaption}\item[{double precision}]{ekv,  }\item[{double precision}]{amin,  }\item[{double precision}]{amax,  }\item[{double precision}]{qa,  }\item[{double precision}]{sig1,  }\item[{double precision}]{ts }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{qra__dust_8f_a46f9c812bf42c0fea75fa91455f98652}\label{qra__dust_8f_a46f9c812bf42c0fea75fa91455f98652}} 
+\index{qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}!qra\+\_\+dustrings@{qra\+\_\+dustrings}}
+\index{qra\+\_\+dustrings@{qra\+\_\+dustrings}!qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}}
+\subsubsection{\texorpdfstring{qra\+\_\+dustrings()}{qra\_dustrings()}}
+{\footnotesize\ttfamily subroutine qra\+\_\+dustrings (\begin{DoxyParamCaption}\item[{integer}]{nrings,  }\item[{integer}]{ndata,  }\item[{double precision, dimension(nrings,ndata)}]{dat,  }\item[{double precision, dimension(nrings,ndata)}]{der,  }\item[{double precision}]{dsou,  }\item[{integer}]{ne,  }\item[{double precision, dimension(ne)}]{ekv,  }\item[{double precision, dimension(ne)}]{srate,  }\item[{double precision}]{dts,  }\item[{double precision, dimension(ndata)}]{td,  }\item[{double precision, dimension(nrings)}]{zd,  }\item[{double precision}]{amin,  }\item[{double precision}]{amax,  }\item[{double precision}]{qa,  }\item[{double precision}]{sig1,  }\item[{double precision, dimension(nrings,ndata)}]{angs,  }\item[{double precision, dimension(nrings)}]{ndust,  }\item[{double precision, dimension(nrings)}]{edust,  }\item[{double precision, dimension(nrings,ndata)}]{model,  }\item[{double precision}]{chisq,  }\item[{integer}]{ndof }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{qra__dust_8f_a40ca5b41eb59b4d866ae8402d69cc74f}\label{qra__dust_8f_a40ca5b41eb59b4d866ae8402d69cc74f}} 
+\index{qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}!qra\+\_\+dustthetascat@{qra\+\_\+dustthetascat}}
+\index{qra\+\_\+dustthetascat@{qra\+\_\+dustthetascat}!qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}}
+\subsubsection{\texorpdfstring{qra\+\_\+dustthetascat()}{qra\_dustthetascat()}}
+{\footnotesize\ttfamily subroutine qra\+\_\+dustthetascat (\begin{DoxyParamCaption}\item[{double precision}]{td,  }\item[{double precision}]{ds,  }\item[{double precision}]{zd,  }\item[{double precision}]{arad }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{qra__dust_8f_a993fd66229d12e6af7bf7aa8873f4eb5}\label{qra__dust_8f_a993fd66229d12e6af7bf7aa8873f4eb5}} 
+\index{qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}!scatfun@{scatfun}}
+\index{scatfun@{scatfun}!qra\+\_\+dust.\+f@{qra\+\_\+dust.\+f}}
+\subsubsection{\texorpdfstring{scatfun()}{scatfun()}}
+{\footnotesize\ttfamily double precision function scatfun (\begin{DoxyParamCaption}\item[{double precision}]{agr,  }\item[{double precision}]{ts,  }\item[{double precision}]{lambda }\end{DoxyParamCaption})}
+

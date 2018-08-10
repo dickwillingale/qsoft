@@ -9,6 +9,7 @@
 *   6 Radial/azimuthal sector limits (rmin,rmax,amin,amax)
 *     amin and amax in radians range 0-2pi
 *   7 Parallelogram limits (xmin,ymin,xmax,ymax,dx)
+*   8 Aperture for MCO test station limits (hsize dols)
 *IDF      input        deformation index
 *AP       input        position of aperture
 *AN       input        normal to aperture plane
@@ -131,6 +132,19 @@ C Cartesian limits
                  RETURN
                 ENDIF
                 IT=27
+                NP=9+NL
+                DO J=1,NL
+                        PL(9+J)=ALIM(J)
+                ENDDO
+                IDEF(2)=0
+        ELSEIF(ID.EQ.8) THEN
+C MCO test station aperture
+                IF(NL.NE.2.OR.ALIM(1).GT.ALIM(2)) THEN
+                 WRITE(*,*) 'QRT_APERTURE error -  ID=8 bad paramters'
+                 ISTAT=1
+                 RETURN
+                ENDIF
+                IT=29
                 NP=9+NL
                 DO J=1,NL
                         PL(9+J)=ALIM(J)

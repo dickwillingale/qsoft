@@ -362,6 +362,32 @@ qrt_sipore<-function(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
 	as.integer(iq))
 	invisible()
 }
+qrt_spoarr<-function(pcen,pnorm,raxis,flen,a2j,
+	rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,idf) {
+	.Fortran("qrt_spoarr",
+	as.double(pcen),
+	as.double(pnorm),
+	as.double(raxis),
+	as.double(flen),
+	as.double(a2j),
+	as.integer(length(rm)),
+	as.double(rm),
+	as.double(pm),
+	as.double(tm),
+	as.double(wm),
+	as.double(hm),
+	as.double(am),
+	as.double(cm),
+	as.double(gm),
+	as.double(rpitch),
+	as.double(wall),
+	as.double(apitch),
+	as.double(rwi),
+	as.double(wfr),
+	as.double(siq),
+	as.integer(idf))
+	invisible()
+}
 qrt_aperture<-function(id,idf,ap,an,ar,alim,nsurf) {
 	.Fortran("qrt_aperture",
 	as.integer(id),

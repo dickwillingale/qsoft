@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['ngp_5fappend_5fcolumns',['ngp_append_columns',['../grparser_8h.html#a0b7cf2fda3398e9601188c4975527002',1,'grparser.h']]],
+  ['ngp_5fdelete_5fextver_5ftab',['ngp_delete_extver_tab',['../grparser_8h.html#a58a417a23925462f37538d0568cf7429',1,'grparser.h']]],
+  ['ngp_5fextract_5ftokens',['ngp_extract_tokens',['../grparser_8h.html#ab0d84d73ab70cd5fa7dbec4907e76a11',1,'grparser.h']]],
+  ['ngp_5ffree_5fline',['ngp_free_line',['../grparser_8h.html#a5555ca8fe02d23161e9ab129e3461b1f',1,'grparser.h']]],
+  ['ngp_5ffree_5fprevline',['ngp_free_prevline',['../grparser_8h.html#a2c5653efb6469ea61788a8b2862be04c',1,'grparser.h']]],
+  ['ngp_5fget_5fextver',['ngp_get_extver',['../grparser_8h.html#a0f4929bd3b8244828a88e095302fff6f',1,'grparser.h']]],
+  ['ngp_5fhdu_5fclear',['ngp_hdu_clear',['../grparser_8h.html#a6274e0048008d0bd68dd339d02c243b7',1,'grparser.h']]],
+  ['ngp_5fhdu_5finit',['ngp_hdu_init',['../grparser_8h.html#a1af89a4fd23c95aa17212ba75af6313f',1,'grparser.h']]],
+  ['ngp_5fhdu_5finsert_5ftoken',['ngp_hdu_insert_token',['../grparser_8h.html#ab5a6ee7013f3e200c1824c138d2fac79',1,'grparser.h']]],
+  ['ngp_5finclude_5ffile',['ngp_include_file',['../grparser_8h.html#a5a2e7c7fa841f92635b2d349f3441a73',1,'grparser.h']]],
+  ['ngp_5fkeyword_5fall_5fwrite',['ngp_keyword_all_write',['../grparser_8h.html#a45fd8688b66a94258deab0d8cb642924',1,'grparser.h']]],
+  ['ngp_5fkeyword_5fis_5fwrite',['ngp_keyword_is_write',['../grparser_8h.html#a3bd63d67a9906bac9f2373fdf4c9b320',1,'grparser.h']]],
+  ['ngp_5fline_5ffrom_5ffile',['ngp_line_from_file',['../grparser_8h.html#a36d0788a7d4e5ffd2c82b193e6957a92',1,'grparser.h']]],
+  ['ngp_5fread_5fgroup',['ngp_read_group',['../grparser_8h.html#ade5353218772b4edc477c69cc07b276e',1,'grparser.h']]],
+  ['ngp_5fread_5fline',['ngp_read_line',['../grparser_8h.html#a0a562cdea87dbba20024d770b6e6d2c4',1,'grparser.h']]],
+  ['ngp_5fread_5fline_5fbuffered',['ngp_read_line_buffered',['../grparser_8h.html#a11ebaf9979b2afa2b461d6002a81bfe5',1,'grparser.h']]],
+  ['ngp_5fread_5fxtension',['ngp_read_xtension',['../grparser_8h.html#a4a8924c4a8ab260f6cc9d3607a627325',1,'grparser.h']]],
+  ['ngp_5fset_5fextver',['ngp_set_extver',['../grparser_8h.html#a22485c30c83c494ad6b24d75bdc5dfba',1,'grparser.h']]],
+  ['ngp_5fstrcasecmp',['ngp_strcasecmp',['../grparser_8h.html#a78d8c350b9e818629ee417506e2bb5b0',1,'grparser.h']]],
+  ['ngp_5fstrcasencmp',['ngp_strcasencmp',['../grparser_8h.html#ab274af2dabbc7bfac30e34fa7e419da7',1,'grparser.h']]],
+  ['ngp_5funread_5fline',['ngp_unread_line',['../grparser_8h.html#a46b349fcae57a1ec1a7f7f1047b6c002',1,'grparser.h']]]
+];

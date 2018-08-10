@@ -42,6 +42,7 @@
 * aperture search 29/04/2015 RW
 * Added GMOD as grazing angle ratio for module 29/04/2015 RW
 * Added axial variation in figure errors 19/07/2017 RW
+* Modified formulation of degradation towards axial edges 1/03/2018 RW
 *-Author Dick Willingale 2008-Oct-2
 	DOUBLE PRECISION PI
 	PARAMETER (PI=3.14159265359)
@@ -50,10 +51,10 @@
 	DOUBLE PRECISION PP(16),HX,HY,HL,THETA,DTHETA,RCURP,RCURH
 	DOUBLE PRECISION DX,DY,DZ,DDX,DDY,DDZ,THETAJ,THETAP,THETAH,DV
 	DOUBLE PRECISION FL,PL,RP,RAD,RMIN,DR,DA,DC1,DB1,DC2,DB2,WFR
-        DOUBLE PRECISION DBS,DBC,SCA
-	DOUBLE PRECISION A2J,WALL,DELTA,HGRID,GX,GY,RAP,ROFF
+        DOUBLE PRECISION DBS,DBC,SCA,YPR
+	DOUBLE PRECISION A2J,WALL,DELTA,HGRID,GX,GY,RAP,ROFF,DQ
 	DOUBLE PRECISION RMOD,PMOD,TMOD,WMOD,HMOD,XX,YY,RAN(4),TT,DC,DB
-	DOUBLE PRECISION CMOD,GMOD,YYY
+	DOUBLE PRECISION CMOD,GMOD,YYY,SFAC
 	DOUBLE PRECISION TFOV,GDEP,GBIT
 	INTEGER IX,IY,I,KSUR,IQ,IP,IMOD,ICURV
 	LOGICAL HIT
@@ -187,6 +188,7 @@ C DY is effective displacement of module focus in direction CAX X CAR
 C DZ is change in focal length of module
 C DB mean value for Gaussian in-plane figure errors radians
 C DC mean value for Gaussian out-of-plane figure errors radians
+C DQ is full width used to set up degradation towards axial edges of module
 C Note TMOD provides the module rotation about the axis which gives
 C a contribution to the out-of-plane error
 C Also note that the derivatives are not used
@@ -200,11 +202,19 @@ C Also note that the derivatives are not used
 		CALL SRT_IDFRM(IDEF,IMOD,1,DB,DDX,DDY,ISTAT)
 		IDEF(2)=5
 		CALL SRT_IDFRM(IDEF,IMOD,1,DC,DDX,DDY,ISTAT)
+		IDEF(2)=6
+		CALL SRT_IDFRM(IDEF,IMOD,1,DQ,DDX,DDY,ISTAT)
 		CALL SYS_GAUSS(4,RAN,0.0D0,1.0D0,ISTAT)
 C Scale in-plane and out-of-plane figure errors according to distance
 C from centre of plate towards the axial edges of the plate
-                IF(HMOD.GT.0.0) THEN
-                  SCA=1.0+(YY/HMOD*2.0)**2
+                IF(DQ.GT.0.0) THEN
+		  YPR=ABS(YY)-DQ*0.25
+		  IF(YPR.GT.0.0) THEN
+		    SFAC=10.0
+                    SCA=1.0+(YPR*SQRT(SFAC-1.0)/(DQ*0.25))**2
+		  ELSE
+		    SCA=1.0
+		  ENDIF
 		ELSE
 		  SCA=1.0
 		ENDIF

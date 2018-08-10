@@ -44,6 +44,17 @@ qr_circles<-function(x,y,r,lty=par("lty"),lwd=par("lwd"),col=par("col")) {
         }
         invisible()
 }
+qr_arcs<-function(x,y,r,tl,th,lty=par("lty"),lwd=par("lwd"),col=par("col")) {
+        usr<-par()$usr
+        del<-min(usr[2]-usr[1],usr[4]-usr[3])/100
+        for(i in 1:length(x)) {
+		delt<- (th[i]-tl[i])*del/r[i]
+                th<-seq(from=tl,to=th,by=delt)
+                lines(x[i]+r[i]*cos(th),y[i]+r[i]*sin(th),lty=lty,
+                lwd=lwd,col=col)
+        }
+        invisible()
+}
 qr_collut<-function(fname) {
         t<-read.table(fname,header=T)
         rgb(t$r,t$g,t$b,1)
