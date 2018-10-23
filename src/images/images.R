@@ -436,6 +436,78 @@ qri_peakchisq<-function(fpars) {
         as.double(fpars),
         chisq=double(length=1))$chisq
 }
+qri_lorentzian<-function(x,p) {
+	return(p[1]/(1+((x-p[2])*2.0/p[3])^2))
+}
+qri_sqbeam<-function(arr,hbeam,blev,bvar) {
+	np<-1000
+	a<-.Fortran("qri_sqbeam",
+	as.integer(dim(arr)[1]),
+	as.integer(dim(arr)[2]),
+	as.double(arr),
+	as.double(hbeam),
+	as.double(blev),
+	as.double(bvar),
+	as.integer(np),
+	xpi=double(length=np),
+	xpr=double(length=np),
+	ypi=double(length=np),
+	ypr=double(length=np),
+	bug=double(length=np),
+	nx=integer(length=1),
+	ny=integer(length=1),
+	bflux=double(length=1),
+	bsigma=double(length=1),
+	flux=double(length=1),
+	fsigma=double(length=1),
+	peak=double(length=2),
+	cen=double(length=2),
+	rmsx=double(length=1),
+	rmsy=double(length=1),
+	pi5=double(length=2),
+	pi25=double(length=2),
+	med=double(length=2),
+	pi75=double(length=2),
+	pi95=double(length=2),
+	hewx=double(length=1),
+	hewy=double(length=1),
+	w90x=double(length=1),
+	w90y=double(length=1))
+# Do peak fit
+	if(bvar!=0) {
+		qri_xchisq<-function(fpars) {
+			xm<- qri_lorentzian(a$xpi[1:a$nx],fpars)
+			return(sum((a$xpr[1:a$nx]-xm)^2/bvar/a$nx))
+		}
+		qri_ychisq<-function(fpars) {
+			ym<- qri_lorentzian(a$ypi[1:a$ny],fpars)
+			return(sum((a$ypr[1:a$ny]-ym)^2/bvar/a$ny))
+		}
+		delstat<- qchisq(0.9,3)
+		derr<- c(F,F, T)
+		pval<- max(a$xpr[1:a$nx])
+		spars<- c(pval,a$med[1],a$hewx)
+		lpars<- c(pval/2,a$med[1]-a$hewx/2,a$hewx/2)
+		upars<- c(pval*2,a$med[1]+a$hewx/2,a$hewx*2)
+		fx<- qr_srchmin(spars,lpars,upars,qri_xchisq,delstat,derr)
+		pval<- max(a$ypr[1:a$ny])
+		spars<- c(pval,a$med[2],a$hewy)
+		lpars<- c(pval/2,a$med[2]-a$hewy/2,a$hewy/2)
+		upars<- c(pval*2,a$med[2]+a$hewy/2,a$hewy*2)
+		fy<- qr_srchmin(spars,lpars,upars,qri_ychisq,delstat,derr)
+	} else {
+		fx<-F
+		fy<-F
+	}
+# Return list of results
+	return(list(nx=a$nx,ny=a$ny,
+	xpi=a$xpi[1:a$nx],xpr=a$xpr[1:a$nx],ypi=a$ypi[1:a$ny],ypr=a$ypr[1:a$ny],
+	bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
+	fsigma=a$fsigma,peak=a$peak,cen=a$cen,
+	rmsx=a$rmsx,rmsy=a$rmsy,pi5=a$pi5,pi25=a$pi25,med=a$med,pi75=a$pi75,
+	pi95=a$pi95,hewx=a$hewx,hewy=a$hewy,w90x=a$w90x,w90y=a$w90y,
+	fitx=fx,fity=fy))
+}
 qri_beam<-function(arr,rbeam,blev,bvar) {
 	a<-.Fortran("qri_beam",
 	as.integer(dim(arr)[1]),

@@ -30,12 +30,12 @@ C Initialize results
         BVAR=0.0
         NSAM=0
 C Find pixel ranges about centre
-        IXP=XAN+1.0
-        IYP=YAN+1.0
+        IXP=INT(XAN+1.0)
+        IYP=INT(YAN+1.0)
         IF(IXP.LT.1.OR.IXP.GT.NEL1.OR.IYP.LT.1.OR.IYP.GT.NEL2) THEN
                 RETURN
         ENDIF
-        IRAD=RMAX+2.0
+        IRAD=INT(RMAX+2.0)
         NXL=MAX(MIN(IXP-IRAD,NEL1),1)
         NXH=MAX(MIN(IXP+IRAD,NEL1),1)
         NYL=MAX(MIN(IYP-IRAD,NEL2),1)

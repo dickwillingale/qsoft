@@ -30,7 +30,7 @@ C
 C Set constants
         A=1.0/H-B*0.5/H**2
         BB2=(1.0-SQRT(1.0-4.0*A*B*0.5))/A/2.0
-	BB=BB2*2.0
+        BB=BB2*2.0
         S2=S*0.5
         BH=BB2/H
         SM=MIN(S2,H)
