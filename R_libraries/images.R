@@ -484,7 +484,7 @@ qri_sqbeam<-function(arr,hbeam,blev,bvar) {
 			return(sum((a$ypr[1:a$ny]-ym)^2/bvar/a$ny))
 		}
 		delstat<- qchisq(0.9,3)
-		derr<- c(F,F,T)
+		derr<- c(F,F, T)
 		pval<- max(a$xpr[1:a$nx])
 		spars<- c(pval,a$med[1],a$hewx)
 		lpars<- c(pval/2,a$med[1]-a$hewx/2,a$hewx/2)

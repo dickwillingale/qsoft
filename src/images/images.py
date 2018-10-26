@@ -285,7 +285,7 @@ def sqbeam(arr,hbeam,blev,bvar):
     b.ypr=b.ypr[0:b.ny]
     if bvar!=0:
         delstat= chi2.isf(0.1,3)
-        derr=np.array([False,False,True])
+        derr=np.array([False,False,False])
         def xchisq(fpars):
             xm=lorentzian(b.xpi,fpars)
             #xm=gaussian(b.xpi,fpars)

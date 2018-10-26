@@ -541,7 +541,7 @@ def sipore(pcen,pnorm,raxis,flen_bn,rpitch,apitch,wall,
     """
     xsrtfor.qrt_sipore(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
     rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq)
- def spoarr(pcen,pnorm,raxis,flen,a2j,
+def spoarr(pcen,pnorm,raxis,flen,a2j,
     rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,wfr,siq,idf):
     """Set up Silicon Pore Optics array
         pcen       position of centre of aperture (above join plane)
