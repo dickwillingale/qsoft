@@ -206,6 +206,18 @@ def lorentzian(x,p):
     return      array of function values evaluated at x
     """
     return p[0]/(1+np.square((x-p[1])*2.0/p[2]))
+def king_profile(x,p):
+    """Morentzian profile
+        x           array of x values
+        p           array of fitting parameters
+                    parameter 1 normalisation (value at peak)
+                    parameter 2 x-centre (pixel position)
+                    parameter 3 full width half maximum (pixels)
+                    parameter 4 power index (1 for Lorentzian)
+    return      array of function values evaluated at x
+    """
+    G=p[2]/np.sqrt(np.power(2.0,1.0/p[3])-1.0)
+    return p[0]/np.power(1+np.square((x-p[1])*2.0/G),p[3])
 def gaussian(x,p):
     """Gaussian profile
         x           array of x values
@@ -284,25 +296,27 @@ def sqbeam(arr,hbeam,blev,bvar):
     b.ypi=b.ypi[0:b.ny]
     b.ypr=b.ypr[0:b.ny]
     if bvar!=0:
-        delstat= chi2.isf(0.1,3)
-        derr=np.array([False,False,False])
+        delstat= chi2.isf(0.1,4)
+        derr=np.array([False,False,False,False])
         def xchisq(fpars):
-            xm=lorentzian(b.xpi,fpars)
+            #xm=lorentzian(b.xpi,fpars)
             #xm=gaussian(b.xpi,fpars)
+            xm=king_profile(b.xpi,fpars)
             return np.sum(np.square(b.xpr-xm)/bvar/b.ny)
         pval=np.amax(b.xpr[0:b.nx])
-        spars=np.array([pval,b.med[0],b.hewx/2.])
-        lpars=np.array([pval/2,b.cen[0]-b.hewx/2,b.hewx/2.])
-        upars=np.array([pval*2,b.cen[0]+b.hewx/2,b.hewx*2.])
+        spars=np.array([pval,b.med[0],b.hewx/2.,1.0])
+        lpars=np.array([pval/2,b.cen[0]-b.hewx/2,b.hewx/2.,0.3])
+        upars=np.array([pval*2,b.cen[0]+b.hewx/2,b.hewx*2.,3.0])
         b.fitx=srchmin(spars,lpars,upars,xchisq,delstat,derr)
         def ychisq(fpars):
-            ym=lorentzian(b.ypi,fpars)
+            #ym=lorentzian(b.ypi,fpars)
             #ym=gaussian(b.ypi,fpars)
+            ym=king_profile(b.ypi,fpars)
             return np.sum(np.square(b.ypr-ym)/bvar/b.nx)
         pval=np.amax(b.ypr[0:b.ny])
-        spars=np.array([pval,b.med[1],b.hewy/2.])
-        lpars=np.array([pval/2,b.cen[1]-b.hewy/2,b.hewy/2.])
-        upars=np.array([pval*2,b.cen[1]+b.hewy/2,b.hewy*2.])
+        spars=np.array([pval,b.med[1],b.hewy/2.,1.0])
+        lpars=np.array([pval/2,b.cen[1]-b.hewy/2,b.hewy/2.,0.3])
+        upars=np.array([pval*2,b.cen[1]+b.hewy/2,b.hewy*2.,3.0])
         b.fity=srchmin(spars,lpars,upars,ychisq,delstat,derr)
     else:
         b.fitx=False
