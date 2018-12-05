@@ -17,6 +17,7 @@
 	IMPLICIT NONE
 	INTEGER IOPT,ISTAT
 	DOUBLE PRECISION RIRIS,DSHFT,YBAR,ZBAR,RMS,AREA
+* Added SU30 and SU31 21st November 2018
 *-Author Dick Willingale 2012-May-1
 	INCLUDE 'SRT_COM'
 	INTEGER MAXNPR
@@ -196,6 +197,12 @@ C Find intersection of ray with surface
      +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
                         ELSEIF(ISURS(KSUR).EQ.30) THEN
                                 CALL SRT_SU30(IPAR(KSUR),ISDF(1,KSUR),
+     +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
+                        ELSEIF(ISURS(KSUR).EQ.31) THEN
+                                CALL SRT_SU31(IPAR(KSUR),ISDF(1,KSUR),
+     +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
+                        ELSEIF(ISURS(KSUR).EQ.32) THEN
+                                CALL SRT_SU32(IPAR(KSUR),ISDF(1,KSUR),
      +				RPOS(1,NPR),RDIR,HIT,RPOS(1,NPR+1),RNM,ISTAT)
 			ELSEIF(ISURS(KSUR).EQ.0) THEN
 C Null surface

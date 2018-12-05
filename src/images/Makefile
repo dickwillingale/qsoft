@@ -2,9 +2,10 @@
 # RW 06-Jun-2016
 # compiler definitions
 include ../compiler.config
-# Target directory for Python modules
+# Target directories for Python, R and IDL modules
 PYMODDIR = $(QSOFT)/python_modules
 RLIBDIR = $(QSOFT)/R_libraries
+IDLDIR = $(QSOFT)/qIDL
 LIBDIR = $(QSOFT)/lib
 # Python module
 MODNAME = images
@@ -57,11 +58,15 @@ install: $(MODNAME).R $(MODNAME).py
 ifdef F2PY
 	cp $(MODNAME)for*.so $(PYMODDIR)
 	cp $(MODNAME).py $(PYMODDIR)
+	cp locator.py $(PYMODDIR)
 endif   
 ifdef R 
 	cp $(MODNAME)R.so $(RLIBDIR)
 	cp $(MODNAME).R $(RLIBDIR)
 endif   
+ifdef IDL
+	cp qIDL/*.pro $(IDLDIR)/$(MODNAME)
+endif
 	cp $(LIB) $(LIBDIR)
 
 clean:

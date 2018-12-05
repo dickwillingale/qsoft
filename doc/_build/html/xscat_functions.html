@@ -1,0 +1,455 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>xscat.functions &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="xsrt - Sequential Ray Tracing" href="xsrt.html" />
+    <link rel="prev" title="xscat - X-ray Physics" href="xscat.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt.html" title="xsrt - Sequential Ray Tracing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xscat.html" title="xscat - X-ray Physics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xscat.html" accesskey="U">xscat  - X-ray Physics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-xscat">
+<span id="xscat-functions"></span><h1>xscat.functions<a class="headerlink" href="#module-xscat" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="xscat.dustrings">
+<code class="descclassname">xscat.</code><code class="descname">dustrings</code><span class="sig-paren">(</span><em>data</em>, <em>derr</em>, <em>dsou</em>, <em>ekv</em>, <em>srate</em>, <em>dts</em>, <em>td</em>, <em>zd</em>, <em>amin</em>, <em>amax</em>, <em>qa</em>, <em>sig1</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.dustrings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model fitting to dust X-ray scattering halo rings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – data array of rings surface brightness cts/s/str</li>
+<li><strong>derr</strong> – array of errors on data</li>
+<li><strong>dsou</strong> – distance to source PC</li>
+<li><strong>ekv</strong> – array of energies keV (equally spaced across observed band)</li>
+<li><strong>srate</strong> – source spectrum cts/s/keV</li>
+<li><strong>dts</strong> – source burst duration</li>
+<li><strong>td</strong> – delay time of observations secs</li>
+<li><strong>zd</strong> – fraction of source distance to rings</li>
+<li><strong>amin</strong><strong>,</strong><strong>amax</strong> – grain size radius range microns</li>
+<li><strong>qa</strong> – grain size distribution index N(a)=A.a^-qa</li>
+<li><strong>sig1</strong> – differential cross-section of 1 grain cm2, 1 keV, 0.1 microns</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the following</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>angs</strong>:       array of angles</div>
+<div class="line"><strong>ndust</strong>:      N dust columns cm-2</div>
+<div class="line"><strong>edust</strong>:      errors on N dust columns cm-2</div>
+<div class="line"><strong>model</strong>:      model cts/s/str in rings</div>
+<div class="line"><strong>chisq</strong>:      Chi-Squared between data and model</div>
+<div class="line"><strong>ndof</strong>:       ndof</div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="xscat.duststat">
+<em class="property">class </em><code class="descclassname">xscat.</code><code class="descname">duststat</code><span class="sig-paren">(</span><em>data</em>, <em>derr</em>, <em>dsou</em>, <em>ekv</em>, <em>srate</em>, <em>dts</em>, <em>td</em>, <em>zd</em>, <em>sig1</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.duststat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Statistic of fit of model to dust rings</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xscat.dustthetascat">
+<code class="descclassname">xscat.</code><code class="descname">dustthetascat</code><span class="sig-paren">(</span><em>td</em>, <em>ds</em>, <em>zd</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.dustthetascat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scattering angle radians</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>td</strong> – delay time seconds after source flare (assumed delta function)</li>
+<li><strong>ds</strong> – distance to source parsecs (convert to m - 3.086e16/parsec)</li>
+<li><strong>zd</strong> – fractional distance to dust</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">angle in radians</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xscat.miev0">
+<code class="descclassname">xscat.</code><code class="descname">miev0</code><span class="sig-paren">(</span><em>xx</em>, <em>crefin</em>, <em>pfct</em>, <em>mimc</em>, <em>anya</em>, <em>xmu</em>, <em>nmom</em>, <em>ipolzn</em>, <em>momd</em>, <em>prt</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.miev0" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://github.com/cfinch/Mie_scattering/blob/master/Wiscombe/MIEV0.f">Wiscombe subroutine</a></p>
+<p>Computes Mie scattering and extinction efficiencies; asymmetry
+factor;  forward- and backscatter amplitude;  scattering
+amplitudes vs. scattering angle for incident polarization parallel
+and perpendicular to the plane of scattering;
+coefficients in the Legendre polynomial expansions of either the
+unpolarized phase function or the polarized phase matrix;
+some quantities needed in polarized radiative transfer;  and
+information about whether or not a resonance has been hit.</p>
+<p>Input and output variables are described in file MIEV.doc.
+Many statements are accompanied by comments referring to
+references in MIEV.doc, notably the NCAR Mie report which is now
+available electronically and which is referred to using the
+shorthand (Rn), meaning Eq. (n) of the report.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xx</strong> – Mie size parameter ( 2 * pi * radius / wavelength )</li>
+<li><strong>crefin</strong> – Complex refractive index ( imag part can be + or -,
+but internally a negative imaginary index is assumed ).
+If imag part is - ,  scattering amplitudes as in Van
+de Hulst are returned;  if imag part is + , complex
+conjugates of those scattering amplitudes are returned
+(the latter is the convention in physics).
+** NOTE ** In the ‘PERFECT’ case, scattering amplitudes
+in the Van de Hulst (Ref. 6 above) convention will
+automatically be returned unless  Im(CREFIN)  is
+positive;  otherwise, CREFIN plays no role.</li>
+<li><strong>pfct</strong> – TRUE, assume refractive index is infinite and use
+special case formulas for Mie coefficients  ‘a’
+and  ‘b’  ( see Kerker, M., The Scattering of
+Light and Other Electromagnetic Radiation, p. 90 ).
+This is sometimes called the ‘totally reflecting’,
+sometimes the ‘perfectly conducting’ case.
+( see CREFIN for additional information )</li>
+<li><strong>mimc</strong> – (positive) value below which imaginary refractive
+index is regarded as zero (computation proceeds
+faster for zero imaginary index)</li>
+<li><strong>anya</strong> – TRUE, any angles whatsoever may be input through
+XMU.  FALSE, the angles are monotone increasing
+and mirror symmetric about 90 degrees (this option
+is advantageous because the scattering amplitudes
+S1,S2 for the angles between 90 and 180 degrees
+are evaluable from symmetry relations, and hence
+are obtained with little added computational cost.)</li>
+<li><strong>numang</strong> – No. of angles at which scattering amplitudes
+S1,S2 are to be evaluated  ( set = 0 to skip
+calculation of S1,S2 ).  Make sure NUMANG does
+not exceed the parameter MAXANG in the program.</li>
+<li><strong>xmu</strong> (<em>N</em>) – Cosines of angles ( N = 1 TO NUMANG ) at which S1,S2
+are to be evaluated.  If ANYANG = FALSE, then
+(a) the angles must be monotone increasing and
+mirror symmetric about 90 degrees (if 90-A is
+an angle, then 90+A must be also)
+(b) if NUMANG is odd, 90 degrees must be among
+the angles</li>
+<li><strong>nmom</strong> – Highest Legendre moment PMOM to calculate,
+numbering from zero ( NMOM = 0 prevents
+calculation of PMOM )</li>
+<li><strong>ipolzn</strong> – POSITIVE, Compute Legendre moments PMOM for the
+Mueller matrix elements determined by the
+digits of IPOLZN, with 1 referring to M1,
+2 to M2, 3 to S21, and 4 to D21 (Ref. 3).
+E.g., if IPOLZN = 14 then only moments for
+M1 and D21 will be returned.
+0,  Compute Legendre moments PMOM for the
+npolarized unnormalized phase function.
+NEGATIVE, Compute Legendre moments PMOM for the
+Sekera phase quantities determined by the
+digits of ABS(IPOLZN), with 1 referring to
+R1, 2 to R2, 3 to R3, and 4 to R4 (REF. 4).
+E.g., if IPOLZN = -14 then only moments for
+R1 and R4 will be returned.
+( NOT USED IF  NMOM = 0 )</li>
+<li><strong>momd</strong> – Determines first dimension of PMOM, which is dimensioned
+internally as PMOM( 0:MOMDIM, * ) (second dimension must
+be the larger of unity and the highest digit in
+IPOLZN; if not, serious errors will occur).
+Must be given a value, even if  NMOM = 0.  Minimum: 1.</li>
+<li><strong>prt</strong> (<em>L</em>) – Print flags (LOGICAL).  L = 1  prints  S1,S2, their
+squared absolute values, and degree of polarization,
+provided NUMANG is non-zero.   L = 2  prints all
+output variables other than  S1,S2.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list containing the following</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>qext</strong>:       (REAL) extinction efficiency factor  ( Ref. 2, Eq. 1A )</div>
+<div class="line"><strong>qsca</strong>:       (REAL) scattering efficiency factor  ( Ref. 2, Eq. 1B )</div>
+<div class="line"><strong>gqsc</strong>:       (REAL) asymmetry factor times scattering efficiency</div>
+<div class="line-block">
+<div class="line">( Ref. 2, Eq. 1C )  ( allows calculation of radiation</div>
+<div class="line-block">
+<div class="line">pressure efficiency factor  QPR = QEXT - GQSC )</div>
+</div>
+<div class="line">NOTE – S1, S2, SFORW, SBACK, TFORW, AND TBACK are calculated</div>
+<div class="line">internally for negative imaginary refractive index;</div>
+<div class="line">for positive imaginary index, their complex conjugates</div>
+<div class="line">are taken before they are returned, to correspond to</div>
+<div class="line">customary usage in some parts of physics ( in particular,</div>
+<div class="line">in papers on CAM approximations to Mie theory ).</div>
+</div>
+<div class="line"><strong>pmom(M,NP)</strong>: (REAL) moments  M = 0 to NMOM  of unnormalized NP-th</div>
+<div class="line-block">
+<div class="line">phase quantity PQ  ( moments with  M .GT. 2*NTRM  are</div>
+<div class="line">zero, where  NTRM = no. terms in Mie series =</div>
+<div class="line">XX + 4*XX**1/3 + 1 )</div>
+</div>
+<div class="line"><strong>PQ( MU, NP )</strong>: = sum( M=0 to infinity ) ( (2M+1)</div>
+<div class="line-block">
+<div class="line">* PMOM( M,NP ) * P-sub-M( MU ) )</div>
+<div class="line">WHERE  MU = COS( scattering angle )</div>
+<div class="line">P-sub-M = M-th Legendre polynomial</div>
+<div class="line">and the definition of ‘PQ’ is as follows:</div>
+<div class="line">IPOLZN.GT.0:  PQ(MU,1) = CABS( S1(MU) )**2</div>
+<div class="line">PQ(MU,2) = CABS( S2(MU) )**2</div>
+<div class="line">PQ(MU,3) = RE( S1(MU)*CONJG( S2(MU) ) )</div>
+<div class="line">PQ(MU,4) = - IM( S1(MU)*CONJG( S2(MU) ) )</div>
+<div class="line">( called M1, M2, S21, D21 in literature )</div>
+<div class="line">IPOLZN=0:  PQ(MU,1) = ( CABS(S1)**2 + CABS(S2)**2 ) / 2</div>
+<div class="line">( the unnormalized phase function )</div>
+<div class="line">IPOLZN.LT.0:  PQ(MU,1) = CABS( T1(MU) )**2</div>
+<div class="line">PQ(MU,2) = CABS( T2(MU) )**2</div>
+<div class="line">PQ(MU,3) = RE( T1(MU)*CONJG( T2(MU) ) )</div>
+<div class="line">PQ(MU,4) = - IM( T1(MU)*CONJG( T2(MU) ) )</div>
+<div class="line">( called R1, R2, R3, R4 in literature )</div>
+<div class="line">The sign of the 4th phase quantity is a source of</div>
+<div class="line">confusion.  It flips if the complex conjugates of</div>
+<div class="line">S1,S2  or  T1,T2  are used, as occurs when a</div>
+<div class="line">refractive index with positive imaginary part is</div>
+<div class="line">used (see discussion below).  The definition above</div>
+<div class="line">is consistent with a negative imaginary part.</div>
+<div class="line">See Ref. 5 for correct formulae for PMOM ( Eqs. 2-5</div>
+<div class="line">of Ref. 3 contain typographical errors ).  Ref. 5 also</div>
+<div class="line">contains numerous improvements to the Ref. 3 formulas.</div>
+<div class="line">NOTE THAT OUR DEFINITION OF MOMENTS DIFFERS FROM REF. 3</div>
+<div class="line">in that we divide out the factor (2M+1) and number the</div>
+<div class="line">moments from zero instead of one.</div>
+<div class="line">** WARNING **  Make sure the second dimension of PMOM</div>
+<div class="line">in the calling program is at least as large as the</div>
+<div class="line">absolute value of IPOLZN.</div>
+<div class="line">For small enough values of XX, or large enough values</div>
+<div class="line">of M,  PMOM  will tend to underflow.  Thus, it is</div>
+<div class="line">unwise to assume the values returned are non-zero and,</div>
+<div class="line">for example, to divide some quantity by them.</div>
+</div>
+<div class="line"><strong>s1(N),s2(N)</strong>:  (COMPLEX) Mie scattering amplitudes at angles specified</div>
+<div class="line-block">
+<div class="line">by XMU(N) ( N=1 to NUMANG )  ( Ref. 2, Eqs. 1d-e ).</div>
+</div>
+<div class="line"><strong>sforw</strong>:  (COMPLEX) forward-scattering amplitude S1 at</div>
+<div class="line-block">
+<div class="line">0 degrees.  ( S2(0 deg) = S1(0 deg) )</div>
+</div>
+<div class="line"><strong>sback</strong>:  (COMPLEX) backscattering amplitude S1 at</div>
+<div class="line-block">
+<div class="line">180 degrees.   ( S2(180 deg) = - S1(180 deg) )</div>
+</div>
+<div class="line"><strong>tforw(I)</strong>:   (COMPLEX) values of</div>
+<div class="line-block">
+<div class="line">I=1:  T1 = ( S2 - (MU)*S1 ) / ( 1 - MU**2 )</div>
+<div class="line">I=2:  T2 = ( S1 - (MU)*S2 ) / ( 1 - MU**2 )</div>
+<div class="line">At angle theta = 0 ( MU = COS(theta) = 1 ), where the</div>
+<div class="line">expressions on the right-hand side are indeterminate.</div>
+<div class="line">( these quantities are required for doing polarized</div>
+<div class="line">radiative transfer (Ref. 4, Appendix). )</div>
+</div>
+<div class="line"><strong>tback(I)</strong>:   (COMPLEX) values of  T1 (for I=1) or  T2 (for I=2) at</div>
+<div class="line-block">
+<div class="line">angle  theta = 180 degrees ( MU = COS(theta) = - 1 ).</div>
+</div>
+<div class="line"><strong>spike</strong>:     (REAL) magnitude of the smallest denominator of</div>
+<div class="line-block">
+<div class="line">either Mie coefficient (a-sub-n or b-sub-n),</div>
+<div class="line">taken over all terms in the Mie series past</div>
+<div class="line">N = size parameter XX.  Values of SPIKE below</div>
+<div class="line">about 0.3 signify a ripple spike, since these</div>
+<div class="line">spikes are produced by abnormally small denominators</div>
+<div class="line">in the Mie coefficients (normal denominators are of</div>
+<div class="line">order unity or higher).  Defaults to 1.0 when not</div>
+<div class="line">on a spike.  Does not identify all resonances</div>
+<div class="line">(we are still working on that).</div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="xscat.mievs">
+<em class="property">class </em><code class="descclassname">xscat.</code><code class="descname">mievs</code><a class="headerlink" href="#xscat.mievs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mie scattering and Rayleigh-Gans approximation for scattering by dust</p>
+<dl class="method">
+<dt id="xscat.mievs.list">
+<code class="descname">list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xscat.mievs.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="xscat.xfresnel">
+<code class="descclassname">xscat.</code><code class="descname">xfresnel</code><span class="sig-paren">(</span><em>alpha</em>, <em>gamma</em>, <em>angs</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.xfresnel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate X-ray reflectivity using Fresnel’s equations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha</strong> – real incremental part dielectric constant</li>
+<li><strong>gamma</strong> – imaginary part of dielectric constant</li>
+<li><strong>angs</strong> – incidence angles (degrees)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of following</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>rs</strong>:       sigma reflectivity</div>
+<div class="line"><strong>rp</strong>:       pi reflectivity</div>
+<div class="line"><strong>runp</strong>:     unpolarized reflectivity</div>
+</div>
+<p>If angs(I) out of range 0-90 degrees returns zero reflectivity</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xscat.xopt">
+<code class="descclassname">xscat.</code><code class="descname">xopt</code><span class="sig-paren">(</span><em>mspec</em>, <em>rho</em>, <em>ekev</em>, <em>itype</em><span class="sig-paren">)</span><a class="headerlink" href="#xscat.xopt" title="Permalink to this definition">¶</a></dt>
+<dd><p>X-ray optical properties of a material</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mspec</strong> – specification of composition</li>
+<li><strong>rho</strong> – density gm/cm**3</li>
+<li><strong>ekev</strong> – array of photon energies in keV</li>
+<li><strong>itype</strong> – data source (0=Cromer, 1=Henke)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list with the following</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>alpha</strong>:     array of real parts dielectric constant</div>
+<div class="line"><strong>gamm</strong>:      array of imaginary parts dielectric constant</div>
+<div class="line"><strong>absl</strong>:      array of absortion lengths cm-1</div>
+<div class="line"><strong>f1</strong>:        array of real parts scattering factor</div>
+<div class="line"><strong>f2</strong>:        array of imaginary parts scattering factor</div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">xscat.functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_modifying.html">Adding New Functions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xscat.html"
+                        title="previous chapter">xscat  - X-ray Physics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xsrt.html"
+                        title="next chapter">xsrt   - Sequential Ray Tracing</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt.html" title="xsrt - Sequential Ray Tracing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xscat.html" title="xscat - X-ray Physics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xscat.html" >xscat  - X-ray Physics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+Surface Element Parameters
+**************************
+All the surface element parameters etc. are held in a common area. Individual
+surface elements pick up their parameters using an index into this area.
+The parameters are set by the following routines:
+
+==============  ===================   ===================================
+routine         parameters                      called by
+==============  ===================   ===================================
+SRT\_SETF       surface               QRT\_MIRROR, QRT\_BAFFLE etc.
+SRT\_SETT       surface quality       QRT\_SURFACE, QRT\_LENS, QRT\_PRISM
+SRT\_SETD       deformation           QRT\_DEFS
+SRT\_SETS       source                QRT\_SOURCE
+SRT\_SETCONCOM  SPO constellation     QRT\_SIPORE
+SRT\_SETKBSCOM  KBS constellation     QRT\_KBS
+SRT\_SETMPOARR  MPO array             QRT\_SQMPOARR
+SRT\_SETSLECOM  Schmidt lobster eye   QRT\_SLE
+SRT\_SETSPOCOM  Si Pore Optics        QRT\_SPOARR
+==============  ===================   ===================================
+
+These routines put the parameters
+into common blocks. The order of the parameters is important and must
+match the order expected by the target routine. The sequence of
+parameters expected is specified in the comment lines at the top
+of the surface element routines.

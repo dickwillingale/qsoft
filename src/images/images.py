@@ -2,6 +2,7 @@
 # Functions for image display and manipulation
 from __future__ import print_function
 import imagesfor 
+import locator
 import numpy as np
 import matplotlib.pylab as plt
 from scipy.stats import chi2
@@ -16,9 +17,13 @@ def reset():
 init()
 def rectangles(x,y,w,h,t):
     """Draw rectangles
-        x,y   centre positions
-        w,h   widths and heights
-        t     rotation angles radians
+
+    Args:
+        x: centres in local x
+        y: centres in local y
+        w: widths 
+        h: heights
+        t: rotation angles radians
     """
     cth=np.cos(t)
     sth=np.sin(t)
@@ -42,26 +47,37 @@ def rectangles(x,y,w,h,t):
         color='k',linestyle='-',linewidth=1)
 def binxy(x,y,iq,w,xleft,xright,ybot,ytop,nx,ny):
     """x-y event binning to form an image
-        x      array of x positions
-        Y      array of y positions
-        iq     array of quality values (0 for OK)
-        w      array of weights
-        xleft  minimum x value (left edge) for image array
-        xright maximum x value (rigth edge) for image array
-        ybot   minimum y value (bottom edge) for image array
-        ytop   maximum y value (top edge) for image array
-        nx,ny  dimensions of output array
-    return image array
-        R version returns an image object - image array object$data_array
+
+    Args:
+        x:      array of x positions
+        Y:      array of y positions
+        iq:     array of quality values (0 for OK)
+        w:      array of weights
+        xleft:  minimum x value (left edge) for image array
+        xright: maximum x value (rigth edge) for image array
+        ybot:   minimum y value (bottom edge) for image array
+        ytop:   maximum y value (top edge) for image array
+        nx:     size of 1st dimension of image array (number of rows)
+        ny:     size of 2nd dimension of image array (number of columns)
+
+    Returns:
+        | image array
+        | R version returns an image object - image array object$data_array
     """
     a=imagesfor.qri_binxy(x,y,iq,w,xleft,xright,ybot,ytop,nx,ny)
     return a
 def quaderr(x0,y0,x1,y1,y):
     """Quadratic estimator for confidence limit
-        x0,y0   parameter and statistic at minimum
-        x1,y1   parameter and statistic near minimum
-        y       required statistic value
-    return  estimate of parameter corresponding to y
+
+    Args:
+        x0: parameter at minimum
+        y0: statistic at minimum
+        x1: parameter near minimum
+        y1: statistic near minimum
+        y:  required statistic value
+
+    Returns:
+        estimate of parameter corresponding to y
     """
     a=(y1-y0)/(x1-x0)**2
     b=-2.0*a*x0
@@ -73,15 +89,19 @@ def quaderr(x0,y0,x1,y1,y):
         return 0.0
 def srchmin(pars,pl,ph,stat,delstat,derr):
     """Search for minimum statistic and return best fit parameters and confidence limits of the parameters
-        pars        initial parameter values
-        pl          hard lower limit of parameter values
-        ph          hard upper limit of parameter values
-        stat        the statistic function to be minimised
-        delstat     the change in statistic for confidence limits
-        derr        initial error estimates for parameters
-                    0 fixed, >0 to estimate confidence range
-    returns     list from optim() plus confidence limits parlo and parhi
-        The statistic function call must return the value of a statistic with call of form stat(pars).
+
+    Args:
+        pars:        initial parameter values
+        pl:          hard lower limit of parameter values
+        ph:          hard upper limit of parameter values
+        stat:        the statistic function to be minimised
+        delstat:     the change in statistic for confidence limits
+        derr:        initial error estimates for parameters, 0 fixed, >0 to estimate confidence range
+
+    Returns:
+        list from optim() plus confidence limits parlo and parhi
+
+    The statistic function call must return the value of a statistic with call of form stat(pars) (e.g. images.peakchisq(pars))
     """
     npa=len(pars)
     # make local copies of hard limits
@@ -186,83 +206,110 @@ def srchmin(pars,pl,ph,stat,delstat,derr):
 class bdata: pass
 def peakchisq(fpars):
     """Chi-squared for image peak fitting
-        fpars       array of fitting parameters
-                    parameter 1 normalisation (value at peak)
-                    parameter 2 x-centre (pixel position)
-                    parameter 3 y-centre (pixel position)
-                    parameter 4 Lorentian width (pixels) 24th Sept. 2017 RW
-    return      Chi-squared value
-        Used by function beam() which loads Fortran common block BEAMFIT with image data.
+
+    Args:
+        fpars:       array of fitting parameters
+
+    | par 0: normalisation (value at peak)
+    | par 1: x-centre (pixel position)
+    | par 2: y-centre (pixel position)
+    | par 3: Lorentian width (pixels) 24th Sept. 2017 RW
+    
+    Returns:
+        Chi-squared value
+
+    Used by function beam() which loads Fortran common block BEAMFIT with image data.
     """
     chis=imagesfor.qri_peakchisq(fpars)
     return chis
 def lorentzian(x,p):
     """Lorentzian profile
-        x           array of x values
-        p           array of fitting parameters
-                    parameter 1 normalisation (value at peak)
-                    parameter 2 x-centre (pixel position)
-                    parameter 3 Lorentian width (pixels)
-    return      array of function values evaluated at x
+
+    Args:
+        x:          array of x values
+        p:          array of fitting parameters
+
+    | par 0: normalisation (value at peak)
+    | par 1: x-centre (pixel position)
+    | par 2: Lorentian width (pixels)
+    
+    Returns:
+        array of function values evaluated at x
     """
     return p[0]/(1+np.square((x-p[1])*2.0/p[2]))
 def king_profile(x,p):
-    """Morentzian profile
-        x           array of x values
-        p           array of fitting parameters
-                    parameter 1 normalisation (value at peak)
-                    parameter 2 x-centre (pixel position)
-                    parameter 3 full width half maximum (pixels)
-                    parameter 4 power index (1 for Lorentzian)
-    return      array of function values evaluated at x
+    """King function (modified Lorentzian) profile
+
+    Args:
+        x:          array of x values
+        p:          array of fitting parameters
+
+    | par 0: normalisation (value at peak)
+    | par 1: x-centre (pixel position)
+    | par 2: full width half maximum (pixels)
+    | par 3: power index (1 for Lorentzian)
+
+    Returns:
+        array of function values evaluated at x
     """
     G=p[2]/np.sqrt(np.power(2.0,1.0/p[3])-1.0)
     return p[0]/np.power(1+np.square((x-p[1])*2.0/G),p[3])
 def gaussian(x,p):
     """Gaussian profile
-        x           array of x values
-        p           array of fitting parameters
-                    parameter 1 normalisation (value at peak)
-                    parameter 2 x-centre (pixel position)
-                    parameter 3 Gaussian full width half maximum (pixels)
-    return      array of function values evaluated at x
+
+    Args:
+        x:          array of x values
+        p:          array of fitting parameters
+    
+    | par 0: normalisation (value at peak)
+    | par 1: x-centre (pixel position)
+    | par 2: Gaussian full width half maximum (pixels)
+
+    Returns:
+        array of function values evaluated at x
     """
     return p[0]*np.exp(-np.square(x-p[1])/(2*np.square(p[2]/2.37)))
 def sqbeam(arr,hbeam,blev,bvar):
     """Analysis of source above background within a square beam
-        arr      image array
-        hbeam    half width of square beam in pixels
-        blev     average background level per pixel (to be subtracted)
-        bvar     variance on blev (-ve for counting statistics)
-    return   list with the following:
-        nx,ny    dimension of beam pixels (truncated if falls off edge of image)
-        xpi,xpr  x output arrays, pixel position and flux
-        ypi,ypr  y output arrays, pixel position and flux
-        bflux    background in beam (e.g. counts)
-        bsigma   standard deviation of background
-        flux     source flux above background in beam (e.g. counts)
-        fsigma   standard deviation of source flux
-        peak     source x,y peak position
-        cen      source x,y centroid position
-        rmsx     rms width in x (pixels) about centroid
-        rmsy     rms width in y (pixels) about centroid
-        pi5      5% x,y position
-        pi25     25% x,y position
-        med      median (50%) x,y position
-        pi75     75% x,y position
-        pi95     95% x,y position
-        hewx     HEW (half energy width) x (pixels)
-        hewy     HEW (half energy width) y (pixels)
-        w90x     W90 (90% width) x (pixels)
-        w90y     W90 (90% width) y (pixels)
-        fitx     parameters from x profile fit using lorentzian() 
-        fity     parameters from y profile fit using lorentzian() 
-    Fits performed if bvar!=0 parameters are saved in the lists fitx and fity
-        0       peak value (no error range calculated)
-        1       peak X pixel position (no error range calculated)
-        2       Lorentzian width including 90% upper and lower bounds
-    The position of the sqbeam is the current position within the image.
-    Use function setpos() to set the current position.
+
+    Args:
+        arr:     image array
+        hbeam:   half width of square beam in pixels
+        blev:    average background level per pixel (to be subtracted)
+        bvar:    variance on blev (-ve for counting statistics)
+
+    Returns:
+        | list with the following
+        | **nx,ny**:    dimension of beam pixels (truncated if falls off edge)
+        | **xpi,xpr**:  x output arrays, pixel position and flux
+        | **ypi,ypr**:  y output arrays, pixel position and flux
+        | **bflux**:    background in beam (e.g. counts)
+        | **bsigma**:   standard deviation of background
+        | **flux**:     source flux above background in beam (e.g. counts)
+        | **fsigma**:   standard deviation of source flux
+        | **peak**:     source x,y peak position
+        | **cen**:      source x,y centroid position
+        | **rmsx**:     rms width in x (pixels) about centroid
+        | **rmsy**:     rms width in y (pixels) about centroid
+        | **pi5**:      5% x,y position
+        | **pi25**:     25% x,y position
+        | **med**:      median (50%) x,y position
+        | **pi75**:     75% x,y position
+        | **pi95**:     95% x,y position
+        | **hewx**:     HEW (half energy width) x (pixels)
+        | **hewy**:     HEW (half energy width) y (pixels)
+        | **w90x**:     W90 (90% width) x (pixels)
+        | **w90y**:     W90 (90% width) y (pixels)
+        | **fitx**:     parameters from x profile fit using king_profile() 
+        | **fity**:     parameters from y profile fit using king_profile() 
+    |
+    | Fits performed if bvar!=0.
+    | Parameters are saved in the lists fitx and fity
+    |   0: peak value (no error range calculated)
+    |   1: peak X pixel position (no error range calculated)
+    |   2: Lorentzian width including 90% upper and lower bounds
+    | The position of the sqbeam is the current position within the image.
+    | Use function setpos() to set the current position.
     """
     npp=1000
     a=imagesfor.qri_sqbeam(arr,hbeam,blev,bvar,npp)
@@ -324,38 +371,45 @@ def sqbeam(arr,hbeam,blev,bvar):
     return b
 def beam(arr,rbeam,blev,bvar):
     """Analysis of source above background within a circular beam
-        arr      image array
-        rbeam    radius of beam in pixels
-        blev     average background level per pixel (to be subtracted)
-        bvar     variance on blev (-ve for counting statistics)
-    return   list with the following:
-        nsam     number of pixels in beam
-        bflux    background in beam (e.g. counts)
-        bsigma   standard deviation of background
-        flux     source flux above background in beam (e.g. counts)
-        fsigma   standard deviation of source flux
-        peak     source x,y peak position
-        cen      source x,y centroid position
-        tha      angle (degrees) of major axis wrt x (x to y +ve)
-        rmsa     source max rms width (major axis) (pixels)
-        rmsb     source min rms width (minor axis) (pixels)
-        fwhm     full width half maximum (pixels) about beam centre
-        hew      half energy width (pixels) about beam centre
-        w90      W90 (90% width) (pixels) about beam centre
-        fwhmp    full width half maximum (pixels) about peak
-        hewp     half energy width (pixels) about peak
-        w90p     W90 (90% width) (pixels) about peak
-        fwhmc    full width half maximum (pixels) about centroid
-        hewc     half energy width (pixels) about centroid
-        w90c     W90 (90% width) (pixels) about centroid
-        fit      parameters from peak fit using peakchisq() 
-    Fit performed if bvar!=0 parameters are saved in the list fit
-        0       peak value (no error range calculated)
-        1       peak X pixel position with 90% error range
-        2       peak Y pixel position with 90% error range
-        3       Lorentzian width including 90% upper and lower bounds
-    The position of the beam is the current position within the image.
-    Use function setpos() to set the current position.
+
+    Args:
+        arr:     image array
+        rbeam:   radius of beam in pixels
+        blev:    average background level per pixel (to be subtracted)
+        bvar:    variance on blev (-ve for counting statistics)
+
+    Returns:
+        | list with the following
+        | **nsam**:    number of pixels in beam
+        | **bflux**:   background in beam (e.g. counts)
+        | **bsigma**:  standard deviation of background
+        | **flux**:    source flux above background in beam (e.g. counts)
+        | **fsigma**:  standard deviation of source flux
+        | **peak**:    source x,y peak position
+        | **cen**:     source x,y centroid position
+        | **tha**:     angle (degrees) of major axis wrt x (x to y +ve)
+        | **rmsa**:    source max rms width (major axis) (pixels)
+        | **rmsb**:    source min rms width (minor axis) (pixels)
+        | **fwhm**:    full width half maximum (pixels) about beam centre
+        | **hew**:     half energy width (pixels) about beam centre
+        | **w90**:     W90 (90% width) (pixels) about beam centre
+        | **fwhmp**:   full width half maximum (pixels) about peak
+        | **hewp**:    half energy width (pixels) about peak
+        | **w90p**:    W90 (90% width) (pixels) about peak
+        | **fwhmc**:   full width half maximum (pixels) about centroid
+        | **hewc**:    half energy width (pixels) about centroid
+        | **w90c**:    W90 (90% width) (pixels) about centroid
+        | **fit**:     parameters from peak fit using peakchisq() 
+    |
+    | Fit performed if bvar!=0.
+    | Parameters are saved in the list fit (see function srchmin())
+    |   0:      peak value (no error range calculated)
+    |   1:      peak X pixel position with 90% error range
+    |   2:      peak Y pixel position with 90% error range
+    |   3:      Lorentzian width including 90% upper and lower bounds
+    |
+    | The position of the beam is the current position within the image.
+    | Use function setpos() to set the current position.
     """
     a=imagesfor.qri_beam(arr,rbeam,blev,bvar)
     b=bdata()
@@ -395,29 +449,34 @@ def beam(arr,rbeam,blev,bvar):
     return b
 def lecbeam(arr,s,h,blev,bvar,nt):
     """Analysis of source above background in a lobster eye cross-beam
-        arr      image array
-        s        size of cross-beam square area in pixels
-        h        height of cross-arm quadrant in pixels (=2d/L)
-        blev     average background level per pixel (to be subtracted)
-        bvar     variance on blev (-ve for counting statistics)
-        nt       dimension of output quadrant flux distribution in pixels
-    return   list of the following:
-        qua      quadrant surface brightness distribution array nt by nt
-        quan     quadrant  pixel occupancy array nt by nt
-        nsam     number of pixels in beam
-        bflux    background in beam (e.g. counts)
-        bsigma   standard deviation of background
-        flux     source flux above background in beam (e.g. counts)
-        fsigma   standard deviation of source flux
-        peak     source x,y peak position
-        cen      source x,y centroid position
-        hew      half energy width (pixels)
-        w90      W90 (90% width) (pixels)
-        ahew     half energy area (sq pixels)
-        aw90     W90 (90% width) area (sq pixels)
-        fpeak    flux in peak pixel
-    The position of the beam is the current position within the image.
-    Use function setpos() to set the current position.
+   
+    Args:
+        arr:     image array
+        s:       size of cross-beam square area in pixels
+        h:       height of cross-arm quadrant in pixels (=2d/L)
+        blev:    average background level per pixel (to be subtracted)
+        bvar:    variance on blev (-ve for counting statistics)
+        nt:      dimension of output quadrant flux distribution in pixels
+    
+    Returns:
+        list of the following
+    | **qua**:     quadrant surface brightness distribution array nt by nt
+    | **quan**:    quadrant  pixel occupancy array nt by nt
+    | **nsam**:    number of pixels in beam
+    | **bflux**:   background in beam (e.g. counts)
+    | **bsigma**:  standard deviation of background
+    | **flux**:    source flux above background in beam (e.g. counts)
+    | **fsigma**:  standard deviation of source flux
+    | **peak**:    source x,y peak position
+    | **cen**:     source x,y centroid position
+    | **hew**:     half energy width (pixels)
+    | **w90**:     W90 (90% width) (pixels)
+    | **ahe**:     half energy area (sq pixels)
+    | **aw9**:     W90 (90% width) area (sq pixels)
+    | **fpeak**:   flux in peak pixel
+    |
+    | The position of the beam is the current position within the image.
+    | Use function setpos() to set the current position.
     """
     a=imagesfor.qri_lecbeam(arr,s,h,blev,bvar,nt)
     b=bdata()
@@ -438,94 +497,102 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     return b
 def lecimage(s,h,b,xcen,ycen,nx,ny):
     """Create an image array of the lobster eye cross-beam
-        s       size of cross-beam square area in pixels
-        h       height of cross-arm triangle in pixels (=2d/L)
-        b       jwidth of cross-arm triangle in pixels
-        xcen    centre pixel (see coords below)
-        ycen    centre pixel (see coords below)
-        nx      first dimension of array
-        ny      second dimension of array
-    return  image array
-        Coordinate system for xcen,ycen is:
-        x runs from 0.0 on left to nx on right
-        Y runs from 0.0 on bottom to ny on top
-        Centre of bottom left pixel is therefore 0.5,0.5
-        Centre of top right pixel is nx-0.5,ny-0.5
+
+    Args:
+        s:      size of cross-beam square area in pixels
+        h:      height of cross-arm triangle in pixels (=2d/L)
+        b:      jwidth of cross-arm triangle in pixels
+        xcen:   centre pixel (see coords below)
+        ycen:   centre pixel (see coords below)
+        nx:     first dimension of array
+        ny:     second dimension of array
+    
+    Returns:
+        image array
+
+    Coordinate system for xcen,ycen is:
+        | x runs from 0.0 on left to nx on right
+        | Y runs from 0.0 on bottom to ny on top
+        | Centre of bottom left pixel is therefore 0.5,0.5
+        | Centre of top right pixel is nx-0.5,ny-0.5
     """
     a=imagesfor.qri_lecimage(s,h,b,xcen,ycen,nx,ny)
     return a
 def lepsf(s,h,g,eta,xcen,ycen,nx,ny):
     """Create an image of the lobster eye PSF
-        s       size of cross-beam square area in pixels
-        h       height of cross-arm triangle in pixels (=2d/L)
-        g       width of Lorentzian central spot in pixels
-        eta     cross-arm to peak ratio at centre
-        xcen    centre of PSF (see below for coords. system)
-        ycen    centre of PSF (see below for coords. system)
-        nx      first dimension of array
-        ny      second dimension of array
-    return  image array
-        Coordinate system for xcen,ycen is:
-        x runs from 0.0 on left to nx on right
-        Y runs from 0.0 on bottom to ny on top
-        Centre of bottom left pixel is therefore 0.5,0.5
-        Centre of top right pixel is nx-0.5,ny-0.5
+
+    Args:
+        s:      size of cross-beam square area in pixels
+        h:      height of cross-arm triangle in pixels (=2d/L)
+        g:      width of Lorentzian central spot in pixels
+        eta:    cross-arm to peak ratio at centre
+        xcen:   centre of PSF (see below for coords. system)
+        ycen:   centre of PSF (see below for coords. system)
+        nx:     first dimension of array
+        ny:     second dimension of array
+    
+    Returns:
+        image array
+    
+    Coordinate system for xcen,ycen is:
+        | x runs from 0.0 on left to nx on right
+        | Y runs from 0.0 on bottom to ny on top
+        | Centre of bottom left pixel is therefore 0.5,0.5
+        | Centre of top right pixel is nx-0.5,ny-0.5
     """
     a=imagesfor.qri_lepsf(s,h,g,eta,xcen,ycen,nx,ny)
     return a
 def lebin(xe,ye,s,h,g,eta,nx,ny):
-    """Create an image from an event list using lobster eye psf
-        xe       x event positions, pixels
-        ye       y event positions, pixels
-        s       size of cross-beam square area in pixels
-        h       height of cross-arm triangle in pixels (=2d/L)
-        g       width of Lorentzian central spot in pixels
-        eta     cross-arm to peak ratio at centre
-        nx      first dimension of array
-        ny      second dimension of array
-    return  image array
-        Event positions assumed to run:
-            x 0 left edge to nx right edge
-            y 0 bottom edge to ny top edge
-        Therefore centre of left bottom pixel is 0.5,0.5
-        The binning is effectively a cross-correlation of the event list with the lobster eye cross-beam.
+    """Create an image from an event list binning using lobster eye psf
+    
+    The image is effectively a cross-correlation of the event list with the lobster eye cross-beam.
+
+    Args:
+        xe:      x event positions, pixels
+        ye:      y event positions, pixels
+        s:      size of cross-beam square area in pixels
+        h:      height of cross-arm triangle in pixels (=2d/L)
+        g:      width of Lorentzian central spot in pixels
+        eta:    cross-arm to peak ratio at centre
+        nx:     first dimension of array
+        ny:     second dimension of array
+    
+    Returns:
+        image array
+    
+    |   Event positions assumed to run:
+    |       x: 0 left edge to nx right edge
+    |       y: 0 bottom edge to ny top edge
+    |   Therefore centre of left bottom pixel is 0.5,0.5
     """
     a=imagesfor.qri_lebin(xe,ye,s,h,g,eta,nx,ny)
     return a
 def setfield(nx,xleft,xright,ny,ybot,ytop):
     """Set local coordinates for image field
-        nx     number of columns
-        xleft  local x left edge
-        xright local x right edge
-        ny     number of rows
-        ybot   local y bottom edge
-        ytop   local y top edge
+
+    Args:
+        nx:     number of columns
+        xleft:  local x left edge
+        xright: local x right edge
+        ny:    number of rows
+        ybot:  local y bottom edge
+        ytop:  local y top edge
     """
     imagesfor.qri_setfield(nx,xleft,xright,ny,ybot,ytop)
-def setsky(xtodeg,ytodeg,ipr,mjd,ra,dec,roll):
-    """Set sky coordinates for image field
-        xtodeg  scale from local x to degrees (usually -ve)
-        ytodeg  scale from local y to degrees
-        ipr     projection between local XY and local spherical
-            0 Plate Carre
-            1 Aitoff (Hammer)
-            2 Lambert (equatorial aspect of Azimuthal equal-area projection)
-        mjd     Modified Julian date
-        ra      Right Ascension (degrees J2000 at local origin)
-        dev     Declination (degrees J2000 at local origin)
-        roll    Roll angle (degrees from North to +ve elev. +ve clockwise)
-    """
-    imagesfor.qri_setsky(xtodeg,ytodeg,ipr,mjd,ra,dec,roll)
+
 class iposition: pass
 def getpos():
     """Get current position in image field
-    return   list with following:
-        pix      pixel position
-        xyl      local position
-        aes      local azimuth,elevation degrees
-        equ      Celestial RA,DEC degrees J2000
-        ecl      Ecliptic EA,EL degrees
-        gal      Galactic LII,BII degrees
+
+    Returns:
+        list with following
+
+    |   **pix**:     pixel position
+    |   **xyl**:     local position
+    |   **aes**:     local azimuth,elevation degrees
+    |   **equ**:     Celestial RA,DEC degrees J2000
+    |   **ecl**:     Ecliptic EA,EL degrees
+    |   **gal**:     Galactic LII,BII degrees
     """
     a=imagesfor.qri_getpos()
     b=iposition()
@@ -538,56 +605,75 @@ def getpos():
     return b
 def setpos(ipos,p):
     """Set current position in image field
-        ipos    coordinate index
-            1 pixel 0-NCOLS, 0-NROWS
-            2 local X,Y
-            3 local azimuth,elevation degrees
-            4 Celestial RA,DEC degrees J2000
-            5 Ecliptic EA,EL degrees
-            6 Galactic LII,BII degrees
-        p       position coordinate pair
-    return  current position using getpos()
+
+    Args:
+        ipos:   coordinate index
+        p:      position coordinate pair
+
+    ipos values:
+        | 1: pixel 0-NCOLS, 0-NROWS
+        | 2:  local X,Y
+        | 3:  local azimuth,elevation degrees
+        | 4:  Celestial RA,DEC degrees J2000
+        | 5:  Ecliptic EA,EL degrees
+        | 6:  Galactic LII,BII degrees
+    
+    Returns:
+        current position using getpos()
     """
     imagesfor.qri_setpos(ipos,p)
     return getpos()
+def setsky(xtodeg,ytodeg,ipr,mjd,ra,dec,roll):
+    """Set up sky coordinates for image field
+
+    Args:
+        xtodeg: scale from local x to degrees (usually -ve)
+        ytodeg: scale from local y to degrees
+        ipr:    projection between local XY and local spherical
+        mjd:    Modified Julian date
+        ra:     Right Ascension (degrees J2000 at local origin)
+        dec:    Declination (degrees J2000 at local origin)
+        roll:   Roll angle (degrees from North to +ve elev. +ve clockwise)
+
+    ipr values:
+        |   0: Plate Carre
+        |   1: Aitoff (Hammer)
+        |   2: Lambert (equatorial aspect of Azimuthal equal-area projection)
+    """
+    imagesfor.qri_setsky(xtodeg,ytodeg,ipr,mjd,ra,dec,roll)
 # Python QSOFT locator
 def plt_show_locator(fg,npos):
     """Get local coordinate positions using the cursor
-        fg      figure id returned by plt.figure()
-        npos    number of positions to be retured (clicked)
-    return  xx,yy 2 arrays containing npos local coordinates
+
+    Args:
+        fg:     figure id returned by plt.figure()
+        npos:   number of positions to be retured (clicked)
+    
+    Returns:
+        xx,yy,  2 arrays containing npos local coordinates
+    
     This routine provides a basic level of interaction with a displayed figure.
     It is used in place of a simple plt.show() call so that npos local coordinate
     positions can be selected interactively using the cursor from a displayed image
     and returned in arrays to the user.
     """
-    xx=np.empty(npos)
-    yy=np.empty(npos)
-    ipos=0
-    def onclick(event):
-        nonlocal xx
-        nonlocal yy
-        nonlocal ipos
-        nonlocal npos
-        xx[ipos]=event.xdata
-        yy[ipos]=event.ydata
-        ipos=ipos+1
-        if ipos==npos:
-            plt.close()
-    fg.canvas.mpl_connect("button_press_event",onclick)
-    plt.show()
-    return xx,yy
+    return locator.plt_show_locator(fg,npos)
 # Convert position to local XY coords
 def toxy(ipos,p):
     """Convert position to local xy coordinates
-        ipos    coordinate index
-            1 pixel 0-NCOLS, 0-NROWS
-            2 local X,Y
-            3 local azimuth,elevation degrees
-            4 Celestial RA,DEC degrees J2000
-            5 Ecliptic EA,EL degrees
-            6 Galactic LII,BII degrees
-    return  position as local xy
+
+    Args:
+        ipos:   coordinate index
+
+    | 1: pixel 0-NCOLS, 0-NROWS
+    | 2: local X,Y
+    | 3: local azimuth,elevation degrees
+    | 4: Celestial RA,DEC degrees J2000
+    | 5: Ecliptic EA,EL degrees
+    | 6: Galactic LII,BII degrees
+    
+    Returns:
+        position as local xy
     """
     n=len(p[:,0])
     pout=np.empty([n,2])
@@ -599,7 +685,9 @@ def toxy(ipos,p):
 # Plot a Hammer projection grid on figure pic
 def hamgrid(pic):
     """Plot a Hammer projection grid on figure
-        pic     figure object
+
+    Args:
+        pic:    figure object
     """
     n=45
     gap=10
@@ -625,7 +713,9 @@ def hamgrid(pic):
 # Plot a Lambert projection grid on figure pic
 def lamgrid(pic):
     """Plot a Lambert projection grid on figure
-        pic     figure object
+       
+       Args:
+           pic:    figure object
     """
     n=45
     gap=10

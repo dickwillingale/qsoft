@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Build and Installation &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python, R and IDL" href="using_py_R_IDL.html" />
+    <link rel="prev" title="Welcome to QSOFT" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="using_py_R_IDL.html" title="Python, R and IDL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to QSOFT"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="build-and-installation">
+<h1>Build and Installation<a class="headerlink" href="#build-and-installation" title="Permalink to this headline">¶</a></h1>
+<p>The following software items are required for the build:</p>
+<ul class="simple">
+<li>Fortran compiler - GNU gfortran used in development</li>
+<li>C compiler - GNU gcc used in development</li>
+<li>Python module f2py - to build the modules for Python</li>
+<li>R - to build the shareable libraries for R and IDL</li>
+<li>Python module sphinx - to build the documentation</li>
+</ul>
+<ol class="arabic">
+<li><p class="first">Download from GitHub</p>
+<blockquote>
+<div><p>$ git clone git://github.com/dickwillingale/qsoft.git</p>
+<p>This will create a directory qsoft/</p>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic" start="2">
+<li><p class="first">Move into /your/files/top/qsoft/src</p>
+<blockquote>
+<div><p>$ cd /your/files/top/qsoft/src</p>
+<p>Edit the compile.config so that the compilers CC and F77 and R, F2PY and IDL
+point to the correct executables on your system.
+If you don’t have R or F2PY leave them blank. If your target is IDL you will
+need R to compile the shareable library.</p>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic" start="3">
+<li><p class="first">Move into /your/files/top/qsoft and execute build</p>
+<blockquote>
+<div><p>$ cd /your/files/top/qsoft</p>
+<p>$ ./build</p>
+<p>This will check you have gcc gfortran and R and/or Python with f2py.  It will then create the src/compiler.config file for make and compile the shareable objects.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Put the following line into your /home/.profile</p>
+<blockquote>
+<div><p>. /your/files/top/qsoft/setup_q</p>
+<p>Qsoft will be available when you launch a login terminal.</p>
+</div></blockquote>
+</li>
+<li><p class="first">That’s it.</p>
+<blockquote>
+<div><p>When you start R (or Rscript) it will automatically load the QSOFT applications
+using the /home/.Rprofile file.</p>
+<p>The environment variable PYTHONPATH will point to the qsoft/python_modules
+directory so you can load the modules into Python.</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_modifying.html">Adding New Functions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to QSOFT</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="using_py_R_IDL.html"
+                        title="next chapter">Python, R and IDL</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="using_py_R_IDL.html" title="Python, R and IDL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to QSOFT"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

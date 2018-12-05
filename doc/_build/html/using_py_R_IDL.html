@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python, R and IDL &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qfits - Using FITS Files" href="qfits.html" />
+    <link rel="prev" title="Build and Installation" href="installation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qfits.html" title="qfits - Using FITS Files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Build and Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-r-and-idl">
+<h1>Python, R and IDL<a class="headerlink" href="#python-r-and-idl" title="Permalink to this headline">¶</a></h1>
+<p>All the Fortran functions can be called from Python, R or IDL.
+Because of peculiarities in the syntax and structure of the scripting languages
+there are minor differences in the way the functions are accessed.</p>
+<p>The documentation of all the functions uses the Python implementation. Where
+there are significant differences in the R or IDL versions these are
+mentioned in the text.</p>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>The directory $QSOFT/python_modules is included in the PYTHONPATH at set up so
+that the python  modules can be imported in the usual way. Here is a
+snippet of a Python script using the astro.cosmo() function</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Test of Cosmological parameter calculations etc.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astro</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="c1">#</span>
+<span class="n">zmax</span><span class="o">=</span><span class="mi">5</span>
+<span class="c1"># Einstein de Sitter</span>
+<span class="n">c1</span><span class="o">=</span><span class="n">astro</span><span class="o">.</span><span class="n">cosmo</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">zmax</span><span class="p">)</span>
+<span class="c1"># Low density</span>
+<span class="n">c2</span><span class="o">=</span><span class="n">astro</span><span class="o">.</span><span class="n">cosmo</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">zmax</span><span class="p">)</span>
+<span class="c1"># High Lambda</span>
+<span class="n">c3</span><span class="o">=</span><span class="n">astro</span><span class="o">.</span><span class="n">cosmo</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="n">zmax</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rscript">
+<h2>RScript<a class="headerlink" href="#rscript" title="Permalink to this headline">¶</a></h2>
+<p>The file .Rprofile in the users home directory is executed by Rscript at start
+up to dynamically load the shareable libraries. The QSOFT R function names
+are prefixed according to the module library/subject as follows</p>
+<ul class="simple">
+<li>utilities: qr_</li>
+<li>qfits: qr_fits</li>
+<li>images: qri_</li>
+<li>astro: qra_</li>
+<li>xscat: qrx_</li>
+<li>xsrt: qrt_</li>
+</ul>
+<p>Here is a snippet of a Rscript using the astro.cosmo() function</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#!/usr/bin/env Rscript</span>
+<span class="c1"># Test of Cosmological parameter distance calculations</span>
+    zmax<span class="o">&lt;-</span><span class="m">5</span>
+<span class="c1"># Einstein de Sitter</span>
+    c1<span class="o">&lt;-</span>qra_cosmo<span class="p">(</span><span class="m">70</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span>zmax<span class="p">)</span>
+<span class="c1"># Low density</span>
+    c2<span class="o">&lt;-</span>qra_cosmo<span class="p">(</span><span class="m">70</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0</span><span class="p">,</span>zmax<span class="p">)</span>
+<span class="c1"># High Lambda</span>
+    c3<span class="o">&lt;-</span>qra_cosmo<span class="p">(</span><span class="m">70</span><span class="p">,</span><span class="m">0.2</span><span class="p">,</span><span class="m">0.8</span><span class="p">,</span>zmax<span class="p">)</span>
+<span class="kc">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="idl">
+<h2>IDL<a class="headerlink" href="#idl" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python, R and IDL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rscript">RScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#idl">IDL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Build and Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qfits.html"
+                        title="next chapter">qfits - Using FITS Files</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qfits.html" title="qfits - Using FITS Files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Build and Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

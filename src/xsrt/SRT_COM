@@ -1,9 +1,11 @@
 *SRT_COM        Common blocks and parameters for sequential ray tracing
 *-Author Dick Willingale 1996-Nov-29
 *Added concom RW 2012-Jul-6
+*Added IDFT() Vladimir Tichy 2017
 C Surface deformation table
         INTEGER MAXDF,MAXDSAM,IDUM1
         PARAMETER (MAXDF=20,MAXDSAM=50000)
+        INTEGER IDFT(MAXDF) 
         INTEGER IDFP(5,MAXDF)
         INTEGER IDFM(3,MAXDF),IDSAM
         DOUBLE PRECISION DSAM(MAXDSAM)
@@ -39,7 +41,7 @@ C Useful constants
         PARAMETER (PIBY2=1.5707963267949,PI=PIBY2*2.D0)
 C
         COMMON/SRTCOM/IDFP,IDFM,IDSAM,IDUM1,
-     +  DSAM,PAR,NPAR,NSUR,ISQP,IPAR,MPAR,
+     +  DSAM,PAR,NPAR,NSUR,ISQP,IPAR,MPAR,IDFT,
      +  ISURS,ISDF,ISTY,IMISS,IHIT,ITRA,NRAYS,ISRC,NDET,NPOS,IDEBUG,IDET
 C 
         integer nrofelts,maxlist,iptype

@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Writing FITS Files &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qfits.functions" href="qfits_functions.html" />
+    <link rel="prev" title="Reading FITS Files" href="qfits_read.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qfits_functions.html" title="qfits.functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="qfits_read.html" title="Reading FITS Files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="qfits.html" accesskey="U">qfits - Using FITS Files</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="writing-fits-files">
+<h1>Writing FITS Files<a class="headerlink" href="#writing-fits-files" title="Permalink to this headline">¶</a></h1>
+<p>FITS files can be created using a Python or R script as
+illustrated below. Python uses methods in class fitsfile and
+class fitshdu. R uses functions qr_fits*().</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">qfits</span>
+<span class="c1">#</span>
+<span class="n">a</span><span class="o">=</span><span class="n">qfits</span><span class="o">.</span><span class="n">fitsfile</span><span class="p">(</span><span class="s2">&quot;new&quot;</span><span class="p">)</span>
+<span class="c1"># Primary array</span>
+<span class="n">hdu</span><span class="o">=</span><span class="n">qfits</span><span class="o">.</span><span class="n">fitshdu</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mf">101.1</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">data_array</span><span class="o">=</span><span class="n">arr</span>
+<span class="n">a</span><span class="o">.</span><span class="n">hdu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+<span class="c1"># Extension Arrays</span>
+<span class="n">hdu</span><span class="o">=</span><span class="n">qfits</span><span class="o">.</span><span class="n">fitshdu</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">iarr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">iarr</span><span class="o">=</span><span class="n">iarr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">iarr</span><span class="o">.</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">data_array</span><span class="o">=</span><span class="n">iarr</span>
+<span class="c1"># Add some comments</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">cr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;This is a test comment&quot;</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">cr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;This is some history&quot;</span><span class="p">)</span>
+<span class="c1"># keywords</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;TESTD&quot;</span><span class="p">]</span><span class="o">=</span><span class="mf">55.5</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kc</span><span class="p">[</span><span class="s2">&quot;TESTD&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a test double value&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;TESTJ&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">28</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kc</span><span class="p">[</span><span class="s2">&quot;TESTJ&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a test integer value&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;TESTL&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">True</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kc</span><span class="p">[</span><span class="s2">&quot;TESTL&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a true logical value&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;TESTF&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">False</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kc</span><span class="p">[</span><span class="s2">&quot;TESTF&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a false logical value&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;TESTS&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a string&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">kc</span><span class="p">[</span><span class="s2">&quot;TESTS&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;a test string value&quot;</span>
+<span class="n">a</span><span class="o">.</span><span class="n">hdu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+<span class="c1"># Tables</span>
+<span class="n">hdu</span><span class="o">=</span><span class="n">qfits</span><span class="o">.</span><span class="n">fitshdu</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ix</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">ix</span><span class="o">*.</span><span class="mi">1</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">ix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ix</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;aaaaaaaaaaa&quot;</span><span class="p">,</span><span class="s2">&quot;bbbbbbbbbbb&quot;</span><span class="p">,</span><span class="s2">&quot;ccccccccccc&quot;</span><span class="p">,</span><span class="s2">&quot;ddddddddddd&quot;</span><span class="p">]</span>
+<span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">False</span><span class="p">,</span><span class="bp">True</span><span class="p">])</span>
+<span class="n">q</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">s</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">55</span><span class="o">+</span><span class="mi">22j</span><span class="p">,</span><span class="mi">66</span><span class="o">+</span><span class="mi">23j</span><span class="p">,</span><span class="mi">77</span><span class="o">+</span><span class="mi">24j</span><span class="p">,</span><span class="mi">88</span><span class="o">+</span><span class="mi">25j</span><span class="p">])</span>
+<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b_bits</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1000000111&quot;</span><span class="p">,</span><span class="s2">&quot;0111001101&quot;</span><span class="p">,</span><span class="s2">&quot;0010000010&quot;</span><span class="p">,</span><span class="s2">&quot;0001101100&quot;</span><span class="p">]</span>
+<span class="n">rnames</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;r1&quot;</span><span class="p">,</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span><span class="s2">&quot;r3&quot;</span><span class="p">,</span><span class="s2">&quot;r4&quot;</span><span class="p">]</span>
+<span class="n">short</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span><span class="mf">2.2</span><span class="p">,</span><span class="mf">3.3</span><span class="p">])</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;ix&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">ix</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">units</span><span class="p">[</span><span class="s2">&quot;ix&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;splogs&quot;</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">x</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;xx&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">xx</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">y</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">z</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;q&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">q</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">s</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;b_bits&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">b_bits</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;short&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">short</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;rnames&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">rnames</span>
+<span class="n">a</span><span class="o">.</span><span class="n">hdu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">a</span><span class="o">.</span><span class="n">nhdu</span><span class="o">=</span><span class="mi">3</span>
+<span class="c1"># Print a summary and save</span>
+<span class="n">a</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;test_fitsnew.fits&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#!/usr/bin/env Rscript</span>
+qr_fitsnew<span class="p">(</span><span class="s">&quot;fitswrite_test.fits&quot;</span><span class="p">)</span>
+<span class="c1"># Primary array</span>
+arr<span class="o">&lt;-</span><span class="kp">seq</span><span class="p">(</span>from<span class="o">=</span><span class="m">10.1</span><span class="p">,</span>to<span class="o">=</span><span class="m">20</span><span class="p">,</span>length.out<span class="o">=</span><span class="m">100</span><span class="p">)</span>
+<span class="kp">dim</span><span class="p">(</span>arr<span class="p">)</span><span class="o">&lt;-</span><span class="kt">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="m">20</span><span class="p">)</span>
+qr_fitsparrd<span class="p">(</span>arr<span class="p">)</span>
+<span class="c1"># Extension Arrays</span>
+iarr<span class="o">&lt;-</span><span class="m">100</span><span class="o">:</span><span class="m">1</span>
+<span class="kp">dim</span><span class="p">(</span>iarr<span class="p">)</span><span class="o">&lt;-</span><span class="kt">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="m">20</span><span class="p">)</span>
+qr_fitsparrj<span class="p">(</span>iarr<span class="p">)</span>
+<span class="c1"># Comments and history cards</span>
+qr_fitspcom<span class="p">(</span><span class="s">&quot;This is a test comment&quot;</span><span class="p">)</span>
+qr_fitsphis<span class="p">(</span><span class="s">&quot;This is some history&quot;</span><span class="p">)</span>
+qr_fitsempty<span class="p">()</span>
+<span class="c1"># keywords</span>
+qr_fitspkeyd<span class="p">(</span><span class="s">&quot;TESTD&quot;</span><span class="p">,</span><span class="m">55.5</span><span class="p">,</span><span class="s">&quot;a test double value&quot;</span><span class="p">)</span>
+qr_fitspkeyj<span class="p">(</span><span class="s">&quot;TESTJ&quot;</span><span class="p">,</span><span class="m">28</span><span class="p">,</span><span class="s">&quot;a test integer value&quot;</span><span class="p">)</span>
+qr_fitspkeyl<span class="p">(</span><span class="s">&quot;TESTL&quot;</span><span class="p">,</span><span class="bp">T</span><span class="p">,</span><span class="s">&quot;a true logical value&quot;</span><span class="p">)</span>
+qr_fitspkeyl<span class="p">(</span><span class="s">&quot;TESTF&quot;</span><span class="p">,</span><span class="bp">F</span><span class="p">,</span><span class="s">&quot;a false logical value&quot;</span><span class="p">)</span>
+qr_fitspkeys<span class="p">(</span><span class="s">&quot;TESTS&quot;</span><span class="p">,</span><span class="s">&quot;a string&quot;</span><span class="p">,</span><span class="s">&quot;a test string value&quot;</span><span class="p">)</span>
+<span class="c1"># Tables</span>
+x<span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">10.10</span><span class="p">,</span><span class="m">20.20</span><span class="p">,</span><span class="m">30.30</span><span class="p">,</span><span class="m">40.40</span><span class="p">)</span>
+ix<span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">30</span><span class="p">,</span><span class="m">40</span><span class="p">))</span>
+y<span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;aaaaaaaaaaa&quot;</span><span class="p">,</span><span class="s">&quot;bbbbbbbbbbb&quot;</span><span class="p">,</span><span class="s">&quot;ccccccccccc&quot;</span><span class="p">,</span><span class="s">&quot;ddddddddddd&quot;</span><span class="p">)</span>
+z<span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="bp">T</span><span class="p">,</span><span class="bp">T</span><span class="p">,</span><span class="bp">F</span><span class="p">,</span><span class="bp">T</span><span class="p">)</span>
+<span class="kp">q</span><span class="o">&lt;-</span><span class="kp">as.raw</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">6</span><span class="p">))</span>
+s<span class="o">&lt;-</span> <span class="kt">complex</span><span class="p">(</span>real<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">55</span><span class="p">,</span><span class="m">66</span><span class="p">,</span><span class="m">77</span><span class="p">,</span><span class="m">88</span><span class="p">),</span>imaginary<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">22</span><span class="p">,</span><span class="m">23</span><span class="p">,</span><span class="m">24</span><span class="p">,</span><span class="m">25</span><span class="p">))</span>
+rnames<span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;r1&quot;</span><span class="p">,</span><span class="s">&quot;r2&quot;</span><span class="p">,</span><span class="s">&quot;r3&quot;</span><span class="p">,</span><span class="s">&quot;r4&quot;</span><span class="p">)</span>
+tt<span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>x<span class="p">,</span>ix<span class="p">,</span>y<span class="p">,</span>z<span class="p">,</span><span class="kp">q</span><span class="p">,</span>s<span class="p">,</span>stringsAsFactors<span class="o">=</span><span class="bp">F</span><span class="p">,</span>row.names<span class="o">=</span>rnames<span class="p">)</span>
+qr_fitspobj<span class="p">(</span>tt<span class="p">,</span><span class="s">&quot;dframe&quot;</span><span class="p">)</span>
+qr_fitsclose<span class="p">()</span>
+<span class="c1"># Print a summary</span>
+fitsin<span class="o">&lt;-</span> qr_fitsread<span class="p">(</span><span class="s">&quot;fitswrite_test.fits&quot;</span><span class="p">)</span>
+qr_fitsprint<span class="p">(</span>fitsin<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="qfits_read.html">Reading FITS Files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Writing FITS Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qfits_functions.html">qfits.functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="qfits_read.html"
+                        title="previous chapter">Reading FITS Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qfits_functions.html"
+                        title="next chapter">qfits.functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qfits_functions.html" title="qfits.functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="qfits_read.html" title="Reading FITS Files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="qfits.html" >qfits - Using FITS Files</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

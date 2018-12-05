@@ -34,7 +34,7 @@ putcolu.c putcolui.c putcoluj.c putkey.c region.c scalnull.c \
 swapproc.c wcssub.c wcsutil.c imcompress.c quantize.c ricecomp.c \
 pliocomp.c fits_hcompress.c fits_hdecompress.c zuncompress.c zcompress.c \
 adler32.c crc32.c inffast.c inftrees.c trees.c zutil.c \
-deflate.c infback.c inflate.c uncompr.c \
+deflate.c infback.c inflate.c uncompr.c sys_unlink.c \
 f77_wrap1.c f77_wrap2.c f77_wrap3.c f77_wrap4.c
 # Fortran source files for internal library
 LSOURCES = len_trim.f sys_getlun.f

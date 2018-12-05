@@ -1,25 +1,32 @@
-# qfits - qpy fitsio
+## @package qfits
+# I/O for fits files in Qsoft
 from __future__ import print_function
 import qfitsfor 
 import numpy as np
 from datetime import datetime
 # Initialisation
 def init():
+    """Initialize common blocks on import"""
     qfitsfor.qrf_init()
 init()
 # Get column from table on FITS file
 def fitsgcol(ic,typ,nrows,rp,vr):
-# ic        column number
-# typ        column data type
-# nrows        number of column rows
-# rp        repeat count
-# vr        If rp zero then vr[nrows] is variable count for each row
-# The following parameters are used:
-#      nc - the number of calls required to get complete column
-#      ne -length returned per call
-#      qt 1 complete column returned in 1 call
-#      qt 2 1 call per row fixed width returned as a list
-#      qt 3 variable width column 1 call per row returned as a list
+    """Get column from table on FITS file - internal function
+
+    Args:
+        ic:       column number
+        typ:      column data type
+        nrows:    number of column rows
+        rp:       repeat count
+        vr:       If rp zero then vr[nrows] is variable count for each row
+
+    The following variables are used internally:
+        | nc: the number of calls required to get complete column
+        | ne: length returned per call
+        | qt: 1 complete column returned in 1 call
+        | qt: 2 1 call per row fixed width returned as a list
+        | qt: 3 variable width column 1 call per row returned as a list
+    """
     if rp==0:
 # Variable width column and request for each row
         nc=nrows
@@ -51,6 +58,29 @@ def fitsgcol(ic,typ,nrows,rp,vr):
     return vc
 # Get column values from FITS file
 def fitsgcolv(typ,ic,ii,ne):
+    """Get columm values from FITS file - internal function
+
+    Args:
+        typ:       column data type returned
+        ic:        column number
+        ii:        first row number
+        ne:        number of elements
+
+    **typ** values:
+        | 0   none
+        | 1   integer
+        | 2   double
+        | 3   logical
+        | 4   bit as string 1 or 0
+        | 5   real complex
+        | 6   double complex
+        | 7   byte integer 8
+        | 8   bit row as a character string
+
+    Returns:
+        values from column
+
+    """
     if ne==0:
         return None
     if typ==1:
@@ -79,6 +109,18 @@ def fitsgcolv(typ,ic,ii,ne):
 # Set current fits HDU and return info
 class hduinfo: pass
 def fitshduinfo(ihdu):
+    """Get FITS header dimension info - internal function
+
+    Args:
+        ihdu:   HDU index
+        
+    Returns:
+        | list of following
+        |   **hdutype**    type of HDU
+        |   **naxis**      number of dimensions
+        |   **naxes**      size of dimensions (nrows,ncols)
+        |   **nkeys**      number of keywords
+    """
     a=qfitsfor.qr_fitshdu(ihdu,10)
     b=hduinfo()
     b.hdutype=a[0]
@@ -101,6 +143,25 @@ def fitshduinfo(ihdu):
     return b
 # Get key data
 def fitsgetkey(ikey):
+    """Get FITS keyword - internal function
+
+    Args:
+        ikey:    keyword index
+
+    Returns:
+        | **key**    keyword string
+        | **ki**     number of characters in keyword string
+        | **sval**   string value
+        | **si**     number of characters in string value
+        | **jval**   integer value
+        | **dval**   double value
+        | **lval**   logical value
+        | **ktype**  type of value returned
+        |        1 integer in jval
+        |        2 real in dval
+        |        3 logical in jval 
+        |        4 string in sval
+    """
     a=qfitsfor.qr_fitsgetkey(ikey)
     ki=a[1]
     key=a[0][:ki].decode()
@@ -115,16 +176,47 @@ def fitsgetkey(ikey):
     return key,ki,sval,si,jval,dval,lval,ktype,cval,ci
 # Get data types
 def fitstypes(hdutype,ncols):
+    """Get FITS header data types - internal function
+
+    Args:
+        hdutype:   type of HDU
+        ncols:     number of columns (if hdutype=0)
+
+    Returns:
+        | **ctype**   column type
+        | **rp**      column repeat count
+    """
     a=qfitsfor.qr_fitstypes(hdutype,ncols)
     ctype=a[0]
     rp=a[1]
     return ctype,rp
 # Open fits file for read/write
 def fitsupdate(filename):
+    """Open FITS file for read/write
+
+    Args:
+        filename:   FITS file name
+
+    Returns:
+        number of HDU in file
+    """
     return qfitsfor.qr_fitsopen(len(filename),filename,1)
 # Get column info
 class fitstab: pass
 def fitscolnam(ic,rr,nrows):
+    """Get FITS table column name - internal routine
+
+    Args:
+        ic:     column index
+        rr:     0 if variable column width
+        nrows:  number of rows
+
+    Returns:
+        | list of following
+        |  **colnam**    column name
+        |  **iname**     number of characters in colnam
+        |  **vrep**      variable repeat count
+    """
     a=qfitsfor.qr_fitscolnam(ic,rr,nrows,500)
     b=fitstab()
     b.colnam=a[0].decode()
@@ -133,6 +225,11 @@ def fitscolnam(ic,rr,nrows):
     return b
 # Put array onto fits file as primary or extension data array
 def fitsparr(arr):
+    """Put array onto fits file - internal function
+
+    Args:
+        arr:    arr of data values
+    """
     nels=np.array(arr.shape,int)
     nel=arr.size
 # Reverse the array indices for FITS which is Fortran like
@@ -146,6 +243,12 @@ def fitsparr(arr):
 # Define fitshdu object
 class fitshdu:
     def __init__(self,ihdu,hdutype):
+        """FITS HDU object
+
+        Args:
+            ihdu:    HDU index
+            hdutype: HDU type
+        """
         self.ihdu=ihdu
         self.htype=hdutype
 # Comment records are held in a list
@@ -162,6 +265,7 @@ class fitshdu:
             self.units={}
 # List fits HDU object
     def display(self):
+        """List FITS HDU object"""
         print("************* HDU",self.ihdu,"***************")
         print("hdu.htype      ",self.htype)
         for ic in range(len(self.cr)):
@@ -188,12 +292,18 @@ class fitshdu:
 # Define fitsfile object
 class fitsfile:
     def display(self):
+        """List FITS object"""
         print("filename       ",self.filename)
         print("date           ",self.date)
         print("nhdu           ",self.nhdu)
         for i in range(self.nhdu):
             self.hdu[i].display()
     def __init__(self,filename):
+        """Read object from FITS file or create new FITS object
+
+        Args:
+           filename:  FITS filename ("new" to create new object) 
+        """
         self.filename=filename
         self.date=str(datetime.now())
         self.nhdu=0
@@ -273,6 +383,11 @@ class fitsfile:
         qfitsfor.qr_fitsclose()
 # Save to  file
     def save(self,filename):
+        """Save FITS object to file
+
+        Args:
+            filename:  FITS file name
+        """
 # Open new fits file
         qfitsfor.qr_fitsnew(len(filename),filename)
         self.filename=filename
@@ -308,6 +423,11 @@ class fitsfile:
         qfitsfor.qr_fitsclose()
 # Create binary table HDU on fits file
 def fitsptab(hdu):
+    """Create binary table HDU on FITS object
+
+    Args:
+       hdu:    FITS HDU object
+    """
     tab=hdu.table
     units=hdu.units
 #    names=tab.keys()

@@ -47,6 +47,7 @@ C Allocate parameter index
 		IF(NS.GT.NSUR) THEN
 			WRITE(*,*) 
      +			'SRT_SETF error - attempt to modify null surface'
+                        WRITE(*,*) 'NS NSUR',NS,NSUR
 			ISTAT=1
 			RETURN
 		ENDIF

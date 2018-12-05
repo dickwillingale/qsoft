@@ -1,0 +1,148 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Adding New Functions &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module Source Code" href="qsoft_source_code.html" />
+    <link rel="prev" title="xsrt.functions" href="xsrt_functions.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qsoft_source_code.html" title="Module Source Code"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_functions.html" title="xsrt.functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="adding-new-functions">
+<h1>Adding New Functions<a class="headerlink" href="#adding-new-functions" title="Permalink to this headline">¶</a></h1>
+<p>The top-level subroutines are written in Fortran 77.</p>
+<p>Subroutines names are prefixed with:</p>
+<ul class="simple">
+<li>QRA_ astronomy/astrophysics</li>
+<li>QRX_ X-ray astronomy/physics</li>
+<li>QRI_ image processing</li>
+<li>QR_FITS for the FITS file interface</li>
+<li>QRT_ sequential rays tracing interface</li>
+<li>QR_ general utilities</li>
+</ul>
+<p>Internal Fortran routines also have prefixes:</p>
+<ul class="simple">
+<li>SRT_ internal sequential ray tracing</li>
+<li>AX_ coordinate transformations</li>
+<li>XX_ X-ray physics</li>
+<li>SYS_ system utilities</li>
+</ul>
+<p>Two general Fortran routines are also suppied, SCAN and LEN_TRIM.</p>
+<p>A few internal routines are written in C or C++. These are best left alone!</p>
+<p>All the source code is held in directory:</p>
+<p>$QSOFT/src/</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_source_code.html">Module Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt_ray_tracing.html">The Ray Tracing Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt_new_surfaces.html">New Surface Elements</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding New Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qsoft_source_code.html">Module Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_ray_tracing.html">The Ray Tracing Routines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_new_surfaces.html">New Surface Elements</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xsrt_functions.html"
+                        title="previous chapter">xsrt.functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qsoft_source_code.html"
+                        title="next chapter">Module Source Code</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qsoft_source_code.html" title="Module Source Code"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_functions.html" title="xsrt.functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

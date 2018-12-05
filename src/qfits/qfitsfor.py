@@ -1,0 +1,1 @@
+"""qfitsfor - Shareable object library"""

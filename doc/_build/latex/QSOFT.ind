@@ -1,0 +1,172 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+
+  \bigletter {\sphinxsymbolsname}
+  \item \_\_init\_\_() (qfits.fitsfile method), \hyperpage{12}
+  \item \_\_init\_\_() (qfits.fitshdu method), \hyperpage{12}
+
+  \indexspace
+  \bigletter A
+  \item aperture() (in module xsrt), \hyperpage{45}
+  \item astro (module), \hyperpage{25}
+
+  \indexspace
+  \bigletter B
+  \item baffle() (in module xsrt), \hyperpage{45}
+  \item beam() (in module images), \hyperpage{16}
+  \item bfield() (in module xsrt), \hyperpage{46}
+  \item binxy() (in module images), \hyperpage{17}
+  \item brems() (in module astro), \hyperpage{25}
+  \item btoc() (in module astro), \hyperpage{25}
+
+  \indexspace
+  \bigletter C
+  \item c1nest() (in module xsrt), \hyperpage{46}
+  \item cosmo() (in module astro), \hyperpage{26}
+  \item ctob() (in module astro), \hyperpage{26}
+
+  \indexspace
+  \bigletter D
+  \item defmat() (in module xsrt), \hyperpage{47}
+  \item deform() (in module xsrt), \hyperpage{47}
+  \item defparxy() (in module xsrt), \hyperpage{47}
+  \item detector() (in module xsrt), \hyperpage{48}
+  \item display() (qfits.fitsfile method), \hyperpage{12}
+  \item display() (qfits.fitshdu method), \hyperpage{13}
+  \item dustrings() (in module xscat), \hyperpage{31}
+  \item duststat (class in xscat), \hyperpage{32}
+  \item dustthetascat() (in module xscat), \hyperpage{32}
+
+  \indexspace
+  \bigletter E
+  \item elips() (in module xsrt), \hyperpage{48}
+  \item eltmxt() (in module xsrt), \hyperpage{48}
+
+  \indexspace
+  \bigletter F
+  \item fitscolnam() (in module qfits), \hyperpage{10}
+  \item fitsfile (class in qfits), \hyperpage{12}
+  \item fitsgcol() (in module qfits), \hyperpage{10}
+  \item fitsgcolv() (in module qfits), \hyperpage{10}
+  \item fitsgetkey() (in module qfits), \hyperpage{11}
+  \item fitshdu (class in qfits), \hyperpage{12}
+  \item fitshduinfo() (in module qfits), \hyperpage{11}
+  \item fitsparr() (in module qfits), \hyperpage{12}
+  \item fitsptab() (in module qfits), \hyperpage{12}
+  \item fitstypes() (in module qfits), \hyperpage{12}
+  \item fitsupdate() (in module qfits), \hyperpage{12}
+  \item fresnel() (in module xsrt), \hyperpage{49}
+
+  \indexspace
+  \bigletter G
+  \item gaussian() (in module images), \hyperpage{17}
+  \item getpos() (in module images), \hyperpage{17}
+
+  \indexspace
+  \bigletter H
+  \item habs() (in module astro), \hyperpage{26}
+  \item hamgrid() (in module images), \hyperpage{18}
+
+  \indexspace
+  \bigletter I
+  \item igmtau() (in module astro), \hyperpage{26}
+  \item iigmtau() (in module astro), \hyperpage{27}
+  \item iigmtauvz() (in module astro), \hyperpage{27}
+  \item iismtau() (in module astro), \hyperpage{28}
+  \item images (module), \hyperpage{16}
+  \item init() (in module astro), \hyperpage{28}
+  \item init() (in module images), \hyperpage{18}
+  \item init() (in module qfits), \hyperpage{12}
+  \item init() (in module xsrt), \hyperpage{50}
+  \item ismtau() (in module astro), \hyperpage{28}
+
+  \indexspace
+  \bigletter K
+  \item kbs() (in module xsrt), \hyperpage{50}
+  \item kcorrb() (in module astro), \hyperpage{28}
+  \item king\_profile() (in module images), \hyperpage{18}
+
+  \indexspace
+  \bigletter L
+  \item lamgrid() (in module images), \hyperpage{18}
+  \item lebin() (in module images), \hyperpage{18}
+  \item lecbeam() (in module images), \hyperpage{19}
+  \item lecimage() (in module images), \hyperpage{19}
+  \item lens() (in module xsrt), \hyperpage{51}
+  \item lepsf() (in module images), \hyperpage{20}
+  \item list() (xscat.mievs method), \hyperpage{35}
+  \item lorentzian() (in module images), \hyperpage{20}
+  \item lyftau() (in module astro), \hyperpage{28}
+  \item lyftauvz() (in module astro), \hyperpage{29}
+
+  \indexspace
+  \bigletter M
+  \item miev0() (in module xscat), \hyperpage{32}
+  \item mievs (class in xscat), \hyperpage{35}
+  \item mirror() (in module xsrt), \hyperpage{51}
+  \item moa() (in module xsrt), \hyperpage{51}
+
+  \indexspace
+  \bigletter O
+  \item opgrat() (in module xsrt), \hyperpage{52}
+
+  \indexspace
+  \bigletter P
+  \item peakchisq() (in module images), \hyperpage{21}
+  \item plt\_show\_locator() (in module images), \hyperpage{21}
+  \item prism() (in module xsrt), \hyperpage{52}
+  \item prtathena() (in module xsrt), \hyperpage{53}
+
+  \indexspace
+  \bigletter Q
+  \item qfits (module), \hyperpage{10}
+  \item quaderr() (in module images), \hyperpage{21}
+
+  \indexspace
+  \bigletter R
+  \item rectangles() (in module images), \hyperpage{21}
+  \item reset() (in module astro), \hyperpage{29}
+  \item reset() (in module images), \hyperpage{22}
+  \item reset() (in module xsrt), \hyperpage{54}
+  \item rotate() (in module xsrt), \hyperpage{54}
+  \item rseed() (in module xsrt), \hyperpage{54}
+
+  \indexspace
+  \bigletter S
+  \item save() (qfits.fitsfile method), \hyperpage{12}
+  \item setabund() (in module astro), \hyperpage{29}
+  \item setfield() (in module images), \hyperpage{22}
+  \item setpos() (in module images), \hyperpage{22}
+  \item setsky() (in module images), \hyperpage{22}
+  \item shift() (in module xsrt), \hyperpage{54}
+  \item sipore() (in module xsrt), \hyperpage{54}
+  \item sle() (in module xsrt), \hyperpage{55}
+  \item source() (in module xsrt), \hyperpage{55}
+  \item spider() (in module xsrt), \hyperpage{56}
+  \item spoarr() (in module xsrt), \hyperpage{56}
+  \item sqbeam() (in module images), \hyperpage{23}
+  \item sqmpoarr() (in module xsrt), \hyperpage{57}
+  \item sqpore() (in module xsrt), \hyperpage{58}
+  \item srchmin() (in module images), \hyperpage{24}
+  \item srtlist() (in module xsrt), \hyperpage{58}
+  \item srtreset() (in module xsrt), \hyperpage{59}
+  \item surface() (in module xsrt), \hyperpage{59}
+
+  \indexspace
+  \bigletter T
+  \item toxy() (in module images), \hyperpage{24}
+  \item trace() (in module xsrt), \hyperpage{59}
+
+  \indexspace
+  \bigletter W
+  \item w1nest() (in module xsrt), \hyperpage{60}
+  \item wolter2() (in module xsrt), \hyperpage{60}
+
+  \indexspace
+  \bigletter X
+  \item xfresnel() (in module xscat), \hyperpage{35}
+  \item xopt() (in module xscat), \hyperpage{35}
+  \item xscat (module), \hyperpage{31}
+  \item xsrt (module), \hyperpage{45}
+
+\end{sphinxtheindex}

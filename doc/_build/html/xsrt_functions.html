@@ -1,0 +1,1384 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>xsrt.functions &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Adding New Functions" href="qsoft_modifying.html" />
+    <link rel="prev" title="Ray Tracing and Saving Rays" href="xsrt_tracing.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qsoft_modifying.html" title="Adding New Functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_tracing.html" title="Ray Tracing and Saving Rays"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" accesskey="U">xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xsrt-functions">
+<h1>xsrt.functions<a class="headerlink" href="#xsrt-functions" title="Permalink to this headline">¶</a></h1>
+<p><strong>Utility functions</strong></p>
+<ul class="simple">
+<li>rotate() Rotate surface element</li>
+<li>shift() Shift position of surface element</li>
+<li>rseed() Set random number seed</li>
+<li>srtlist() List all current xsrt parameters</li>
+<li>setreset() Reset Fortran common blocks to inital condition</li>
+</ul>
+<p><strong>Apertures, baffles and support structure</strong></p>
+<ul class="simple">
+<li>aperture() Set up an aperture stop</li>
+<li>baffle() Set up a cylindrical baffle</li>
+<li>spider() Set up a support spider</li>
+</ul>
+<p><strong>Wolter systems</strong></p>
+<ul class="simple">
+<li>w1nest() Set up a Wolter Type I nest</li>
+<li>c1nest() Set up conical approximation to a Wolter type I nest</li>
+<li>sipore() Set up Silicon Pore Optics</li>
+<li>spoarr() Set up Silicon Pore Optics array</li>
+<li>wolter2() Set up Wolter Type II surfaces</li>
+</ul>
+<p><strong>Square pore and Kirkpatrick-Baez systems</strong></p>
+<ul class="simple">
+<li>sqpore() Set up slumped square pore MPOs</li>
+<li>sqmpoarr() Set up an array of square pore MPOs</li>
+<li>kbs() Set up a Silicon Kirkpatrick-Baez stack array</li>
+<li>sle() Set up a Schmidt lobster eye stack</li>
+</ul>
+<p><strong>Common optical elements</strong></p>
+<ul class="simple">
+<li>lens() Set up a lens</li>
+<li>prism() Set up a prism</li>
+<li>mirror() Set up a plane mirror</li>
+<li>elips() Set up elliptical grazing indidence mirror</li>
+<li>moa() Set up a cylindrical Micro Optic Array</li>
+<li>opgrat() Set up a single off-plane grating</li>
+</ul>
+<p><strong>Surface quality and deformations</strong></p>
+<ul class="simple">
+<li>surface() Set surface quality parameters</li>
+<li>fresnel() Calculate reflectivity using Fresnel’s equations</li>
+<li>deform() Set up surface deformation dimensions</li>
+<li>defmat() Load deformation matrix</li>
+<li>defparxy() Set up deformation defined by parameters in x and y axes</li>
+</ul>
+<p><strong>Source of rays, tracing rays, detecting rays</strong></p>
+<ul class="simple">
+<li>source() Set up source of rays</li>
+<li>trace() Perform ray tracing</li>
+<li>detector() Set up detector</li>
+</ul>
+<p><strong>Tracing charged particles through magnetic fields</strong></p>
+<ul class="simple">
+<li>bfield() Calculation of magnetic field for array of dipoles</li>
+<li>eltmxt() Trace electrons through SVOM MXT telescope with magnetic diverter</li>
+<li>prtathena() Trace proton through Athena telescope with magnetic diverter</li>
+</ul>
+<span class="target" id="module-xsrt"></span><dl class="function">
+<dt id="xsrt.aperture">
+<code class="descclassname">xsrt.</code><code class="descname">aperture</code><span class="sig-paren">(</span><em>idd</em>, <em>idf</em>, <em>ap</em>, <em>an</em>, <em>ar</em>, <em>alim</em>, <em>nsurf</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.aperture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up an aperture stop</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – aperture type</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>ap</strong> – position of aperture</li>
+<li><strong>an</strong> – normal to aperture plane</li>
+<li><strong>ar</strong> – reference axis in aperture plane</li>
+<li><strong>alim</strong> – limit values (depend on id see above)</li>
+<li><strong>nsurf</strong> – number of subsequent surfaces per aperture (id=2)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><strong>id</strong> values:</dt>
+<dd><div class="first last line-block">
+<div class="line">1 Single annulus, radial limits (aref,rmin,rmax,0,0,0)</div>
+<div class="line">2 Nested annuli, radial limits  (aref,rmin1,rmax1,rmin2,0,0)</div>
+<div class="line-block">
+<div class="line">aref is an axial reference position used for deformation</div>
+</div>
+<div class="line">3 Hole Cartesian limits (xmin,ymin,xmax,ymax,0,0)</div>
+<div class="line">4 Block Cartesian limits (xmin,ymin,xmax,ymax,0,0)</div>
+<div class="line">5 Cartesian grid limits (pitchx pitchy ribx riby,0,0)</div>
+<div class="line">6 Radial/azimuthal sector limits (rmin,rmax,amin,amax,0,0)</div>
+<div class="line-block">
+<div class="line">amin and amax in radians range 0-2pi</div>
+</div>
+<div class="line">7 Parallelogram limits (xmin,ymin,xmax,ymax,dx,0)</div>
+<div class="line-block">
+<div class="line">where dx is the shear in X over the distance ymax-ymin</div>
+</div>
+<div class="line">8 Aperture for MCO test station limits (hsize dols,0,0,0,0)</div>
+</div>
+</dd>
+</dl>
+<p>The parameter <strong>nsurf</strong> is used for radially nested apertures so that
+the code knows how many surface elements to skip if a ray penitrates
+a particular annulus.</p>
+<p>If the limits are radial the deformation is defined as a vector (1-d
+sampless in azimuth) and is applied in the radial direction.</p>
+<p>If the limits are cartesian, radial/azimuthal or parallelogram
+the deformation is defined over a matrix (2-d) and is applied in the
+direction of the normal.</p>
+<p>No deformation is used for <strong>id=8</strong>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.baffle">
+<code class="descclassname">xsrt.</code><code class="descname">baffle</code><span class="sig-paren">(</span><em>xmin</em>, <em>xmax</em>, <em>rad</em>, <em>ax</em>, <em>ar</em>, <em>rp</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.baffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a cylindrical baffle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>xmin</strong> – axial position of base</li>
+<li><strong>xmax</strong> – axial position of top</li>
+<li><strong>rad</strong> – radius of cylinder</li>
+<li><strong>ax</strong> – axis direction</li>
+<li><strong>ar</strong> – reference direction perpendicular to axis</li>
+<li><strong>rp</strong> – position of vertex</li>
+<li><strong>iq</strong> – surface quality index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The axial positions of the base and top, <strong>xmin</strong> and <strong>xmax</strong>
+are local coordinates wrt <strong>ap</strong> along the <strong>ax</strong> direction.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.bfield">
+<code class="descclassname">xsrt.</code><code class="descname">bfield</code><span class="sig-paren">(</span><em>dm</em>, <em>pdx</em>, <em>pdy</em>, <em>pdz</em>, <em>ddx</em>, <em>ddy</em>, <em>ddz</em>, <em>px</em>, <em>py</em>, <em>pz</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.bfield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation of magnetic field for array of dipoles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dm</strong> – dipole moments (Gauss cm3)</li>
+<li><strong>pdx</strong> – x positions of dipoles (cm)</li>
+<li><strong>pdy</strong> – y positions of dipoles (cm)</li>
+<li><strong>pdz</strong> – z positions of dipoles (cm)</li>
+<li><strong>ddx</strong> – x direction cosines of dipole moments</li>
+<li><strong>ddy</strong> – y direction cosines of dipole moments</li>
+<li><strong>ddz</strong> – z direction cosines of dipole moments</li>
+<li><strong>px</strong> – x positions for calculation</li>
+<li><strong>py</strong> – y positions for calculation</li>
+<li><strong>pz</strong> – z positions for calculation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list of following</div>
+<div class="line-block">
+<div class="line"><strong>bf</strong>     magnitude of B-field Gauss</div>
+<div class="line"><strong>dx</strong>     direction cosines of B-field in x direction</div>
+<div class="line"><strong>dy</strong>     direction cosines of B-field in y direction</div>
+<div class="line"><strong>dz</strong>     direction cosines of B-field in z direction</div>
+<div class="line"><strong>rmin</strong>   minimum distance from dipoles</div>
+</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.c1nest">
+<code class="descclassname">xsrt.</code><code class="descname">c1nest</code><span class="sig-paren">(</span><em>ax</em>, <em>ar</em>, <em>ff</em>, <em>iq</em>, <em>ib</em>, <em>idf</em>, <em>pl</em>, <em>ph</em>, <em>hl</em>, <em>hh</em>, <em>rpl</em>, <em>rph</em>, <em>rhl</em>, <em>rhh</em>, <em>tin</em>, <em>tj</em>, <em>tout</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.c1nest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up conical approximation to a Wolter type I nest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ax</strong> – optical axis</li>
+<li><strong>ar</strong> – reference axis</li>
+<li><strong>ff</strong> – position of focus</li>
+<li><strong>pl</strong> – array of low axial position of parabola</li>
+<li><strong>ph</strong> – array of high axial position of parabola</li>
+<li><strong>hl</strong> – array of low axial position of hyperbola</li>
+<li><strong>hh</strong> – array of high axial position of hyperbola</li>
+<li><strong>rp</strong> – array of radii parabola near join</li>
+<li><strong>rp</strong> – array of radii parabola at input aperture</li>
+<li><strong>rhl</strong> – array of radii hyperbola at exit aperture</li>
+<li><strong>rjh</strong> – array of radii hyperbola near join</li>
+<li><strong>tin</strong> – array of thicknesses of shells at input aperture</li>
+<li><strong>tj</strong> – array of thicknesses of shells at join plane (or near join)</li>
+<li><strong>tout</strong> – array of thicknesses of shells at the output aperture</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The innermost shell is a dummy and provides an inner stop for the nest</p>
+<dl class="docutils">
+<dt>Deformation:</dt>
+<dd>A deformation sub-matrix is required for each shell (not
+including the innermost shell)
+Each matrix covers a grid of points along the axis in mm and azimuth
+in radians. The axial range covers both the 1st and 2nd reflection
+surfaces.
+The values in the matrices are radial displacments mm at the grid
+points.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.defmat">
+<code class="descclassname">xsrt.</code><code class="descname">defmat</code><span class="sig-paren">(</span><em>idd</em>, <em>im</em>, <em>xsam</em>, <em>ysam</em>, <em>zdef</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.defmat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load deformation matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – deformation index</li>
+<li><strong>im</strong> – sub-matrix index (runs from 1-N)</li>
+<li><strong>xsam</strong> – x values</li>
+<li><strong>ysam</strong> – y values</li>
+<li><strong>zdef</strong> – deformation matrix</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note for deformation of a surface of revolution X is axial direction and
+Y is azimuth.</p>
+<p>Used when <strong>it=1</strong> in deform().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.deform">
+<code class="descclassname">xsrt.</code><code class="descname">deform</code><span class="sig-paren">(</span><em>idd</em>, <em>it</em>, <em>nm</em>, <em>nx</em>, <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.deform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up surface deformation dimensions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – deformation index</li>
+<li><strong>it</strong> – deformation type (1 matrix, 2 sin() in x and/or y)</li>
+<li><strong>nm</strong> – number of sub-matrices</li>
+<li><strong>nx</strong> – number of x samples</li>
+<li><strong>ny</strong> – number of y samples</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note when <strong>it=2</strong> the sin() function requires 3 parameters, amplitude (<strong>amp</strong>),
+wavelength (<strong>lam</strong>) and phase (<strong>phi</strong>) all in mm (or the same units)
+<strong>defx=amp.sin(2.pi.(x-phi)/lam)</strong></p>
+<p>If <strong>it</strong> -ve then uses <strong>abs(it)</strong> but expects a 2nd deformation to be
+defined which will be added to the current deformation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.defparxy">
+<code class="descclassname">xsrt.</code><code class="descname">defparxy</code><span class="sig-paren">(</span><em>idd</em>, <em>im</em>, <em>xpar</em>, <em>ypar</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.defparxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets parameters of deformation defined by parameters in x and y axes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>idd</strong> – deformation index</li>
+<li><strong>im</strong> – sub-surface index</li>
+<li><strong>xpar</strong> – parameters of deformations in x axis</li>
+<li><strong>ypar</strong> – parameters of deformations in y axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Empty field [] can be used as xpar or ypar if there are no deformations
+in the corresponding axis.</p>
+<p>Use this routine to set parameteric deformations, e.g.
+when <strong>it=2</strong> in deform() the sin() function requires 3 parameters,
+amplitude (<strong>amp</strong>), wavelength (<strong>lam</strong>) and phase (<strong>phi</strong>) all in mm
+(or the same units) <strong>defx=amp.sin(2.pi.(x-phi)/lam)</strong></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.detector">
+<code class="descclassname">xsrt.</code><code class="descname">detector</code><span class="sig-paren">(</span><em>idd</em>, <em>dpos</em>, <em>dnml</em>, <em>drfx</em>, <em>dlim</em>, <em>radet</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.detector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up detector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – detector type</li>
+<li><strong>dpos</strong> – detector position</li>
+<li><strong>dnml</strong> – detector normal</li>
+<li><strong>drfx</strong> – detector reference axis</li>
+<li><strong>dlim</strong> – detector limits</li>
+<li><strong>radet</strong> – radius of curvature of spherical detector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><strong>id</strong> values:</dt>
+<dd><div class="first last line-block">
+<div class="line">1 planar detector, radial limits</div>
+<div class="line">2 planar detector, cartesian limits</div>
+<div class="line">3 spherical detector, radial limits</div>
+<div class="line">4 spherical detector, cartesian limits</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.elips">
+<code class="descclassname">xsrt.</code><code class="descname">elips</code><span class="sig-paren">(</span><em>org</em>, <em>axs</em>, <em>cen</em>, <em>xmin</em>, <em>xmax</em>, <em>amin</em>, <em>amax</em>, <em>smb</em>, <em>rab</em>, <em>ide</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.elips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up elliptical grazing indidence mirror</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>org</strong> – local origin on surface of ellipse</li>
+<li><strong>axs</strong> – reference axis in aperture</li>
+<li><strong>cen</strong> – focus of ellipse</li>
+<li><strong>xmin</strong> – minimum axial position</li>
+<li><strong>xmax</strong> – maximum axial position</li>
+<li><strong>amin</strong> – minimum azimuth radians</li>
+<li><strong>amax</strong> – maximum azimuth radians</li>
+<li><strong>smb</strong> – conic coefficient</li>
+<li><strong>rab</strong> – conic coefficient
+conic equation of form r**2=rab**2.x**2+smb**2</li>
+<li><strong>ide</strong> – deformation index</li>
+<li><strong>iq</strong> – reflecting surface quality</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.eltmxt">
+<code class="descclassname">xsrt.</code><code class="descname">eltmxt</code><span class="sig-paren">(</span><em>dm</em>, <em>pdx</em>, <em>pdy</em>, <em>pdz</em>, <em>ddx</em>, <em>ddy</em>, <em>ddz</em>, <em>ekv</em>, <em>tsig</em>, <em>xaper</em>, <em>xdiv</em>, <em>apy</em>, <em>apz</em>, <em>apsiz</em>, <em>wdiv</em>, <em>ddiv</em>, <em>sdet</em>, <em>maxst</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.eltmxt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trace electrons through SVOM MXT telescope with magnetic diverter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dm</strong> – dipole moments (Gauss cm3)</li>
+<li><strong>pdx</strong> – x positions of dipoles (cm)</li>
+<li><strong>pdy</strong> – y positions of dipoles (cm)</li>
+<li><strong>pdz</strong> – z positions of dipoles (cm)</li>
+<li><strong>ddx</strong> – x direction cosines of dipole moments</li>
+<li><strong>ddy</strong> – y direction cosines of dipole moments</li>
+<li><strong>ddz</strong> – z direction cosines of dipole moments</li>
+<li><strong>ekv</strong> – proton energy keV</li>
+<li><strong>tsig</strong> – rms width of beam degrees</li>
+<li><strong>xaper</strong> – x position of mirror aperture cm (focal length)</li>
+<li><strong>xdiv</strong> – x position of diverter input aperture cm</li>
+<li><strong>apy</strong> – y centre of apertures cm</li>
+<li><strong>apz</strong> – z centre of apertures cm</li>
+<li><strong>apsiz</strong> – aperture size (3.8) cm</li>
+<li><strong>wdiv</strong> – extra width of diverter apertures (0.2) cm</li>
+<li><strong>ddiv</strong> – axial depth of diverter cm</li>
+<li><strong>sdet</strong> – size of detector cm (axial position XDET=0.0)</li>
+<li><strong>maxst</strong> – maximum number of steps along path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list of the following</div>
+<div class="line-block">
+<div class="line"><strong>npath</strong>  number of points along path</div>
+<div class="line"><strong>iqual</strong>  type of path</div>
+<div class="line-block">
+<div class="line">0 hits active detector</div>
+<div class="line">1 too close to dipole</div>
+<div class="line">2 hits telescope tube</div>
+<div class="line">3 hits mirror aperture</div>
+<div class="line">4 hits diverter</div>
+<div class="line">5 hits focal plane beyond detector</div>
+<div class="line">6 hit maximum number of steps</div>
+</div>
+<div class="line"><strong>xp</strong>     x positions along path cm</div>
+<div class="line"><strong>yp</strong>     y positions along path cm</div>
+<div class="line"><strong>zp</strong>     z positions along path cm</div>
+</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.fresnel">
+<code class="descclassname">xsrt.</code><code class="descname">fresnel</code><span class="sig-paren">(</span><em>nreal</em>, <em>kimag</em>, <em>angs</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.fresnel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate reflectivity using Fresnel’s equations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nreal</strong> – real part of refractive index</li>
+<li><strong>kimag</strong> – imaginary part of refractive index</li>
+<li><strong>angs</strong> – array of incidence angles (degrees range 0-90)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list of following</div>
+<div class="line-block">
+<div class="line"><strong>rs</strong>          sigma reflectivity</div>
+<div class="line"><strong>rp</strong>          pi reflectivity</div>
+<div class="line"><strong>runp</strong>        unpolarized reflectivity</div>
+</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">Reference “Handbook of Optical Constants of Solids” Ed. Edward D.Palik</div>
+<div class="line">Academic Press 1985, page 70</div>
+<div class="line">If angs(I) out of range 0-90 degrees returns zero reflectivities</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.init">
+<code class="descclassname">xsrt.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialisation of Fortran common blocks</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.kbs">
+<code class="descclassname">xsrt.</code><code class="descname">kbs</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnor</em>, <em>raxi</em>, <em>ipack</em>, <em>rmin</em>, <em>rmax</em>, <em>flen</em>, <em>csize</em>, <em>pitch</em>, <em>wall</em>, <em>plmin</em>, <em>plmax</em>, <em>idf</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.kbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a Silicon Kirkpatrick-Baez stack array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcen</strong> – centre of telescope aperture</li>
+<li><strong>pnor</strong> – normal to aperture</li>
+<li><strong>razi</strong> – reference axis at centre of aperture</li>
+<li><strong>ipack</strong> – packing 0 single module, 1 sunflower, 2 cartesian, 3 wide
+field cartesian</li>
+<li><strong>rmin</strong> – minimum radius for aperture of constellation</li>
+<li><strong>rmax</strong> – maximum radius for aperture of constellation</li>
+<li><strong>flen</strong> – focal length (-ve for 2nd stack)</li>
+<li><strong>csize</strong> – size of each module in constellation</li>
+<li><strong>pitch</strong> – pitch of K-B slots</li>
+<li><strong>wall</strong> – wall thickness of K-B slots</li>
+<li><strong>plmin</strong> – minimum axial length of K-B slots</li>
+<li><strong>plmax</strong> – maximum axial length of K-B slots</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line"><strong>rc</strong>        radius of each module</div>
+<div class="line"><strong>pc</strong>        azimuth of each module</div>
+<div class="line"><strong>tc</strong>        rotation of each module</div>
+<div class="line"><strong>ac</strong>        axial length of each module</div>
+<div class="line"><strong>nset</strong>      number of module coordinates returned</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Deformation:</dt>
+<dd><div class="first last line-block">
+<div class="line">matrix is (5,nmod) specifying 5 deformations per module.</div>
+<div class="line-block">
+<div class="line">1 displacement of module vertex in <strong>razi</strong> mm</div>
+<div class="line">2 displacement of module vertex in <strong>pnor X razi</strong> mm</div>
+<div class="line">3 displaement of module vertex in <strong>pnor</strong> mm</div>
+<div class="line">4 rms Gaussian in-plane figure errors radians</div>
+<div class="line">5 rms Gaussian out-of-plane figure errors radians</div>
+</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.lens">
+<code class="descclassname">xsrt.</code><code class="descname">lens</code><span class="sig-paren">(</span><em>idd</em>, <em>idf</em>, <em>iq</em>, <em>anml</em>, <em>arfx</em>, <em>apos</em>, <em>rap</em>, <em>r1</em>, <em>r2</em>, <em>refind</em>, <em>thickq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.lens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a lens</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – lens type 1 spherical, 2 cylindrical</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+<li><strong>anml</strong> – surface normal</li>
+<li><strong>arfx</strong> – surface reference axis</li>
+<li><strong>apos</strong> – surface reference position</li>
+<li><strong>rap</strong> – radius of aperture</li>
+<li><strong>r1</strong><strong>,</strong><strong>r2</strong> – radii of curvature of lens surfaces</li>
+<li><strong>refind</strong> – refractive index of lens material (or n2/n1)</li>
+<li><strong>thick</strong> – lens thickness</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Surface quality:</dt>
+<dd>This function sets up 2 surface qualities <strong>iq</strong> and <strong>iq+1</strong> to
+represent the entrance and exit surfaces.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.mirror">
+<code class="descclassname">xsrt.</code><code class="descname">mirror</code><span class="sig-paren">(</span><em>idd</em>, <em>idf</em>, <em>iq</em>, <em>anml</em>, <em>arfx</em>, <em>apos</em>, <em>alim</em>, <em>nsurf</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a plane mirror</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>idd</strong> – aperture type</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+<li><strong>anml</strong> – surface normal</li>
+<li><strong>arfx</strong> – surface reference axis</li>
+<li><strong>apos</strong> – surface reference position</li>
+<li><strong>alim</strong> – limits array (see aperture() )</li>
+<li><strong>nsurf</strong> – number of subsequent surfaces ID=2</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The aperture limits of the mirror are specified in the same way as
+for a top. See function aperture().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.moa">
+<code class="descclassname">xsrt.</code><code class="descname">moa</code><span class="sig-paren">(</span><em>pcen</em>, <em>pno</em>, <em>rax</em>, <em>rcur</em>, <em>xyap</em>, <em>pitch</em>, <em>wall</em>, <em>plen</em>, <em>idf</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.moa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a cylindrical Micro Optic Array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcen</strong> – centre of MOA</li>
+<li><strong>pno</strong> – normal at centre of MOA</li>
+<li><strong>rax</strong> – cylindrical axis of MOA</li>
+<li><strong>rcur</strong> – radius of curvature of cylinder</li>
+<li><strong>xyap</strong> – half width of MOA aperture</li>
+<li><strong>pitchnput</strong> – pitch of slots</li>
+<li><strong>wall</strong> – wall thickness between slots</li>
+<li><strong>plen</strong> – depth of slots (thickness MOA)</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.opgrat">
+<code class="descclassname">xsrt.</code><code class="descname">opgrat</code><span class="sig-paren">(</span><em>idd</em>, <em>defi</em>, <em>iq</em>, <em>al</em>, <em>fpos</em>, <em>zpos</em>, <em>gpos</em>, <em>alim</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.opgrat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a single off-plane grating</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> – 1 radial, 2 nested rad., 4 cart., 6 slats</li>
+<li><strong>defi</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+<li><strong>al</strong> – azimuthal exit angle of zeroth order on cone degrees</li>
+<li><strong>fpos</strong> – position of primary focus (not reflected)</li>
+<li><strong>zpos</strong> – position of zeroth order focus (reflected)</li>
+<li><strong>gpos</strong> – position of centre of grating</li>
+<li><strong>alim</strong> – limits on surface</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line"><strong>adir</strong>     grating normal</div>
+<div class="line"><strong>rdir</strong>     grating ruling</div>
+<div class="line"><strong>dpos</strong>     grating hub</div>
+<div class="line"><strong>graz</strong>     grating grazing angle radians</div>
+<div class="line"><strong>gam</strong>      grating cone angle radians</div>
+<div class="line"><strong>dhub</strong>     grating hub distance</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The grating parameters <strong>gpitch</strong>, <strong>dhub</strong> and <strong>order</strong> and the
+reflectivity as a function of incidence angle are set by
+the surface quality (index <strong>iq</strong>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.prism">
+<code class="descclassname">xsrt.</code><code class="descname">prism</code><span class="sig-paren">(</span><em>idd</em>, <em>idf</em>, <em>iq</em>, <em>anml</em>, <em>arfx</em>, <em>apos</em>, <em>rap</em>, <em>d1</em>, <em>d2</em>, <em>refind</em>, <em>thick</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.prism" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a prism</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – 1 small angle, 2 right-angle</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – quality index</li>
+<li><strong>anml</strong> – entrance surface normal</li>
+<li><strong>arfx</strong> – reference axis</li>
+<li><strong>apos</strong> – reference position</li>
+<li><strong>rap</strong> – aperture radius</li>
+<li><strong>d1</strong> – small angle radians on entry side (if ID=1)</li>
+<li><strong>d2</strong> – small angle radians on exit side (if ID=1)</li>
+<li><strong>refind</strong> – refractive index of material or n2/n1</li>
+<li><strong>thick</strong> – thickness</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Surface quality:</dt>
+<dd>This function sets up 2 surface qualities <strong>iq</strong> and <strong>iq+1</strong> to
+represent the entrance and exit surfaces.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.prtathena">
+<code class="descclassname">xsrt.</code><code class="descname">prtathena</code><span class="sig-paren">(</span><em>dm</em>, <em>pdx</em>, <em>pdy</em>, <em>pdz</em>, <em>ddx</em>, <em>ddy</em>, <em>ddz</em>, <em>ekv</em>, <em>tsig</em>, <em>xaper</em>, <em>xdiv</em>, <em>rrings</em>, <em>trings</em>, <em>drings</em>, <em>rdet</em>, <em>maxst</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.prtathena" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trace proton through Athena telescope with magnetic diverter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dm</strong> – dipole moments (Gauss cm3)</li>
+<li><strong>pdx</strong> – x positions of dipoles (cm)</li>
+<li><strong>pdy</strong> – y positions of dipoles (cm)</li>
+<li><strong>pdz</strong> – z positions of dipoles (cm)</li>
+<li><strong>ddx</strong> – x direction cosines of dipole moments</li>
+<li><strong>ddy</strong> – y direction cosines of dipole moments</li>
+<li><strong>ddz</strong> – z direction cosines of dipole moments</li>
+<li><strong>ekv</strong> – proton energy keV</li>
+<li><strong>tsig</strong> – rms width of beam degrees</li>
+<li><strong>xaper</strong> – x position of mirror aperture cm (focal length)</li>
+<li><strong>xdiv</strong> – x position of diverter input aperture cm</li>
+<li><strong>nrings</strong> – number of rings in diverter</li>
+<li><strong>rrings</strong> – radius of rings in diverter cm</li>
+<li><strong>trings</strong> – radial thickness of rings in diverter cm</li>
+<li><strong>drings</strong> – axial depth of rings in diverter cm</li>
+<li><strong>rdet</strong> – radius of detector cm (axial position XDET=0.0)</li>
+<li><strong>maxst</strong> – maximum number of steps along path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list of following</div>
+<div class="line-block">
+<div class="line"><strong>npath</strong>  number of points along path</div>
+<div class="line"><strong>iqual</strong>  type of path</div>
+<div class="line-block">
+<div class="line">0 hits active detector</div>
+<div class="line">1 too close to dipole</div>
+<div class="line">2 hits telescope tube</div>
+<div class="line">3 hits mirror aperture</div>
+<div class="line">4 hits diverter</div>
+<div class="line">5 hits focal plane beyond detector</div>
+<div class="line">6 hit maximum number of steps</div>
+</div>
+<div class="line"><strong>xp</strong>     x positions along path cm</div>
+<div class="line"><strong>yp</strong>     y positions along path cm</div>
+<div class="line"><strong>zp</strong>     z positions along path cm</div>
+</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.reset">
+<code class="descclassname">xsrt.</code><code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reseting of Fortran common blocks to initial condition</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.rotate">
+<code class="descclassname">xsrt.</code><code class="descname">rotate</code><span class="sig-paren">(</span><em>iss</em>, <em>pl</em>, <em>ax</em>, <em>angle</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate surface element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>iss</strong> – surface element index</li>
+<li><strong>pl</strong> – position of rotation centre (x,y,z)</li>
+<li><strong>ax</strong> – rotation axis (ax,ay,az)</li>
+<li><strong>angle</strong> – rotation angle degrees</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.rseed">
+<code class="descclassname">xsrt.</code><code class="descname">rseed</code><span class="sig-paren">(</span><em>iseed</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.rseed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set random number seed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iseed</strong> – integer seed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.shift">
+<code class="descclassname">xsrt.</code><code class="descname">shift</code><span class="sig-paren">(</span><em>iss</em>, <em>pl</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shift position of surface element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>iss</strong> – surface element index</li>
+<li><strong>pl</strong> – 3 vector shift (dx,dx,dz)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.sipore">
+<code class="descclassname">xsrt.</code><code class="descname">sipore</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnorm</em>, <em>raxis</em>, <em>flen</em>, <em>rpitch</em>, <em>apitch</em>, <em>wall</em>, <em>rm</em>, <em>pm</em>, <em>tm</em>, <em>wm</em>, <em>hm</em>, <em>am</em>, <em>cm</em>, <em>gm</em>, <em>wfr</em>, <em>a2j</em>, <em>idf</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.sipore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up Silicon Pore Optics</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcen</strong> – position of centre of aperture (above join plane)</li>
+<li><strong>rnorm</strong> – normal at centre of aperture</li>
+<li><strong>raxis</strong> – reference axis at centre of aperture</li>
+<li><strong>flen</strong> – focal length</li>
+<li><strong>rpitch</strong> – pore radial pitch</li>
+<li><strong>apitch</strong> – pore azimuthal pitch</li>
+<li><strong>wall</strong> – wall thickness</li>
+<li><strong>rm</strong> – array of module radii</li>
+<li><strong>pm</strong> – array of module azimuths (radians)</li>
+<li><strong>tm</strong> – array of module rotations (radians normally 0)</li>
+<li><strong>wm</strong> – array of module widths (radial mm)</li>
+<li><strong>hm</strong> – array of module heights (azimuthal mm)</li>
+<li><strong>am</strong> – array of module lengths (axial pore length mm)</li>
+<li><strong>cm</strong> – array of module curvature signatures
+0 conical, 1 Wolter, 2 curve-plane, 3 constant…</li>
+<li><strong>gm</strong> – array of module grazing angle ratios</li>
+<li><strong>wrf</strong> – module frame width (surrounding module aperture)</li>
+<li><strong>a2j</strong> – aperture to join plane axial distance</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – reflecting surface quality</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.sle">
+<code class="descclassname">xsrt.</code><code class="descname">sle</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnor</em>, <em>raxi</em>, <em>flen</em>, <em>cwidth</em>, <em>cheight</em>, <em>pitch</em>, <em>wall</em>, <em>pl</em>, <em>nmir</em>, <em>idf</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.sle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines Schmidt configuration lobster eye stack</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcen</strong> – centre of telescope aperture</li>
+<li><strong>pnor</strong> – normal to aperture</li>
+<li><strong>raxi</strong> – reference axis at centre of aperture</li>
+<li><strong>flen</strong> – focal length (-ve for second stack) measured to front aperture</li>
+<li><strong>cwidth</strong> – cell width = mirror width (its active part)</li>
+<li><strong>cheight</strong> – cell height</li>
+<li><strong>pitch</strong> – pitch including mirrors thickness = pdd+wall</li>
+<li><strong>wall</strong> – mirror thickness</li>
+<li><strong>pl</strong> – mirror axial length (depth)</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line"><strong>rc</strong>        radius of each module</div>
+<div class="line"><strong>pc</strong>        azimuth of each module</div>
+<div class="line"><strong>tc</strong>        rotation of each module</div>
+<div class="line"><strong>ac</strong>        axial length of each module</div>
+<div class="line"><strong>nset</strong>      number of module coordinates returned</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.source">
+<code class="descclassname">xsrt.</code><code class="descname">source</code><span class="sig-paren">(</span><em>it</em>, <em>sd</em>, <em>sp</em>, <em>ap</em>, <em>an</em>, <em>ar</em>, <em>al</em>, <em>apry</em>, <em>nr</em>, <em>idef</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up source</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>it</strong> – source type</li>
+<li><strong>sd</strong> – source direction cosines</li>
+<li><strong>sp</strong> – source position</li>
+<li><strong>ap</strong> – aperture position</li>
+<li><strong>an</strong> – aperture normal</li>
+<li><strong>ar</strong> – aperture reference axis</li>
+<li><strong>al</strong> – aperture limits</li>
+<li><strong>apry</strong> – area per ray - if 0 then use NR</li>
+<li><strong>nr</strong> – number of rays</li>
+<li><strong>idef</strong> – deformation index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><strong>it</strong> values:</dt>
+<dd><div class="first last line-block">
+<div class="line">1 point source at infinity,        radial limits</div>
+<div class="line">2 point source at infinity,        cartesian limits</div>
+<div class="line">3 point source at finite distance, radial limits</div>
+<div class="line">4 point source at finite distance, cartesian limits</div>
+</div>
+</dd>
+<dt>Deformation:</dt>
+<dd>The deformation index is used to specify a pixel array which spreads
+out a point source into an angular distribution. The deformation data are
+set using two functions xsrt.deform() and xsrt.defmat().
+If the source is at infinity the x and y sample arrays must be in radians
+measured from the direction <strong>sd</strong> along the reference axis <strong>ar</strong> and the
+other axis.  (<strong>an</strong> cross <strong>ar</strong>).
+If the source is at a finite distance then x and y are displacements
+in mm (or whatever distance unit is used) of the position <strong>sp</strong> along
+the reference axis <strong>ar</strong> and the other axis (<strong>an</strong> cross <strong>ar</strong>).</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.spider">
+<code class="descclassname">xsrt.</code><code class="descname">spider</code><span class="sig-paren">(</span><em>cone</em>, <em>apos</em>, <em>anml</em>, <em>arfx</em>, <em>nsec</em>, <em>cwid</em>, <em>awid</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a support spider</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cone</strong> – 90-half cone angle degrees (0.0 for plane)</li>
+<li><strong>apos</strong> – axial position of vertex (centre)</li>
+<li><strong>anml</strong> – direction of normal to aperture (optic axis)</li>
+<li><strong>afrx</strong> – reference axis in aperture</li>
+<li><strong>nsec</strong> – number of sectors (number of arms)</li>
+<li><strong>cwid</strong> – constant arm width</li>
+<li><strong>awid</strong> – angular arm width degrees</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The surface figure of the spider aperture is a cone.
+The width of the arms is given by <strong>cwid+aw*R</strong>
+where <strong>R</strong> is the radial distance
+from the axis of the cone and <strong>aw</strong> is <strong>awid</strong>
+degrees converted into radians.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.spoarr">
+<code class="descclassname">xsrt.</code><code class="descname">spoarr</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnorm</em>, <em>raxis</em>, <em>flen</em>, <em>a2j</em>, <em>rm</em>, <em>pm</em>, <em>tm</em>, <em>wm</em>, <em>hm</em>, <em>am</em>, <em>cm</em>, <em>gm</em>, <em>rpitch</em>, <em>wall</em>, <em>apitch</em>, <em>wfr</em>, <em>siq</em>, <em>idf</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.spoarr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up Silicon Pore Optics Wolter I array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcen</strong> – position of centre of aperture (above join plane)</li>
+<li><strong>rnorm</strong> – normal at centre of aperture</li>
+<li><strong>raxis</strong> – reference axis at centre of aperture</li>
+<li><strong>flen</strong> – focal length</li>
+<li><strong>a2j</strong> – aperture to join plane axial distance</li>
+<li><strong>rm</strong> – array of module radii</li>
+<li><strong>pm</strong> – array of module azimuths (radians)</li>
+<li><strong>tm</strong> – array of module rotations (radians normally 0)</li>
+<li><strong>wm</strong> – array of module widths (radial mm)</li>
+<li><strong>hm</strong> – array of module heights (azimuthal mm)</li>
+<li><strong>am</strong> – array of module lengths (axial pore length mm)</li>
+<li><strong>cm</strong> – array of module curvature signatures
+0 conical, 1 Wolter, 2 curve-plane, 3 constant…</li>
+<li><strong>gm</strong> – array of module grazing angle ratios</li>
+<li><strong>rpitch</strong> – array of module pore radial pitch</li>
+<li><strong>wall</strong> – array of module wall thickness</li>
+<li><strong>apitch</strong> – array of module pore azimuthal pitch</li>
+<li><strong>rwi</strong> – array of module pore rib thickness</li>
+<li><strong>wrf</strong> – array of module frame widths (surrounding module aperture)</li>
+<li><strong>siq</strong> – array of surface quality indices</li>
+<li><strong>idf</strong> – deformation index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Deformation:</dt>
+<dd><div class="first last line-block">
+<div class="line">matrix is (6,nmod) specifying 6 deformations per module.</div>
+<div class="line-block">
+<div class="line">1 displacement of module in direction <strong>raxis</strong> mm</div>
+<div class="line">2 displacement of module in direction of <strong>rnorm X raxis</strong> mm</div>
+<div class="line">3 error in focal length of module</div>
+<div class="line">4 Gaussian rms in-plane figure error radians</div>
+<div class="line">5 Gaussian rms out-of-plane figure error radians</div>
+<div class="line">6 width mm along axial edges of module in which figure degrades</div>
+</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.sqmpoarr">
+<code class="descclassname">xsrt.</code><code class="descname">sqmpoarr</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnorm</em>, <em>raxis</em>, <em>rcur</em>, <em>hwid</em>, <em>idf</em>, <em>ar</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.sqmpoarr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up an array of square pore MPOs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcen</strong> – position of centre of array</li>
+<li><strong>rnorm</strong> – normal at centre of array</li>
+<li><strong>raxis</strong> – reference axi at centre of array</li>
+<li><strong>rcur</strong> – radius of curvature of array</li>
+<li><strong>hwid</strong> – half width of array aperture</li>
+<li><strong>idf</strong> – deformation index for array</li>
+<li><strong>ar</strong> – array of additional parameters for each MPO in array</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Additional parameter array:</dt>
+<dd><div class="first last line-block">
+<div class="line">there are 15 parameters for each MPO</div>
+<div class="line">XP     x position of each MPO</div>
+<div class="line">YP     y position of each MPO</div>
+<div class="line">TC     rotation angle of each MPO</div>
+<div class="line">WC     width of each MPO delx</div>
+<div class="line">HC     height of each MPO dely</div>
+<div class="line">AC     axial length of each MPO (thickness)</div>
+<div class="line">CU     radius of curvature of each MPO</div>
+<div class="line">MF     size of multifibres in MPO</div>
+<div class="line">PP     pitch of pores (pore size + wall thickness)</div>
+<div class="line">WA     wall thickness between pores</div>
+<div class="line">SQ     reflecting surface quality index for pores</div>
+<div class="line">BU     bias angle x radians</div>
+<div class="line">BV     bias angle y radians</div>
+<div class="line">BZ     spare parameter!</div>
+<div class="line">SP     spare parameter!</div>
+</div>
+</dd>
+<dt>Deformation:</dt>
+<dd><div class="first last line-block">
+<div class="line">matrix (5,nmpo) specifying 5 deformations for each MPO</div>
+<div class="line-block">
+<div class="line">1 scaling of intrinsic slumping distortion - 1.0 for model</div>
+<div class="line">2 +ve amplitude thermoelastic pore axial pointing errors radians</div>
+<div class="line-block">
+<div class="line">-ve amplitude fixed pattern tilt errors radians</div>
+</div>
+<div class="line">3 Gaussian rms pore rotation errors (about pore axis) radians</div>
+<div class="line">4 pore shear error amplitude mm within multifibre structure</div>
+<div class="line">5 +ve Gaussian rms pore tilt/figure error radians (x2.37=FWHM)</div>
+<div class="line-block">
+<div class="line">-ve Cauchy (Lorentzian) pore tilt/figure errors radians (x2=FWHM)</div>
+<div class="line">both applied independently in 2 tilt axes</div>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.sqpore">
+<code class="descclassname">xsrt.</code><code class="descname">sqpore</code><span class="sig-paren">(</span><em>pcen</em>, <em>pnorm</em>, <em>raxis</em>, <em>rcur</em>, <em>ipack</em>, <em>rap</em>, <em>pitch</em>, <em>wall</em>, <em>plen</em>, <em>idf</em>, <em>iq</em>, <em>plmin</em>, <em>plmax</em>, <em>fibre</em>, <em>ar</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.sqpore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up slumped square pore MPO</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcen</strong> – position of centre of plate</li>
+<li><strong>rnorm</strong> – normal at centre of plate</li>
+<li><strong>raxis</strong> – reference axi at centre of plate</li>
+<li><strong>rcur</strong> – radius of curvature</li>
+<li><strong>ipack</strong> – pore packing
+1 cart, 2 rad, 3 waff, 4 octag, 5 rand, 6 MIXS, 7 NFL</li>
+<li><strong>rap</strong> – half width of plate aperture</li>
+<li><strong>pitch</strong> – pitch of pores on a cartesian grid</li>
+<li><strong>wall</strong> – pore wall thickness</li>
+<li><strong>plen</strong> – length of pores</li>
+<li><strong>idf</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+<li><strong>plmin</strong> – minimum pore length</li>
+<li><strong>plmax</strong> – maximum pore length</li>
+<li><strong>fibre</strong> – size of fibre bundle in packing</li>
+<li><strong>ar</strong> – array of additional parameters specifying plate apertures</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Additional parameter array:</dt>
+<dd><div class="first last line-block">
+<div class="line">used for ipack 6 or 7</div>
+<div class="line">RC,PC  radius and azimuth of each plate</div>
+<div class="line">TC     rotation angle of plate</div>
+<div class="line">WC     width of each plate x</div>
+<div class="line">HC     height of each plate y</div>
+<div class="line">AC     axial length of each plate</div>
+<div class="line">CC     spare</div>
+<div class="line">GC     spare</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.srtlist">
+<code class="descclassname">xsrt.</code><code class="descname">srtlist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.srtlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all current xsrt parameters</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.srtreset">
+<code class="descclassname">xsrt.</code><code class="descname">srtreset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.srtreset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset Fortran common blocks to intial condition</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.surface">
+<code class="descclassname">xsrt.</code><code class="descname">surface</code><span class="sig-paren">(</span><em>iss</em>, <em>it</em>, <em>ekev</em>, <em>srgh</em>, <em>fmin</em>, <em>pind</em>, <em>alpha</em>, <em>gamma</em>, <em>angs</em>, <em>refs</em>, <em>gpitch</em>, <em>dhub</em>, <em>order</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set surface quality parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>is</strong> – surface quality index</li>
+<li><strong>it</strong> – surface type
+1 refl. (Fresnel), 2 refl. (look-up), 3 refract, 4 diffract</li>
+<li><strong>elev</strong> – photon energy keV</li>
+<li><strong>srgh</strong> – Specific roughness (A**2 mm)
+if -ve then rms figure gradient error radians</li>
+<li><strong>fmin</strong> – Minimum surface spatial frequency</li>
+<li><strong>pind</strong> – Surface roughness power spectrum index</li>
+<li><strong>alpha</strong> – real part of diel. constant or refractive index ratio N1/N2</li>
+<li><strong>gamma</strong> – imaginary part of dielectric constant</li>
+<li><strong>angs</strong> – incidence angles (degrees increasing) (QTYPE 2 and 4)</li>
+<li><strong>refs</strong> – reflectivity values (QTYPE 2 and 4)</li>
+<li><strong>gpitch</strong> – d-spacing for grating mm (QTYPE 4)</li>
+<li><strong>dhub</strong> – distance from ruling hub to surface reference point (QTYPE 4)
+if &lt;1.0 mm then d-spacing gradient across ruling (QTYPE 4)</li>
+<li><strong>order</strong> – diffraction order (QTYPE 4)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The X-ray optical constants <strong>alpha</strong> and <strong>gamma</strong> can be calculated for
+a material of specified composition using the function xscat.xopt().
+It <strong>it=1</strong> the X-ray reflectivity is calculated using the same
+code as in the function xscat.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.trace">
+<code class="descclassname">xsrt.</code><code class="descname">trace</code><span class="sig-paren">(</span><em>ideb</em>, <em>riris</em>, <em>iopt</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform ray tracing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ideb</strong> – debugging level (0 none)</li>
+<li><strong>riris</strong> – radius about centre of detector for analysis
+if 0.0 then no analysis of detected distribution</li>
+<li><strong>iopt</strong> – controls form of output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><strong>iopt</strong>:</dt>
+<dd><div class="first last line-block">
+<div class="line">-2 save traced.dat and detected.dat files</div>
+<div class="line">-1 save detected.dat</div>
+<div class="line">0 don’t save files or adjust focus</div>
+<div class="line">1 adjust focus and save detected.dat</div>
+<div class="line">2 adjust focus and save detected.dat and traced</div>
+<div class="line">Only rays with <strong>iopt</strong> reflections are used in adjustment</div>
+</div>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><div class="line-block">
+<div class="line">list of the following</div>
+<div class="line-block">
+<div class="line"><strong>area</strong>    detected area within RIRIS</div>
+<div class="line"><strong>dshft</strong>   axial shift to optimum focus (0.0 if IOPT&lt;=0)</div>
+<div class="line"><strong>ybar</strong>    y centroid of detected distribution</div>
+<div class="line"><strong>zbar</strong>    z centroid of detected distribution</div>
+<div class="line"><strong>rms</strong>     rms radius of detected distribution</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.w1nest">
+<code class="descclassname">xsrt.</code><code class="descname">w1nest</code><span class="sig-paren">(</span><em>xj</em>, <em>rj</em>, <em>ra</em>, <em>pl</em>, <em>ph</em>, <em>hl</em>, <em>hh</em>, <em>tin</em>, <em>tj</em>, <em>tout</em>, <em>ax</em>, <em>ar</em>, <em>ff</em>, <em>defi</em>, <em>iq</em>, <em>ib</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.w1nest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a Wolter Type I nest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>xj</strong> – axial position of join plane</li>
+<li><strong>rj</strong> – array of radii of shells at join</li>
+<li><strong>ra</strong> – ratio of grazing angles</li>
+<li><strong>pl</strong> – low axial position of parabola</li>
+<li><strong>ph</strong> – high axial position of parabola</li>
+<li><strong>hl</strong> – low axial position of hyperbola</li>
+<li><strong>hh</strong> – high axial position of hyperbola</li>
+<li><strong>ti</strong> – array of thicknesses of shells at input aperture</li>
+<li><strong>tj</strong> – array of thicknesses of shells at join plane</li>
+<li><strong>tout</strong> – array of thicknesses of shells at the output aperture</li>
+<li><strong>ax</strong> – direction of axis</li>
+<li><strong>ar</strong> – reference axis in aperture</li>
+<li><strong>ff</strong> – position of focus</li>
+<li><strong>defi</strong> – deformation index</li>
+<li><strong>iq</strong> – reflecting surface quality index</li>
+<li><strong>ib</strong> – back of shells surface quality index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The innermost shell is a dummy and provides an inner stop for the nest</p>
+<dl class="docutils">
+<dt>Deformation:</dt>
+<dd>A deformation sub-matrix is required for each shell (not
+including the innermost shell)
+Each matrix covers a grid of points along the axis in mm and azimuth
+in radians. The axial range covers both the 1st and 2nd reflection
+surfaces.
+The values in the matrices are radial displacments mm at the grid
+points.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="xsrt.wolter2">
+<code class="descclassname">xsrt.</code><code class="descname">wolter2</code><span class="sig-paren">(</span><em>rp</em>, <em>gp</em>, <em>rh</em>, <em>gh</em>, <em>rm</em>, <em>fovr</em>, <em>ax</em>, <em>ar</em>, <em>ff</em>, <em>idf</em>, <em>iq</em><span class="sig-paren">)</span><a class="headerlink" href="#xsrt.wolter2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up Wolter Type II surfaces</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rp</strong> – maximum radius of parabola</li>
+<li><strong>gp</strong> – grazing angle (degrees) at maximum radius on parabola</li>
+<li><strong>rh</strong> – maximum radius of hyperbola</li>
+<li><strong>gh</strong> – grazing angle (degrees) at maximum radius on hyperbola</li>
+<li><strong>rm</strong> – minimum radius of parabola</li>
+<li><strong>fovr</strong> – radius of field of view degrees</li>
+<li><strong>ax</strong> – direction of axis of telescope</li>
+<li><strong>ar</strong> – reference direction perpendicular to axis</li>
+<li><strong>ff</strong> – position of focus of telescope</li>
+<li><strong>id</strong> – deformation index</li>
+<li><strong>iq</strong> – surface quality index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Deformation:</dt>
+<dd>A single deformation matrix specifies radial displacement errors mm
+over a grid of points in  axial mm and azimuthal radians.
+The grid covers the axial positions along both the 1st and 2nd
+reflection surfaces.</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="xsrt_example_scripts.html">Example Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_elements.html">Optical Elements and Coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_source_detector.html">Source and Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_random.html">Monte Carlo and Random Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_deformations.html">Deformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_surfaces.html">Surface Quality, Reflectivity and Scattering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_telescopes.html">X-ray Telescopes, Lens and Prism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_tracing.html">Ray Tracing and Saving Rays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">xsrt.functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_modifying.html">Adding New Functions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xsrt_tracing.html"
+                        title="previous chapter">Ray Tracing and Saving Rays</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qsoft_modifying.html"
+                        title="next chapter">Adding New Functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="qsoft_modifying.html" title="Adding New Functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_tracing.html" title="Ray Tracing and Saving Rays"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" >xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

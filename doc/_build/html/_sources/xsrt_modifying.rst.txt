@@ -1,0 +1,24 @@
+Adding New Functions
+********************
+
+The top-level subroutines are written in Fortran 77.
+
+The ray tracing routines are divided into 2 groups:
+
+* Routines prefixed by QRT\_ that provide the interface to Python, R or IDL
+* Routines prefixed by SRT\_ that do the ray tracing and analysis.
+
+More general routines are prefixed with:
+
+* QRI\_ image processing
+* QR\_ general applications
+* QR\_FITS for the FITS file interface
+
+Internal Fortran routines
+also have prefixes:
+
+* AX\_ coordinate transformations
+* XX\_ X-ray physics
+* SYS\_ system utilities
+  
+Two general Fortran routines are also suppied, SCAN and LEN\_TRIM.

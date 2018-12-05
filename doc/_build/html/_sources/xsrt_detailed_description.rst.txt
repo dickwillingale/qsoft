@@ -1,0 +1,282 @@
+xsrt   - Detailed Description
+*****************************
+
+Each of the elements, including the source and detector, are specified
+by:
+
+* 3 surface reference vectors - origin position, surface normal at origin and reference tangent at origin
+* The surface figure - planar, spherical or conic section - parameters to define the curvature etc. of the figure
+* The surface boundary - circles or rectangles in local surface coordinates
+* A surface quality - source of rays, detection, reflection, diffraction, scattering, refraction, absorption
+* The surface deformation - a grid of displacements defined in local surface coordinates
+
+A full list of all the currently defined elements is produced by the 
+function srtlist().
+
+Individual elements referenced by the surface element index
+can be shifted and rotated using shift() and rotate().
+
+The data base of elements can be cleared to the initial condition (no
+elements defined) using the function reset(). If elements are
+repeatedly defined within a procedure (for instance within a loop)
+the safe and prefered option is to reset()
+everything and redefine all elements each time they are required.
+
+**Random Numbers**
+
+The starting positions of rays, X-ray scattering angles from surface roughness and
+some surface figure errors/deformations are generated using random numbers.
+The sequence of random numbers used will be different each run unless the
+random number seed is set using function rseed(). If the same seed value is set
+before calling the function trace() exactly the same random sequence will be
+generated for the ray tracing and the results will be identical.
+
+**Coordinates**
+
+There is no fixed coordinate system and elements can be set/defined at
+any orientation. However it is conventional to use the X-axis as the
+optical axis (which defines the direction of paraxial rays) and the
+Y-axis as the nominal tangent reference axis. Of course given elements
+may not be aligned exactly with the X-axis and Y-axis.
+In most cases the local coordinates in the detector plane are nominally
+aligned with the Y-axis and Z-axis. Rays are usually traced from right
+to left travelling in the -X direction but this is not necessary and
+it is possible for rays to bounce back and forth as in, for example,
+a cassegrain system.
+
+The source is always the first element in the sequence. All other
+elements are placed in sequence as they are defined. If the source()
+function is used repeatedly the source specification will be overwritten
+each time.
+If the detector command is used repeatedly a new detector will be
+added to the sequence each time and all detectors defined will be active.
+
+Local surface coordinates
+are specified using the tangent plane
+to the surface at the point defined as the surface origin. For a sphere
+points on this tangent plane are projected
+onto the surface along the normal to the surface at the surface
+origin (Lambert's projection). The local x-axis is specified by a tangent vector
+at the surface origin. The local y-axis is the cross product of the
+normal and tangent vector at the surface origin.
+
+The coordinates used for the limits of apertures and stops are given
+in the docstrings of the xsrt.aperture() function.
+
+The local coordinates used for surfaces of revolution generated from conic
+sections (hyperbola, parabola, ellipse) depend on whether the surface
+is designated as being "normal" or "grazing" incidence. For normal
+incidence they are defined in a similar way to the planar or spherical
+surfaces as given above. For grazing incidence a cylindrical coordinate
+system is used where the axis is the normal to the surface at
+the surface origin and the azimuth is the rotation about this axis
+with zero at the surface reference axis at the surface origin. Local
+coordinates are given as axial position and azimuthal position (radians).
+The limits of such surfaces are specified by axial and/or radial limits
+corresponding to the bottom and top edges of the surface of revolution.
+
+**Source of Rays**
+
+The source of rays consists of an annular or rectangular aperture on a planar
+surface. The origin of each ray is a random point within
+the aperture. The direction of the rays is specified either by
+a source at infinity, a source at a finite distance or diffuse.
+For a source at infinity all rays are parallel with the direction
+set by direction cosines. A source at a finite distance is specified
+by a position vector somewhere behind the aperture. Diffuse rays
+are generated so as to give a uniform random distribution over a hemisphere.
+The total number of rays generated is either set explicitly or by
+using an aperture area per ray.
+
+Only one source can be specified. If the source command is used in a
+loop then the source will change on each pass through the loop.
+
+The deformation index is used to specify a pixel array which spreads
+out a point source into an angular distribution. The deformation data are
+set using two functions xsrt.deform() and xsrt.defmat().
+If the source is at infinity the x and y sample arrays must be in radians
+measured from the direction **sd** along the reference axis **ar** and the
+other axis.  (**an** cross **ar**).
+If the source is at a finite distance then x and y are displacements
+in mm (or whatever distance unit is used) of the position **sp** along
+the reference axis **ar** and the other axis (**an** cross **ar**).
+
+**Deformations**
+
+Deformations of surfaces are specified using matricies which either span
+a grid of points in the local coordinate system of the surface or
+are indexed using integer labels for sectors or areas.
+A set of deformations pertaining to a single surface or group of
+related surfaces are given a deformation index (integer 1,2,3...).
+The positions of the deformation grid points in local coordinates are
+specified by two 1-dimensional arrays.
+
+A surface deformation is applied along the normal to the surface. The
+deformation value is interpolated from the 2-d grid of points.
+
+Radial deformations for annula apertures are specified by a vector, sampling
+in 1-d in azimuth, and the deformation is applied as a perturbation in the radial
+direction.
+
+The function xsrt.deform() is used to set up the dimensionality of a
+particular deformation and must be the first call. The component matricies
+are then set using calls to xsrt.defmat().
+
+A deformation applied to the source() spreads the point source into a pixel
+array. See **Source of Rays**.
+
+**Detector**
+
+The detector consists of an annular or rectangular aperture on a planar
+or spherical surface. More than one detector can be specified for an instrument.
+Each detector defined will
+occupy a given position within the sequence of optical elements specified.
+
+**Surface Quality, Reflectivity and Scattering**
+
+Several surface qualities can be set up for the simulation of a given
+instrument. Each is referenced using a surface quality index
+(integer 1,2,3...). The type of surface can be reflecting (with reflectivity
+specified using Fresnel's equations or a lookup table), refracting
+or diffracting. The roughness of the surface can also be specified
+using a power law distribution.
+
+The X-ray optical constants **alpha** and **gamma** can be calculated for
+a material of specified composition using the function xscat.xopt().
+Within the ray tracing the reflectivity is calculated using these
+constants using the same code as in function xscat.xfresnel().
+
+The reflectivity as a function of incidence angle in other energy bands can be
+calculated from the real and imaginary part of the refractive index using
+the function fresnel().
+
+Stops which are intended to block radiation have a surface quality index
+set to 0. When rays hit such surfaces they are terminated (absorbed).
+Detectors have surface quality index -1. If a ray hits such a surface
+it is terminated (detected).
+The source aperture surface has quality index -2.
+The quality indices of the source, stops and detectors are set automatically.
+As ray tracing proceeds rays are stored for further analysis. Each position
+along a ray where an intersection with a surface element occured is
+labelled with the quality index of the surface.
+
+For a grating the surface type is it=4.
+In this case the ruling direction is specified by
+the surface element axis and dhub controls the geometry. dhub < 1 in-plane
+in which the dhub specifies the d-spacing gradient across the ruling
+and dhub > 1 off-plane where the d-spacing gradient along the ruling is
+determined from the distance to the hub.
+
+**Apertures, stops, baffles and support structure**
+
+The function aperture() sets up stops with various geometries, single
+annulus, nested annuli, rectangular holes/blocks, rectangular grid,
+polar sectors, paralleogram. Cylindrical baffles in front of behind
+circular apertures are set up using the function baffle(). Spider
+support structures commomly used in Wolter systems are set up using
+the function spider().
+
+**Wolter Telescopes**
+
+A nest of Wolter I shells is set up using the function w1nest() and
+a conical approximation to the same by c1nest(). A Wolter II telescope
+is set up using the function wolter2().
+A Wolter I telescope manufactured as an array of Silicon Pore Optics
+(like Athena) is set up using the function spoarr().
+
+**Lobster Eye and Kirkpatrick-Baez Telescopes**
+
+A lobster eye telscope is set up using the function sqmpoarr().
+
+A silicon pore Kirkpatrick-Baez stack is defined using the function
+kbs().
+
+**Lens and Prism**
+
+Refracting lens and prism are defined using functions lens() and prism().
+
+**Ray Tracing and Saving Rays**
+
+Once the source, detector and other elements have been defined rays can be
+traced through the instrument using the function trace(). The form of the
+output is controlled by the parameter **iopt**.
+
+* -2 save traced.dat and detected.dat files
+* -1 save detected.dat
+* 0 don't save files or adjust focus
+* 1 adjust focus and save detected.dat
+* 2 adjust focus and save detected.dat and traced.dat
+* Only rays with **iopt** reflections are used in adjustment
+
+When **iopt** is +ve then the detector position which gives the best focus is
+determined. Only rays which have **iopt** reflections and impact the detector
+within a radius **riris** of the centre of the detector are included in the
+analysis. The detector is shifted along the normal direction to find
+the axial position of minimum rms radial spread. The results of this
+analysis area returned as:
+
+* **area**    detected area within RIRIS
+* **dshft**   axial shift to optimum focus (0.0 if IOPT<=0)
+* **ybar**    y centroid of detected distribution
+* **zbar**    z centroid of detected distribution
+* **rms**     rms radius of detected distribution
+
+The files traced.dat and detected.dat are ASCII tabulations. 
+
+The file traced.dat contains the paths of all the rays. It can be very large
+so should not be saved unless required for detailed analysis.
+
+* **RXP,RYP,RZP**  positions of points along each ray
+* **AREA** aperture area associated with ray
+* **IQU**  quality index -2 at source, 1 reflected, 0 absorbed, -1 detected
+
+Note: in the tabulation the beginning of each ray is identified using **IQU=-2**
+and the end using **IQU=0** absorbed or **IQU=-1** detected. Using these data
+you can plot the paths of all the rays.
+
+The file detected.dat contains information about the detected rays.
+
+* **XD,YD,ZD**  the detected position for each ray
+* **XC,YC,ZC**  the direction cosines for each ray
+* **XR,YR,ZR**  the position of the last interaction before detection
+* **YDET,ZDET** the local detected position on detector
+* **AREA**  the aperture area associated with the ray
+* **IREF** the number of reflections suffered by the ray
+
+The position **XR,YR,ZR** is used to indicate where the ray came from.
+
+The following snippets of code show how an image of the detected rays can be
+generated in Python or R.
+
+.. code-block:: python
+
+    import numpy as np
+    import images
+    import xsrt
+    ...
+    ...
+    # half width of image mm
+    hwid=5.0
+    # trace all the rays
+    results=xsrt.trace(0,rdet,-2)
+    # Create an image of the detected area
+    XD,YD,ZD,XC,YC,ZC,XR,YR,ZR,YDET,ZDET,AREA,IREF=np.loadtxt("detected.dat",
+        skiprows=1,unpack=True)
+    arr=images.binxy(YDET,ZDET,0,AREA,-hwid,hwid,-hwid,hwid,nx,ny) 
+
+.. code-block:: R
+
+    # half width of image mm
+    hwid<- 5.0
+    # trace all the rays
+    results<- qrt_trace(0,rdet,-2)
+    # Create an image of the detected area
+    detpos<-read.table("detected.dat",header=TRUE)
+    aim<-qri_binxy(detpos$YDET,detpos$ZDET,0,detpos$AREA,-hwid,hwid,nx,-hwid,hwid,ny)
+
+In Python **arr** is an image array. In R **aim** is an image object which
+contains the image array **aim$data_array**.
+In both cases the function images.binxy() is used to bin up the aperture area
+associated with each ray into an image (2-d histogram). The effective area
+is found by summing up areas of the image.
+

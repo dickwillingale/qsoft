@@ -1,0 +1,154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Source and Detector &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Monte Carlo and Randon Numbers" href="xsrt_random.html" />
+    <link rel="prev" title="Optical Elements and Coordinates" href="xsrt_elements.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt_random.html" title="Monte Carlo and Randon Numbers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_elements.html" title="Optical Elements and Coordinates"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" accesskey="U">xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="source-and-detector">
+<h1>Source and Detector<a class="headerlink" href="#source-and-detector" title="Permalink to this headline">¶</a></h1>
+<p><strong>Source of Rays</strong></p>
+<p>The source of rays consists of an annular or rectangular aperture on a planar
+surface. The origin of each ray is a random point within
+the aperture. The direction of the rays is specified either by
+a source at infinity, a source at a finite distance or diffuse.
+For a source at infinity all rays are parallel with the direction
+set by direction cosines. A source at a finite distance is specified
+by a position vector somewhere behind the aperture. Diffuse rays
+are generated so as to give a uniform random distribution over a hemisphere.
+The total number of rays generated is either set explicitly or by
+using an aperture area per ray.</p>
+<p>Only one source can be specified. If the source command is used in a
+loop then the source will change on each pass through the loop.</p>
+<p>The deformation index is used to specify a pixel array which spreads
+out a point source into an angular distribution. The deformation data are
+set using two functions xsrt.deform() and xsrt.defmat().
+If the source is at infinity the x and y sample arrays must be in radians
+measured from the direction <strong>sd</strong> along the reference axis <strong>ar</strong> and the
+other axis.  (<strong>an</strong> cross <strong>ar</strong>).
+If the source is at a finite distance then x and y are displacements
+in mm (or whatever distance unit is used) of the position <strong>sp</strong> along
+the reference axis <strong>ar</strong> and the other axis (<strong>an</strong> cross <strong>ar</strong>).</p>
+<p><strong>Detector</strong></p>
+<p>The detector consists of an annular or rectangular aperture on a planar
+or spherical surface. More than one detector can be specified for an instrument.
+Each detector defined will
+occupy a given position within the sequence of optical elements specified.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="xsrt_example_scripts.html">xsrt   - Example Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_elements.html">Optical Elements and Coordinates</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Source and Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_random.html">Monte Carlo and Randon Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_deformations.html">Deformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_surfaces.html">Surface Quality, Reflectivity and Scattering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_telescopes.html">X-ray Telescopes, Lens and Prism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_tracing.html">Ray Tracing and Saving Rays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_functions.html">xsrt.functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xsrt_elements.html"
+                        title="previous chapter">Optical Elements and Coordinates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xsrt_random.html"
+                        title="next chapter">Monte Carlo and Randon Numbers</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt_random.html" title="Monte Carlo and Randon Numbers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_elements.html" title="Optical Elements and Coordinates"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" >xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

@@ -23,11 +23,16 @@
 *DZDY	output	gradient of deformation wrt y at X,Y
 *ISTAT	in/out	returned status
 *-Author Dick Willingale 1996-Nov-21
+*Modified by Vladimir Tichy (2017)
 	DOUBLE PRECISION DX,DY
+	DOUBLE PRECISION Z0,Z1
 	INTEGER KK,JJ,KPOS,JPOS,IK,IJ
 C
 	IF(ISTAT.NE.0) RETURN
 C
+c
+c	WRITE(*,*) 'DEBUG SRT_IN2D TEST: NS = ',NS
+C    
 	IF(NS.GT.0.AND.NS.LE.NSMAX) THEN
 C Find position in grid
 		KK=NINT(NX*(X-XSAM(1,NS))/(XSAM(NX,NS)-XSAM(1,NS)))
@@ -74,22 +79,36 @@ C Find position in grid
 		JJ=JPOS
 	ELSE
 		WRITE(*,*) 'SRT_IN2D error - internal index',NS,'  out of range'
+		WRITE(*,*) 'It must be > 0 and <=',NSMAX
 		ISTAT=1
 		RETURN
 	ENDIF
 	IF(KK.GT.0.AND.JJ.GT.0) THEN
 C Find y gradient by linear interpolation between profiles
 		DY=YSAM(JJ+1,NS)-YSAM(JJ,NS)
-		IF(DY.NE.0.0) THEN
+		DX=xSAM(KK+1,NS)-XSAM(KK,NS)
+		IF(DY.NE.0.0.AND.DX.NE.0.0) THEN
+			DX=(X-XSAM(KK,NS))/DX
 			DY=(Y-YSAM(JJ,NS))/DY
 		ELSE
+			DX=0.0
 			DY=0.0
 		ENDIF
-		DZDY=GRADY(KK,JJ,NS)+(GRADY(KK,JJ+1,NS)-GRADY(KK,JJ,NS))*DY
 C Interpolate deformation between profiles
-		Z=DELZ(KK,JJ,NS)+(DELZ(KK,JJ+1,NS)-DELZ(KK,JJ,NS))*DY
+		Z0=DELZ(KK,JJ,NS)+(DELZ(KK+1,JJ,NS)-DELZ(KK,JJ,NS))*DX
+		Z1=DELZ(KK,JJ+1,NS)+(DELZ(KK+1,JJ+1,NS)-DELZ(KK,JJ+1,NS))*DX
+		Z=Z0+(Z1-Z0)*DY
 C Interpolate x gradient between profiles
-		DZDX=GRADX(KK,JJ,NS)+(GRADX(KK,JJ+1,NS)-GRADX(KK,JJ,NS))*DY
+		Z0=GRADX(KK,JJ,NS)+(GRADX(KK+1,JJ,NS)-GRADX(KK,JJ,NS))*DX
+		Z1=GRADX(KK,JJ+1,NS)+(GRADX(KK+1,JJ+1,NS)-GRADX(KK,JJ+1,NS))*DX
+		DZDX=Z0+(Z1-Z0)*DY
+C Interpolate x gradient between profiles
+		Z0=GRADY(KK,JJ,NS)+(GRADY(KK+1,JJ,NS)-GRADY(KK,JJ,NS))*DX
+		Z1=GRADY(KK,JJ+1,NS)+(GRADY(KK+1,JJ+1,NS)-GRADY(KK,JJ+1,NS))*DX
+		DZDY=Z0+(Z1-Z0)*DY
+C		Z=DELZ(KK,JJ,NS)+(DELZ(KK,JJ+1,NS)-DELZ(KK,JJ,NS))*DY
+C		DZDX=GRADX(KK,JJ,NS)+(GRADX(KK,JJ+1,NS)-GRADX(KK,JJ,NS))*DY
+C		DZDY=GRADY(KK,JJ,NS)+(GRADY(KK,JJ+1,NS)-GRADY(KK,JJ,NS))*DY
 	ELSE
 C Missed grid so return zeros
 		Z=0.0

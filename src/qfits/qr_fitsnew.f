@@ -20,8 +20,8 @@ C
 C Check if file already exists
         INQUIRE(FILE=FNAME(1:II),EXIST=LVAL)
         IF(LVAL) THEN
-                WRITE(*,*) FNAME(1:II),' already exists'
-CALL SYS_UNLINK(FNAME(1:II),ISTAT)
+                WRITE(*,*) FNAME(1:II),' already exists, overwriting'
+                CALL SYS_UNLINK(FNAME(1:II),ISTAT)
         ENDIF
 C Open new file
         CALL SYS_GETLUN(IFITS,ISTAT)

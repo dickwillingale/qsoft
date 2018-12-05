@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Surface Quality, Reflectivity and Scattering &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="X-ray Telescopes, Lens and Prism" href="xsrt_telescopes.html" />
+    <link rel="prev" title="Deformations" href="xsrt_deformations.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt_telescopes.html" title="X-ray Telescopes, Lens and Prism"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_deformations.html" title="Deformations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" accesskey="U">xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="surface-quality-reflectivity-and-scattering">
+<h1>Surface Quality, Reflectivity and Scattering<a class="headerlink" href="#surface-quality-reflectivity-and-scattering" title="Permalink to this headline">¶</a></h1>
+<p>Several surface qualities can be set up for the simulation of a given
+instrument. Each is referenced using a surface quality index
+(integer 1,2,3…). The type of surface can be reflecting (with reflectivity
+specified using Fresnel’s equations or a lookup table), refracting
+or diffracting. The roughness of the surface can also be specified
+using a power law distribution.</p>
+<p>The X-ray optical constants <strong>alpha</strong> and <strong>gamma</strong> can be calculated for
+a material of specified composition using the function xscat.xopt().
+Within the ray tracing the reflectivity is calculated using these
+constants using the same code as in function xscat.xfresnel().</p>
+<p>The reflectivity as a function of incidence angle in other energy bands can be
+calculated from the real and imaginary part of the refractive index using
+the function fresnel().</p>
+<p>Stops which are intended to block radiation have a surface quality index
+set to 0. When rays hit such surfaces they are terminated (absorbed).
+Detectors have surface quality index -1. If a ray hits such a surface
+it is terminated (detected).
+The source aperture surface has quality index -2.
+The quality indices of the source, stops and detectors are set automatically.
+As ray tracing proceeds rays are stored for further analysis. Each position
+along a ray where an intersection with a surface element occured is
+labelled with the quality index of the surface.</p>
+<p>For a grating the surface type is it=4.
+In this case the ruling direction is specified by
+the surface element axis and dhub controls the geometry. dhub &lt; 1 in-plane
+in which the dhub specifies the d-spacing gradient across the ruling
+and dhub &gt; 1 off-plane where the d-spacing gradient along the ruling is
+determined from the distance to the hub.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">images  - Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="xsrt_example_scripts.html">xsrt   - Example Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_elements.html">Optical Elements and Coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_source_detector.html">Source and Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_random.html">Monte Carlo and Randon Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_deformations.html">Deformations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Surface Quality, Reflectivity and Scattering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_telescopes.html">X-ray Telescopes, Lens and Prism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_tracing.html">Ray Tracing and Saving Rays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xsrt_functions.html">xsrt.functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xsrt_deformations.html"
+                        title="previous chapter">Deformations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xsrt_telescopes.html"
+                        title="next chapter">X-ray Telescopes, Lens and Prism</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xsrt_telescopes.html" title="X-ray Telescopes, Lens and Prism"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xsrt_deformations.html" title="Deformations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="xsrt.html" >xsrt   - Sequential Ray Tracing</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

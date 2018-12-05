@@ -12,17 +12,20 @@ init()
 # Get column from table on FITS file
 def fitsgcol(ic,typ,nrows,rp,vr):
     """Get column from table on FITS file - internal function
-        ic        column number
-        typ       column data type
-        nrows     number of column rows
-        rp        repeat count
-        vr        If rp zero then vr[nrows] is variable count for each row
-    The following parameters are used:
-        nc - the number of calls required to get complete column
-        ne -length returned per call
-        qt 1 complete column returned in 1 call
-        qt 2 1 call per row fixed width returned as a list
-        qt 3 variable width column 1 call per row returned as a list
+
+    Args:
+        ic:       column number
+        typ:      column data type
+        nrows:    number of column rows
+        rp:       repeat count
+        vr:       If rp zero then vr[nrows] is variable count for each row
+
+    The following variables are used internally:
+        | nc: the number of calls required to get complete column
+        | ne: length returned per call
+        | qt: 1 complete column returned in 1 call
+        | qt: 2 1 call per row fixed width returned as a list
+        | qt: 3 variable width column 1 call per row returned as a list
     """
     if rp==0:
 # Variable width column and request for each row
@@ -56,20 +59,27 @@ def fitsgcol(ic,typ,nrows,rp,vr):
 # Get column values from FITS file
 def fitsgcolv(typ,ic,ii,ne):
     """Get columm values from FITS file - internal function
-        typ       column data type returned
-            0   none
-            1   integer
-            2   double
-            3   logical
-            4   bit as string 1 or 0
-            5   real complex
-            6   double complex
-            7   byte integer 8
-            8   bit row as a character string
-        ic        column number
-        ii        first row number
-        ne        number of elements
-    return        values from column
+
+    Args:
+        typ:       column data type returned
+        ic:        column number
+        ii:        first row number
+        ne:        number of elements
+
+    **typ** values:
+        | 0   none
+        | 1   integer
+        | 2   double
+        | 3   logical
+        | 4   bit as string 1 or 0
+        | 5   real complex
+        | 6   double complex
+        | 7   byte integer 8
+        | 8   bit row as a character string
+
+    Returns:
+        values from column
+
     """
     if ne==0:
         return None
@@ -100,12 +110,16 @@ def fitsgcolv(typ,ic,ii,ne):
 class hduinfo: pass
 def fitshduinfo(ihdu):
     """Get FITS header dimension info - internal function
-        ihdu    HDU index
-    return    list of following:
-        hdutype    type of HDU
-        naxis      number of dimensions
-        naxes      size of dimensions (nrows,ncols)
-        nkeys      number of keywords
+
+    Args:
+        ihdu:   HDU index
+        
+    Returns:
+        | list of following
+        |   **hdutype**    type of HDU
+        |   **naxis**      number of dimensions
+        |   **naxes**      size of dimensions (nrows,ncols)
+        |   **nkeys**      number of keywords
     """
     a=qfitsfor.qr_fitshdu(ihdu,10)
     b=hduinfo()
@@ -130,20 +144,23 @@ def fitshduinfo(ihdu):
 # Get key data
 def fitsgetkey(ikey):
     """Get FITS keyword - internal function
-        ikey    keyword index
-    return  
-        key    keyword string
-        ki     number of characters in keyword string
-        sval   string value
-        si     number of characters in string value
-        jval   integer value
-        dval   double value
-        lval   logical value
-        ktype  type of value returned
-                 1 integer in jval
-                 2 real in dval
-                 3 logical in jval 
-                 4 string in sval
+
+    Args:
+        ikey:    keyword index
+
+    Returns:
+        | **key**    keyword string
+        | **ki**     number of characters in keyword string
+        | **sval**   string value
+        | **si**     number of characters in string value
+        | **jval**   integer value
+        | **dval**   double value
+        | **lval**   logical value
+        | **ktype**  type of value returned
+        |        1 integer in jval
+        |        2 real in dval
+        |        3 logical in jval 
+        |        4 string in sval
     """
     a=qfitsfor.qr_fitsgetkey(ikey)
     ki=a[1]
@@ -160,10 +177,14 @@ def fitsgetkey(ikey):
 # Get data types
 def fitstypes(hdutype,ncols):
     """Get FITS header data types - internal function
-        hdutype    type of HDU
-        ncols      number of columns (if hdutype=0)
-    return    ctype   column type
-              rp      column repeat count
+
+    Args:
+        hdutype:   type of HDU
+        ncols:     number of columns (if hdutype=0)
+
+    Returns:
+        | **ctype**   column type
+        | **rp**      column repeat count
     """
     a=qfitsfor.qr_fitstypes(hdutype,ncols)
     ctype=a[0]
@@ -172,21 +193,29 @@ def fitstypes(hdutype,ncols):
 # Open fits file for read/write
 def fitsupdate(filename):
     """Open FITS file for read/write
-        filename    FITS file name
-    return   number of HDU in file
+
+    Args:
+        filename:   FITS file name
+
+    Returns:
+        number of HDU in file
     """
     return qfitsfor.qr_fitsopen(len(filename),filename,1)
 # Get column info
 class fitstab: pass
 def fitscolnam(ic,rr,nrows):
     """Get FITS table column name - internal routine
-        ic      column index
-        rr      0 if variable column width
-        nrows   number of rows
-    return list of following:
-        colnam    column name
-        iname     number of characters in colnam
-        vrep      variable repeat count
+
+    Args:
+        ic:     column index
+        rr:     0 if variable column width
+        nrows:  number of rows
+
+    Returns:
+        | list of following
+        |  **colnam**    column name
+        |  **iname**     number of characters in colnam
+        |  **vrep**      variable repeat count
     """
     a=qfitsfor.qr_fitscolnam(ic,rr,nrows,500)
     b=fitstab()
@@ -197,7 +226,9 @@ def fitscolnam(ic,rr,nrows):
 # Put array onto fits file as primary or extension data array
 def fitsparr(arr):
     """Put array onto fits file - internal function
-        arr     arr of data values
+
+    Args:
+        arr:    arr of data values
     """
     nels=np.array(arr.shape,int)
     nel=arr.size
@@ -213,8 +244,10 @@ def fitsparr(arr):
 class fitshdu:
     def __init__(self,ihdu,hdutype):
         """FITS HDU object
-            ihdu    HDU index
-            hdutype HDU type
+
+        Args:
+            ihdu:    HDU index
+            hdutype: HDU type
         """
         self.ihdu=ihdu
         self.htype=hdutype
@@ -267,7 +300,9 @@ class fitsfile:
             self.hdu[i].display()
     def __init__(self,filename):
         """Read object from FITS file or create new FITS object
-           filename   FITS filename ("new" to create new object) 
+
+        Args:
+           filename:  FITS filename ("new" to create new object) 
         """
         self.filename=filename
         self.date=str(datetime.now())
@@ -349,7 +384,9 @@ class fitsfile:
 # Save to  file
     def save(self,filename):
         """Save FITS object to file
-            filename   FITS file name
+
+        Args:
+            filename:  FITS file name
         """
 # Open new fits file
         qfitsfor.qr_fitsnew(len(filename),filename)
@@ -387,7 +424,9 @@ class fitsfile:
 # Create binary table HDU on fits file
 def fitsptab(hdu):
     """Create binary table HDU on FITS object
-       hdu    FITS HDU object
+
+    Args:
+       hdu:    FITS HDU object
     """
     tab=hdu.table
     units=hdu.units

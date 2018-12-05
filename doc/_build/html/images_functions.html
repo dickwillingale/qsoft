@@ -1,0 +1,829 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>images.functions &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="astro - Astronomy Applications" href="astro.html" />
+    <link rel="prev" title="images - Image Processing" href="images.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="astro.html" title="astro - Astronomy Applications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="images.html" title="images - Image Processing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="images.html" accesskey="U">images  - Image Processing</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-images">
+<span id="images-functions"></span><h1>images.functions<a class="headerlink" href="#module-images" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="images.beam">
+<code class="descclassname">images.</code><code class="descname">beam</code><span class="sig-paren">(</span><em>arr</em>, <em>rbeam</em>, <em>blev</em>, <em>bvar</em><span class="sig-paren">)</span><a class="headerlink" href="#images.beam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analysis of source above background within a circular beam</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr</strong> – image array</li>
+<li><strong>rbeam</strong> – radius of beam in pixels</li>
+<li><strong>blev</strong> – average background level per pixel (to be subtracted)</li>
+<li><strong>bvar</strong> – variance on blev (-ve for counting statistics)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list with the following</div>
+<div class="line"><strong>nsam</strong>:    number of pixels in beam</div>
+<div class="line"><strong>bflux</strong>:   background in beam (e.g. counts)</div>
+<div class="line"><strong>bsigma</strong>:  standard deviation of background</div>
+<div class="line"><strong>flux</strong>:    source flux above background in beam (e.g. counts)</div>
+<div class="line"><strong>fsigma</strong>:  standard deviation of source flux</div>
+<div class="line"><strong>peak</strong>:    source x,y peak position</div>
+<div class="line"><strong>cen</strong>:     source x,y centroid position</div>
+<div class="line"><strong>tha</strong>:     angle (degrees) of major axis wrt x (x to y +ve)</div>
+<div class="line"><strong>rmsa</strong>:    source max rms width (major axis) (pixels)</div>
+<div class="line"><strong>rmsb</strong>:    source min rms width (minor axis) (pixels)</div>
+<div class="line"><strong>fwhm</strong>:    full width half maximum (pixels) about beam centre</div>
+<div class="line"><strong>hew</strong>:     half energy width (pixels) about beam centre</div>
+<div class="line"><strong>w90</strong>:     W90 (90% width) (pixels) about beam centre</div>
+<div class="line"><strong>fwhmp</strong>:   full width half maximum (pixels) about peak</div>
+<div class="line"><strong>hewp</strong>:    half energy width (pixels) about peak</div>
+<div class="line"><strong>w90p</strong>:    W90 (90% width) (pixels) about peak</div>
+<div class="line"><strong>fwhmc</strong>:   full width half maximum (pixels) about centroid</div>
+<div class="line"><strong>hewc</strong>:    half energy width (pixels) about centroid</div>
+<div class="line"><strong>w90c</strong>:    W90 (90% width) (pixels) about centroid</div>
+<div class="line"><strong>fit</strong>:     parameters from peak fit using peakchisq()</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">Fit performed if bvar!=0.</div>
+<div class="line">Parameters are saved in the list fit (see function srchmin())</div>
+<div class="line-block">
+<div class="line">0:      peak value (no error range calculated)</div>
+<div class="line">1:      peak X pixel position with 90% error range</div>
+<div class="line">2:      peak Y pixel position with 90% error range</div>
+<div class="line">3:      Lorentzian width including 90% upper and lower bounds</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">The position of the beam is the current position within the image.</div>
+<div class="line">Use function setpos() to set the current position.</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.binxy">
+<code class="descclassname">images.</code><code class="descname">binxy</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>iq</em>, <em>w</em>, <em>xleft</em>, <em>xright</em>, <em>ybot</em>, <em>ytop</em>, <em>nx</em>, <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#images.binxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>x-y event binning to form an image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – array of x positions</li>
+<li><strong>Y</strong> – array of y positions</li>
+<li><strong>iq</strong> – array of quality values (0 for OK)</li>
+<li><strong>w</strong> – array of weights</li>
+<li><strong>xleft</strong> – minimum x value (left edge) for image array</li>
+<li><strong>xright</strong> – maximum x value (rigth edge) for image array</li>
+<li><strong>ybot</strong> – minimum y value (bottom edge) for image array</li>
+<li><strong>ytop</strong> – maximum y value (top edge) for image array</li>
+<li><strong>nx</strong> – size of 1st dimension of image array (number of rows)</li>
+<li><strong>ny</strong> – size of 2nd dimension of image array (number of columns)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">image array</div>
+<div class="line">R version returns an image object - image array object$data_array</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.gaussian">
+<code class="descclassname">images.</code><code class="descname">gaussian</code><span class="sig-paren">(</span><em>x</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#images.gaussian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gaussian profile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> – array of x values</li>
+<li><strong>p</strong> – array of fitting parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">par 0: normalisation (value at peak)</div>
+<div class="line">par 1: x-centre (pixel position)</div>
+<div class="line">par 2: Gaussian full width half maximum (pixels)</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">array of function values evaluated at x</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.getpos">
+<code class="descclassname">images.</code><code class="descname">getpos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#images.getpos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current position in image field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list with following</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>pix</strong>:     pixel position</div>
+<div class="line"><strong>xyl</strong>:     local position</div>
+<div class="line"><strong>aes</strong>:     local azimuth,elevation degrees</div>
+<div class="line"><strong>equ</strong>:     Celestial RA,DEC degrees J2000</div>
+<div class="line"><strong>ecl</strong>:     Ecliptic EA,EL degrees</div>
+<div class="line"><strong>gal</strong>:     Galactic LII,BII degrees</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.hamgrid">
+<code class="descclassname">images.</code><code class="descname">hamgrid</code><span class="sig-paren">(</span><em>pic</em><span class="sig-paren">)</span><a class="headerlink" href="#images.hamgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a Hammer projection grid on figure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pic</strong> – figure object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.init">
+<code class="descclassname">images.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#images.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise common blocks on import</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.king_profile">
+<code class="descclassname">images.</code><code class="descname">king_profile</code><span class="sig-paren">(</span><em>x</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#images.king_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>King function (modified Lorentzian) profile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> – array of x values</li>
+<li><strong>p</strong> – array of fitting parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">par 0: normalisation (value at peak)</div>
+<div class="line">par 1: x-centre (pixel position)</div>
+<div class="line">par 2: full width half maximum (pixels)</div>
+<div class="line">par 3: power index (1 for Lorentzian)</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">array of function values evaluated at x</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lamgrid">
+<code class="descclassname">images.</code><code class="descname">lamgrid</code><span class="sig-paren">(</span><em>pic</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lamgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a Lambert projection grid on figure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pic</strong> – figure object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lebin">
+<code class="descclassname">images.</code><code class="descname">lebin</code><span class="sig-paren">(</span><em>xe</em>, <em>ye</em>, <em>s</em>, <em>h</em>, <em>g</em>, <em>eta</em>, <em>nx</em>, <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an image from an event list binning using lobster eye psf</p>
+<p>The image is effectively a cross-correlation of the event list with the lobster eye cross-beam.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xe</strong> – x event positions, pixels</li>
+<li><strong>ye</strong> – y event positions, pixels</li>
+<li><strong>s</strong> – size of cross-beam square area in pixels</li>
+<li><strong>h</strong> – height of cross-arm triangle in pixels (=2d/L)</li>
+<li><strong>g</strong> – width of Lorentzian central spot in pixels</li>
+<li><strong>eta</strong> – cross-arm to peak ratio at centre</li>
+<li><strong>nx</strong> – first dimension of array</li>
+<li><strong>ny</strong> – second dimension of array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">image array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">Event positions assumed to run:</div>
+<div class="line-block">
+<div class="line">x: 0 left edge to nx right edge</div>
+<div class="line">y: 0 bottom edge to ny top edge</div>
+</div>
+<div class="line">Therefore centre of left bottom pixel is 0.5,0.5</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lecbeam">
+<code class="descclassname">images.</code><code class="descname">lecbeam</code><span class="sig-paren">(</span><em>arr</em>, <em>s</em>, <em>h</em>, <em>blev</em>, <em>bvar</em>, <em>nt</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lecbeam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analysis of source above background in a lobster eye cross-beam</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr</strong> – image array</li>
+<li><strong>s</strong> – size of cross-beam square area in pixels</li>
+<li><strong>h</strong> – height of cross-arm quadrant in pixels (=2d/L)</li>
+<li><strong>blev</strong> – average background level per pixel (to be subtracted)</li>
+<li><strong>bvar</strong> – variance on blev (-ve for counting statistics)</li>
+<li><strong>nt</strong> – dimension of output quadrant flux distribution in pixels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of the following</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><strong>qua</strong>:     quadrant surface brightness distribution array nt by nt</div>
+<div class="line"><strong>quan</strong>:    quadrant  pixel occupancy array nt by nt</div>
+<div class="line"><strong>nsam</strong>:    number of pixels in beam</div>
+<div class="line"><strong>bflux</strong>:   background in beam (e.g. counts)</div>
+<div class="line"><strong>bsigma</strong>:  standard deviation of background</div>
+<div class="line"><strong>flux</strong>:    source flux above background in beam (e.g. counts)</div>
+<div class="line"><strong>fsigma</strong>:  standard deviation of source flux</div>
+<div class="line"><strong>peak</strong>:    source x,y peak position</div>
+<div class="line"><strong>cen</strong>:     source x,y centroid position</div>
+<div class="line"><strong>hew</strong>:     half energy width (pixels)</div>
+<div class="line"><strong>w90</strong>:     W90 (90% width) (pixels)</div>
+<div class="line"><strong>ahe</strong>:     half energy area (sq pixels)</div>
+<div class="line"><strong>aw9</strong>:     W90 (90% width) area (sq pixels)</div>
+<div class="line"><strong>fpeak</strong>:   flux in peak pixel</div>
+<div class="line"><br /></div>
+<div class="line">The position of the beam is the current position within the image.</div>
+<div class="line">Use function setpos() to set the current position.</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lecimage">
+<code class="descclassname">images.</code><code class="descname">lecimage</code><span class="sig-paren">(</span><em>s</em>, <em>h</em>, <em>b</em>, <em>xcen</em>, <em>ycen</em>, <em>nx</em>, <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lecimage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an image array of the lobster eye cross-beam</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> – size of cross-beam square area in pixels</li>
+<li><strong>h</strong> – height of cross-arm triangle in pixels (=2d/L)</li>
+<li><strong>b</strong> – jwidth of cross-arm triangle in pixels</li>
+<li><strong>xcen</strong> – centre pixel (see coords below)</li>
+<li><strong>ycen</strong> – centre pixel (see coords below)</li>
+<li><strong>nx</strong> – first dimension of array</li>
+<li><strong>ny</strong> – second dimension of array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">image array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Coordinate system for xcen,ycen is:</dt>
+<dd><div class="first last line-block">
+<div class="line">x runs from 0.0 on left to nx on right</div>
+<div class="line">Y runs from 0.0 on bottom to ny on top</div>
+<div class="line">Centre of bottom left pixel is therefore 0.5,0.5</div>
+<div class="line">Centre of top right pixel is nx-0.5,ny-0.5</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lepsf">
+<code class="descclassname">images.</code><code class="descname">lepsf</code><span class="sig-paren">(</span><em>s</em>, <em>h</em>, <em>g</em>, <em>eta</em>, <em>xcen</em>, <em>ycen</em>, <em>nx</em>, <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lepsf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an image of the lobster eye PSF</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> – size of cross-beam square area in pixels</li>
+<li><strong>h</strong> – height of cross-arm triangle in pixels (=2d/L)</li>
+<li><strong>g</strong> – width of Lorentzian central spot in pixels</li>
+<li><strong>eta</strong> – cross-arm to peak ratio at centre</li>
+<li><strong>xcen</strong> – centre of PSF (see below for coords. system)</li>
+<li><strong>ycen</strong> – centre of PSF (see below for coords. system)</li>
+<li><strong>nx</strong> – first dimension of array</li>
+<li><strong>ny</strong> – second dimension of array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">image array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Coordinate system for xcen,ycen is:</dt>
+<dd><div class="first last line-block">
+<div class="line">x runs from 0.0 on left to nx on right</div>
+<div class="line">Y runs from 0.0 on bottom to ny on top</div>
+<div class="line">Centre of bottom left pixel is therefore 0.5,0.5</div>
+<div class="line">Centre of top right pixel is nx-0.5,ny-0.5</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.lorentzian">
+<code class="descclassname">images.</code><code class="descname">lorentzian</code><span class="sig-paren">(</span><em>x</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#images.lorentzian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lorentzian profile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> – array of x values</li>
+<li><strong>p</strong> – array of fitting parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">par 0: normalisation (value at peak)</div>
+<div class="line">par 1: x-centre (pixel position)</div>
+<div class="line">par 2: Lorentian width (pixels)</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">array of function values evaluated at x</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.peakchisq">
+<code class="descclassname">images.</code><code class="descname">peakchisq</code><span class="sig-paren">(</span><em>fpars</em><span class="sig-paren">)</span><a class="headerlink" href="#images.peakchisq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chi-squared for image peak fitting</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fpars</strong> – array of fitting parameters</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">par 0: normalisation (value at peak)</div>
+<div class="line">par 1: x-centre (pixel position)</div>
+<div class="line">par 2: y-centre (pixel position)</div>
+<div class="line">par 3: Lorentian width (pixels) 24th Sept. 2017 RW</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Chi-squared value</td>
+</tr>
+</tbody>
+</table>
+<p>Used by function beam() which loads Fortran common block BEAMFIT with image data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.plt_show_locator">
+<code class="descclassname">images.</code><code class="descname">plt_show_locator</code><span class="sig-paren">(</span><em>fg</em>, <em>npos</em><span class="sig-paren">)</span><a class="headerlink" href="#images.plt_show_locator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get local coordinate positions using the cursor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fg</strong> – figure id returned by plt.figure()</li>
+<li><strong>npos</strong> – number of positions to be retured (clicked)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">xx,yy,  2 arrays containing npos local coordinates</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This routine provides a basic level of interaction with a displayed figure.
+It is used in place of a simple plt.show() call so that npos local coordinate
+positions can be selected interactively using the cursor from a displayed image
+and returned in arrays to the user.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.quaderr">
+<code class="descclassname">images.</code><code class="descname">quaderr</code><span class="sig-paren">(</span><em>x0</em>, <em>y0</em>, <em>x1</em>, <em>y1</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#images.quaderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quadratic estimator for confidence limit</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x0</strong> – parameter at minimum</li>
+<li><strong>y0</strong> – statistic at minimum</li>
+<li><strong>x1</strong> – parameter near minimum</li>
+<li><strong>y1</strong> – statistic near minimum</li>
+<li><strong>y</strong> – required statistic value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">estimate of parameter corresponding to y</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.rectangles">
+<code class="descclassname">images.</code><code class="descname">rectangles</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#images.rectangles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw rectangles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> – centres in local x</li>
+<li><strong>y</strong> – centres in local y</li>
+<li><strong>w</strong> – widths</li>
+<li><strong>h</strong> – heights</li>
+<li><strong>t</strong> – rotation angles radians</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.reset">
+<code class="descclassname">images.</code><code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#images.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset common blocks to initial condition</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.setfield">
+<code class="descclassname">images.</code><code class="descname">setfield</code><span class="sig-paren">(</span><em>nx</em>, <em>xleft</em>, <em>xright</em>, <em>ny</em>, <em>ybot</em>, <em>ytop</em><span class="sig-paren">)</span><a class="headerlink" href="#images.setfield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set local coordinates for image field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nx</strong> – number of columns</li>
+<li><strong>xleft</strong> – local x left edge</li>
+<li><strong>xright</strong> – local x right edge</li>
+<li><strong>ny</strong> – number of rows</li>
+<li><strong>ybot</strong> – local y bottom edge</li>
+<li><strong>ytop</strong> – local y top edge</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.setpos">
+<code class="descclassname">images.</code><code class="descname">setpos</code><span class="sig-paren">(</span><em>ipos</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#images.setpos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set current position in image field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ipos</strong> – coordinate index</li>
+<li><strong>p</strong> – position coordinate pair</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>ipos values:</dt>
+<dd><div class="first last line-block">
+<div class="line">1: pixel 0-NCOLS, 0-NROWS</div>
+<div class="line">2:  local X,Y</div>
+<div class="line">3:  local azimuth,elevation degrees</div>
+<div class="line">4:  Celestial RA,DEC degrees J2000</div>
+<div class="line">5:  Ecliptic EA,EL degrees</div>
+<div class="line">6:  Galactic LII,BII degrees</div>
+</div>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">current position using getpos()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.setsky">
+<code class="descclassname">images.</code><code class="descname">setsky</code><span class="sig-paren">(</span><em>xtodeg</em>, <em>ytodeg</em>, <em>ipr</em>, <em>mjd</em>, <em>ra</em>, <em>dec</em>, <em>roll</em><span class="sig-paren">)</span><a class="headerlink" href="#images.setsky" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up sky coordinates for image field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>xtodeg</strong> – scale from local x to degrees (usually -ve)</li>
+<li><strong>ytodeg</strong> – scale from local y to degrees</li>
+<li><strong>ipr</strong> – projection between local XY and local spherical</li>
+<li><strong>mjd</strong> – Modified Julian date</li>
+<li><strong>ra</strong> – Right Ascension (degrees J2000 at local origin)</li>
+<li><strong>dec</strong> – Declination (degrees J2000 at local origin)</li>
+<li><strong>roll</strong> – Roll angle (degrees from North to +ve elev. +ve clockwise)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>ipr values:</dt>
+<dd><div class="first last line-block">
+<div class="line">0: Plate Carre</div>
+<div class="line">1: Aitoff (Hammer)</div>
+<div class="line">2: Lambert (equatorial aspect of Azimuthal equal-area projection)</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.sqbeam">
+<code class="descclassname">images.</code><code class="descname">sqbeam</code><span class="sig-paren">(</span><em>arr</em>, <em>hbeam</em>, <em>blev</em>, <em>bvar</em><span class="sig-paren">)</span><a class="headerlink" href="#images.sqbeam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analysis of source above background within a square beam</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr</strong> – image array</li>
+<li><strong>hbeam</strong> – half width of square beam in pixels</li>
+<li><strong>blev</strong> – average background level per pixel (to be subtracted)</li>
+<li><strong>bvar</strong> – variance on blev (-ve for counting statistics)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="line-block">
+<div class="line">list with the following</div>
+<div class="line"><strong>nx,ny</strong>:    dimension of beam pixels (truncated if falls off edge)</div>
+<div class="line"><strong>xpi,xpr</strong>:  x output arrays, pixel position and flux</div>
+<div class="line"><strong>ypi,ypr</strong>:  y output arrays, pixel position and flux</div>
+<div class="line"><strong>bflux</strong>:    background in beam (e.g. counts)</div>
+<div class="line"><strong>bsigma</strong>:   standard deviation of background</div>
+<div class="line"><strong>flux</strong>:     source flux above background in beam (e.g. counts)</div>
+<div class="line"><strong>fsigma</strong>:   standard deviation of source flux</div>
+<div class="line"><strong>peak</strong>:     source x,y peak position</div>
+<div class="line"><strong>cen</strong>:      source x,y centroid position</div>
+<div class="line"><strong>rmsx</strong>:     rms width in x (pixels) about centroid</div>
+<div class="line"><strong>rmsy</strong>:     rms width in y (pixels) about centroid</div>
+<div class="line"><strong>pi5</strong>:      5% x,y position</div>
+<div class="line"><strong>pi25</strong>:     25% x,y position</div>
+<div class="line"><strong>med</strong>:      median (50%) x,y position</div>
+<div class="line"><strong>pi75</strong>:     75% x,y position</div>
+<div class="line"><strong>pi95</strong>:     95% x,y position</div>
+<div class="line"><strong>hewx</strong>:     HEW (half energy width) x (pixels)</div>
+<div class="line"><strong>hewy</strong>:     HEW (half energy width) y (pixels)</div>
+<div class="line"><strong>w90x</strong>:     W90 (90% width) x (pixels)</div>
+<div class="line"><strong>w90y</strong>:     W90 (90% width) y (pixels)</div>
+<div class="line"><strong>fitx</strong>:     parameters from x profile fit using king_profile()</div>
+<div class="line"><strong>fity</strong>:     parameters from y profile fit using king_profile()</div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">Fits performed if bvar!=0.</div>
+<div class="line">Parameters are saved in the lists fitx and fity</div>
+<div class="line-block">
+<div class="line">0: peak value (no error range calculated)</div>
+<div class="line">1: peak X pixel position (no error range calculated)</div>
+<div class="line">2: Lorentzian width including 90% upper and lower bounds</div>
+</div>
+<div class="line">The position of the sqbeam is the current position within the image.</div>
+<div class="line">Use function setpos() to set the current position.</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.srchmin">
+<code class="descclassname">images.</code><code class="descname">srchmin</code><span class="sig-paren">(</span><em>pars</em>, <em>pl</em>, <em>ph</em>, <em>stat</em>, <em>delstat</em>, <em>derr</em><span class="sig-paren">)</span><a class="headerlink" href="#images.srchmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for minimum statistic and return best fit parameters and confidence limits of the parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pars</strong> – initial parameter values</li>
+<li><strong>pl</strong> – hard lower limit of parameter values</li>
+<li><strong>ph</strong> – hard upper limit of parameter values</li>
+<li><strong>stat</strong> – the statistic function to be minimised</li>
+<li><strong>delstat</strong> – the change in statistic for confidence limits</li>
+<li><strong>derr</strong> – initial error estimates for parameters, 0 fixed, &gt;0 to estimate confidence range</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list from optim() plus confidence limits parlo and parhi</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The statistic function call must return the value of a statistic with call of form stat(pars) (e.g. images.peakchisq(pars))</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="images.toxy">
+<code class="descclassname">images.</code><code class="descname">toxy</code><span class="sig-paren">(</span><em>ipos</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#images.toxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert position to local xy coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ipos</strong> – coordinate index</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">1: pixel 0-NCOLS, 0-NROWS</div>
+<div class="line">2: local X,Y</div>
+<div class="line">3: local azimuth,elevation degrees</div>
+<div class="line">4: Celestial RA,DEC degrees J2000</div>
+<div class="line">5: Ecliptic EA,EL degrees</div>
+<div class="line">6: Galactic LII,BII degrees</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">position as local xy</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="images.html">images  - Image Processing</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">images.functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_modifying.html">Adding New Functions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="images.html"
+                        title="previous chapter">images  - Image Processing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="astro.html"
+                        title="next chapter">astro  - Astronomy Applications</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="astro.html" title="astro - Astronomy Applications"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="images.html" title="images - Image Processing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="images.html" >images  - Image Processing</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>

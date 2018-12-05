@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>images - Image Processing &#8212; QSOFT 9.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="images.functions" href="images_functions.html" />
+    <link rel="prev" title="qfits.functions" href="qfits_functions.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="images_functions.html" title="images.functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="qfits_functions.html" title="qfits.functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="images-image-processing">
+<h1>images  - Image Processing<a class="headerlink" href="#images-image-processing" title="Permalink to this headline">¶</a></h1>
+<p>Positions in images. The coordinates of an image field are set up
+using the function setfield(). The <em>current position</em> can be set using the
+function setpos(). This position is then used by functions like beam().
+The position is
+given in pixel coordinates (a real scale running 0-NCOLS in X and 0-NROWS in Y)
+and local X,Y (usually taken as mm). If, in addition to setfield(),
+sky coordinates are set using the function setsky() the <em>current position</em> is
+also specified in local
+azimuth and elevation (degrees), Celestial RA,DEC (degrees J2000), Ecliptic
+EA,EL (degrees) and Galactic LII, BII (degrees). The sky coordinates can be
+set using different projections, Plate Carre, Aitoff (Hammer) or Lambert
+(equatorial aspect of Azimuthal equal-area).</p>
+<ul class="simple">
+<li>setfield() Set local coordinates for image field</li>
+<li>setsky() Set up sky coordinates for image field</li>
+<li>setpos() Set current position in image field</li>
+<li>getpos() Get current position in image field</li>
+<li>toxy() Convert position to local xy coordinates</li>
+<li>plt_show_locator() Get local coordinate positions using the cursor</li>
+</ul>
+<p>Analysis of a beam containing a source or PSF. The beam is centred at the
+<em>current positon</em> (see above).</p>
+<ul class="simple">
+<li>beam() Analysis of source above background within a circular beam</li>
+<li>sqbeam() Analysis of source above background within a square beam</li>
+<li>lecbeam() Analysis of source above background in a lobster eye cross-beam</li>
+</ul>
+<p>Creation of images from event lists or 2-d functions.
+In Python these function return a 2-d array. In R they return
+an image object which contains the array and ancillary information.</p>
+<ul class="simple">
+<li>binxy() x-y event binning to form an image array</li>
+<li>lebin() Create an image from an event list binning using lobster eye psf</li>
+<li>lecimage() Create an image array of the lobster eye cross-beam</li>
+<li>lepsf() Create an image of the lobster eye PSF</li>
+</ul>
+<p>Drawing over images. The function hamgrid() and lamgrid() will only work if
+sky coordinates have been set up using setsky().</p>
+<ul class="simple">
+<li>rectangles() Draw rectangles</li>
+<li>hamgrid() Plot a Hammer projection grid on figure</li>
+<li>lamgrid() Plot a Lambert projection grid on figure</li>
+</ul>
+<p>1-d profiles</p>
+<ul class="simple">
+<li>gaussian() Gaussian profile</li>
+<li>king_profile() King function (modified Lorentzian) profile</li>
+<li>lorentzian() Lorentzian profile</li>
+</ul>
+<p>Model function fitting using a statistic. Can be used for fitting of PSF profiles to image data or more generally for fitting data with a model function.</p>
+<ul class="simple">
+<li>srchmin() Search for minimum statistic and return best fit parameters and confidence limits of the parameters</li>
+<li>peakchisq() Chi-squared for image peak fitting</li>
+<li>quaderr() Quadratic estimator for confidence limit</li>
+</ul>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="images_functions.html">images.functions</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Build and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_py_R_IDL.html">Python, R and IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qfits.html">qfits - Using FITS Files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">images  - Image Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="images_functions.html">images.functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="astro.html">astro  - Astronomy Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xscat.html">xscat  - X-ray Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xsrt.html">xsrt   - Sequential Ray Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qsoft_modifying.html">Adding New Functions</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="qfits_functions.html"
+                        title="previous chapter">qfits.functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="images_functions.html"
+                        title="next chapter">images.functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="images_functions.html" title="images.functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="qfits_functions.html" title="qfits.functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">QSOFT 9.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Richard Willingale.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>
