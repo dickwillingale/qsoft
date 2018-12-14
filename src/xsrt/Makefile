@@ -27,7 +27,7 @@ LSOURCES = \
 srt_cnic.f      srt_cnin.f      srt_dalr.f      srt_dfrm.f      srt_didi.f \
 srt_in2d.f      srt_plne.f      srt_plna.f      srt_qufd.f \
 srt_qufu.f      srt_gray.f      srt_qurt.f      srt_rcon.f      srt_refs.f \
-srt_relk.f      srt_sphr.f      srt_mray.f      srt_trc.f       srt_vcrs.f \
+srt_relk.f      srt_sphr.f      srt_mray.f      srt_vcrs.f \
 srt_vdot.f      srt_vnrm.f      srt_wlt1.f      srt_pray.f      srt_nsur.f \
 srt_su1.f       srt_su2.f       srt_su3.f       srt_su4.f       srt_su5.f \
 srt_su6.f       srt_su7.f       srt_su8.f       srt_su9.f       srt_su10.f \
@@ -35,7 +35,7 @@ srt_su11.f      srt_su12.f      srt_su13.f      srt_su14.f      srt_su15.f \
 srt_su16.f      srt_su17.f      srt_su18.f      srt_su19.f      srt_su20.f \
 srt_su21.f      srt_su22.f      srt_su23.f      srt_su24.f      srt_su25.f \
 srt_su26.f      srt_su27.f 	srt_su28.f	srt_su29.f      srt_su30.f \
-srt_su31.f      srt_su32.f \
+srt_su31.f      \
 srt_setf.f      srt_sett.f      srt_setd.f      srt_sets.f \
 srt_mats.f      srt_cone.f      srt_fleg.f      srt_scrn.f      srt_list.f \
 srt_tdef.f      srt_grad.f      srt_mcm.f       srt_mltr.f \
@@ -50,8 +50,8 @@ srt_findspo.f	srt_spoarr.f	srt_setspocom.f \
 srt_idfrm.f     srt_iin2d.f     srt_changeaxes.f  \
 srt_setkbscom.f srt_findmod.f   srt_sfindmod.f srt_setconcom.f \
 srt_sqmpoarr.f srt_findmpo.f srt_setmpoarr.f \
-srt_defparxy.f srt_dfrmsine.f srt_plns.f srt_setslecom.f \
-srt_slefslot.f srt_slemakeconstellation.f srt_multidfrm.f srt_sle.f \
+srt_defparxy.f srt_dfrmsine.f srt_setslecom.f \
+srt_slefslot.f srt_slemakeconstellation.f srt_sle.f \
 sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f 
 
 CSOURCES = stray_xray_psf.c

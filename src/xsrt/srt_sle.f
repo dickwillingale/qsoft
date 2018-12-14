@@ -297,7 +297,7 @@ C <1> absorbing wall of slot
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-        CALL SRT_SETF(KSUR+1,32,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
+        CALL SRT_SETF(KSUR+1,5,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
 C
 c#ifdef XDEBUG
 c        WRITE (*,*),'wALL 1'
@@ -320,7 +320,7 @@ cC <3> absorbing wall of slot
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-        CALL SRT_SETF(KSUR+3,32,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
+        CALL SRT_SETF(KSUR+3,5,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
 C
 c#ifdef XDEBUG
 c        WRITE (*,*),'wALL 3'
@@ -362,7 +362,7 @@ C Add wall thickness (not exaxt) - necessary to do as the last step
         PP(8)=PP(8)+YP(2)*WALL/2
         PP(9)=PP(9)+YP(3)*WALL/2
 C reflecting:
-        CALL SRT_SETF(KSUR+2,32,13,PP,IDEFR,IQ,KSUR+1,-1,ISTAT)
+        CALL SRT_SETF(KSUR+2,5,13,PP,IDEFR,IQ,KSUR+1,-1,ISTAT)
 C blacked, for experiments:
 C        CALL SRT_SETF(KSUR+2,5,13,PP,0,0,KSUR+1,-1,ISTAT)
 c
@@ -399,7 +399,7 @@ C Add wall thickness (not exaxt) - necessary to do as the last step
         PP(8)=PP(8)-YP(2)*WALL/2
         PP(9)=PP(9)-YP(3)*WALL/2
 C reflecting:
-        CALL SRT_SETF(KSUR+4,32,13,PP,IDEFR,IQ,KSUR+1,-1,ISTAT)
+        CALL SRT_SETF(KSUR+4,5,13,PP,IDEFR,IQ,KSUR+1,-1,ISTAT)
 C blacked, for experiments:
 C        CALL SRT_SETF(KSUR+4,5,13,PP,0,0,KSUR+1,-1,ISTAT)
 C
@@ -481,7 +481,7 @@ c        WRITE(*,*)
 c#endif
 C        the ray goes between mirror and housing
 c
-        CALL SRT_SETF(KSUR+4,32,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
+        CALL SRT_SETF(KSUR+4,5,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
 C
         ENDIF
 c
