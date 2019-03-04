@@ -25,5 +25,5 @@ C
         DO J=1,MAXDF
                 IDFM(1,J)=0
         ENDDO
-c        write(*,*) 'qpy initialises/reset'
+C        write(*,*) 'qpy initialises/reset'
         END

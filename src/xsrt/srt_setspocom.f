@@ -1,6 +1,6 @@
 *+SRT_SETSPOCOM   Set values in constellation common block for SPO array
 	SUBROUTINE SRT_SETSPOCOM(NMOD,RM,PM,TM,WM,HM,AM,
-     +	CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,ISTAT)
+     +	CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,BIQ,ISTAT)
 *NMOD	   input   number of MPOs in full array
 *RM        input   array of module radial positions (mm)
 *PM        input   array of module azimuthal positions (radians)
@@ -16,6 +16,7 @@
 *RWI       input   array of module pore rib thickness (mm)
 *WFR       input   array of module frame widths (mm)
 *SIQ       input   array of module reflecting surface quality indices
+*BIQ       input   array of module non-reflecting surface quality indices
 *ISTAT	in/out	status 0 OK
       	IMPLICIT NONE
 	INTEGER NMOD,ISTAT
@@ -23,7 +24,7 @@
 	DOUBLE PRECISION WM(NMOD),HM(NMOD),AM(NMOD)
 	DOUBLE PRECISION CM(NMOD),GM(NMOD),RPITCH(NMOD)
 	DOUBLE PRECISION WALL(NMOD),APITCH(NMOD),SIQ(NMOD)
-	DOUBLE PRECISION WFR(NMOD),RWI(NMOD)
+	DOUBLE PRECISION WFR(NMOD),RWI(NMOD),BIQ(NMOD)
 *-Dick Willingale 2018-Mar-26
 	INCLUDE 'SRT_COM'
 	INTEGER J
@@ -56,6 +57,6 @@ C Now run through and set SPO parameters in common
 		ulist(J)=RWI(J)
 		vlist(J)=WFR(J)
 		zlist(J)=SIQ(J)
-		slist(J)=0.0
+		slist(J)=BIQ(J)
 	ENDDO
 	END

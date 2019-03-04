@@ -52,7 +52,7 @@
 
 
 \title{QSOFT Documentation}
-\date{Dec 05, 2018}
+\date{Dec 21, 2018}
 \release{9.0}
 \author{Richard Willingale}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -2997,6 +2997,11 @@ particular deformation and must be the first call. The component matricies or
 function parameters are then set using calls to xsrt.defmat() or
 xsrt.defparxy().
 
+If the deformation index, \sphinxstylestrong{it}, is -ve then uses \sphinxstylestrong{abs(it)} but expects a
+2nd deformation to be defined which will be added to the current deformation.
+By using a succession of -ve deformation indices a series of deformations can
+be added together.
+
 A deformation applied to the source() spreads the point source into a pixel
 array. See \sphinxstylestrong{Source of Rays}.
 
@@ -5804,23 +5809,6 @@ sle
 5
 \\
 \hline
-32
-&
-plane
-&
-Schmidt
-&
-normal
-&
-slot
-&
-multiple
-&
-plns
-&
-1
-\\
-\hline
 \end{longtable}\sphinxatlongtableend\end{savenotes}
 
 Each of these surface types has a subroutine SRT\_SUnn associated with
@@ -6053,12 +6041,87 @@ Edit the xsrt.R and xsrt.py script files to include the new function.
 
 If you are going to use IDL move into the qIDL directory and create
 a qrt\_new.pro file to define the function for IDL.
-
-You can use the definitions already present in these files
-to see how the interface works.
 \end{quote}
 
 \end{enumerate}
+
+Here is an example of calling the Fortran subroutine QRT\_LENS() from
+Python, R and IDL. The code can be found in \$QSOFT/src/xsrt/xsrt.py,
+\$QSOFT/src/xsrt/xsrt.R and \$QSOFT/src/xsrt/qIDL/qrt\_lens.pro.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{xsrtfor}
+\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\PYG{c+c1}{\PYGZsh{} Python calls Fortran subroutine QRT\PYGZus{}LENS to define Python function lens()}
+
+\PYG{k}{def} \PYG{n+nf}{lens}\PYG{p}{(}\PYG{n}{idd}\PYG{p}{,}\PYG{n}{idf}\PYG{p}{,}\PYG{n}{iq}\PYG{p}{,}\PYG{n}{anml}\PYG{p}{,}\PYG{n}{arfx}\PYG{p}{,}\PYG{n}{apos}\PYG{p}{,}\PYG{n}{rap}\PYG{p}{,}\PYG{n}{r1}\PYG{p}{,}\PYG{n}{r2}\PYG{p}{,}\PYG{n}{refind}\PYG{p}{,}\PYG{n}{thickq}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}Set up a lens}
+
+\PYG{l+s+sd}{    Args:}
+\PYG{l+s+sd}{        id:      lens type 1 spherical, 2 cylindrical}
+\PYG{l+s+sd}{        idf:     deformation index}
+\PYG{l+s+sd}{        iq:      surface quality index}
+\PYG{l+s+sd}{        anml:    surface normal}
+\PYG{l+s+sd}{        arfx:    surface reference axis}
+\PYG{l+s+sd}{        apos:    surface reference position}
+\PYG{l+s+sd}{        rap:     radius of aperture}
+\PYG{l+s+sd}{        r1,r2:   radii of curvature of lens surfaces}
+\PYG{l+s+sd}{        refind:  refractive index of lens material (or n2/n1)}
+\PYG{l+s+sd}{        thick:   lens thickness}
+
+\PYG{l+s+sd}{    Surface quality:}
+\PYG{l+s+sd}{        This function sets up 2 surface qualities **iq** and **iq+1** to}
+\PYG{l+s+sd}{        represent the entrance and exit surfaces.}
+\PYG{l+s+sd}{    \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+    \PYG{n}{xsrtfor}\PYG{o}{.}\PYG{n}{qrt\PYGZus{}lens}\PYG{p}{(}\PYG{n}{idd}\PYG{p}{,}\PYG{n}{idf}\PYG{p}{,}\PYG{n}{iq}\PYG{p}{,}\PYG{n}{anml}\PYG{p}{,}\PYG{n}{arfx}\PYG{p}{,}\PYG{n}{apos}\PYG{p}{,}\PYG{n}{rap}\PYG{p}{,}\PYG{n}{r1}\PYG{p}{,}\PYG{n}{r2}\PYG{p}{,}\PYG{n}{refind}\PYG{p}{,}\PYG{n}{thickq}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} R calls Fortran subroutine QRT\PYGZus{}LENS to define R Function qrt\PYGZus{}lens()}
+
+qrt\PYGZus{}lens\PYG{o}{\PYGZlt{}\PYGZhy{}}\PYG{k+kr}{function}\PYG{p}{(}id\PYG{p}{,}idf\PYG{p}{,}iq\PYG{p}{,}anml\PYG{p}{,}arfx\PYG{p}{,}apos\PYG{p}{,}rap\PYG{p}{,}r1\PYG{p}{,}r2\PYG{p}{,}refind\PYG{p}{,}thick\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{l+m}{.}Fortran\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{qrt\PYGZus{}lens\PYGZdq{}}\PYG{p}{,}
+    \PYG{k+kp}{as.integer}\PYG{p}{(}id\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.integer}\PYG{p}{(}idf\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.integer}\PYG{p}{(}iq\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}anml\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}arfx\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}apos\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}rap\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}r1\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}r2\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}refind\PYG{p}{)}\PYG{p}{,}
+    \PYG{k+kp}{as.double}\PYG{p}{(}thick\PYG{p}{)}\PYG{p}{)}
+    \PYG{k+kp}{invisible}\PYG{p}{(}\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+\end{sphinxVerbatim}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+cSingleline}{; IDL calls Fortran subroutine QRT\PYGZus{}LENS to define IDL function QRT\PYGZus{}LENS}
+
+\PYG{k}{FUNCTION} QRT\PYGZus{}LENS,id,idf,iq,anml,arfx,apos,rap,r1,r2,refind,thick
+
+  soft \PYG{o}{=} \PYG{n+nb}{GETENV}(\PYG{l+s+s1}{\PYGZsq{}QSOFT\PYGZsq{}})
+  A\PYG{o}{=}\PYG{n+nb}{CALL\PYGZus{}EXTERNAL}(qsoft \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}/R\PYGZus{}libraries/xsrtR.so\PYGZsq{}}, \PYG{l+s+s2}{\PYGZdq{}qrt\PYGZus{}lens\PYGZus{}\PYGZdq{}}, \PYGZdl{}
+    \PYG{n+nb}{LONG}(id),\PYGZdl{}
+    \PYG{n+nb}{LONG}(idf),\PYGZdl{}
+    \PYG{n+nb}{LONG}(iq),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(anml),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(arfx),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(apos),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(rap),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(r1),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(r2),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(refind),\PYGZdl{}
+    \PYG{n+nb}{DOUBLE}(thick),\PYGZdl{}
+  \PYG{o}{/}AUTO\PYGZus{}GLUE)
+
+  \PYG{n+nb}{RETURN},A
+\PYG{k}{END}
+\end{sphinxVerbatim}
 
 If the new optical element is not supported by any existing surface
 type then a new type must be invented. The programmer must write
@@ -6123,6 +6186,13 @@ Use make to install the new libraries and scripts.
 \end{quote}
 
 \end{enumerate}
+
+
+\chapter{Authors}
+\label{\detokenize{authors:authors}}\label{\detokenize{authors::doc}}
+QSOFT was written by Dick Willingale \sphinxurl{mailto:zrw@le.ac.uk} with
+contributions from Vladimir Tichy \sphinxurl{mailto:vt71@le.ac.uk} and
+Adrian Martindale \sphinxurl{mailto:am136@le.ac.uk}
 
 
 \renewcommand{\indexname}{Python Module Index}

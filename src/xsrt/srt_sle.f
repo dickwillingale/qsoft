@@ -35,6 +35,8 @@
 *-Author of original code for KB: Dick Willingale 2008-Nov-20
 * Modification for SLE: Vladimir Tichy
 *
+* Last change: 18 December 2018
+*
 C        INCLUDE 'SRT_COM'
 *
         DOUBLE PRECISION PI
@@ -237,7 +239,7 @@ C Include out-of-plane figure errors by including slot rotation error
                 XP(I)=COS(THETA)*XP(I)+SIN(THETA)*YP(I)
         ENDDO
         CALL SRT_VCRS(ZP,XP,YP)
-C Include in-plan8e figure errors by shifting axis in YP direction
+C Include in-plane figure errors by shifting axis in YP direction
         DO I=1,3
                 ZP(I)=ZP(I)*SQRT(1.0-DB**2)+YP(I)*DB
         ENDDO
@@ -394,7 +396,7 @@ C add slopeness - normal
         PP(1)=VN(1)
         PP(2)=VN(2)
         PP(3)=VN(3)
-C Add wall thickness (not exaxt) - necessary to do as the last step
+C Add wall thickness (not exact) - necessary to do as the last step
         PP(7)=PP(7)-YP(1)*WALL/2
         PP(8)=PP(8)-YP(2)*WALL/2
         PP(9)=PP(9)-YP(3)*WALL/2
@@ -405,84 +407,10 @@ C        CALL SRT_SETF(KSUR+4,5,13,PP,0,0,KSUR+1,-1,ISTAT)
 C
 c
         ELSE
-c
-c#ifdef XDEBUG
-c        WRITE(*,*) 'HX HY HL PL:',HX,HY,HL,PL
-c        WRITE(*,*) 'POS:',POS(1),',',POS(2),' ',POS(3)
-c        WRITE(*,*) 'XP:',XP(1),',',XP(2),' ',XP(3)
-c        WRITE(*,*) 'YP:',YP(1),',',YP(2),' ',YP(3)
-c        WRITE(*,*) 'ZP:',ZP(1),',',ZP(2),' ',ZP(3)
-c        WRITE(*,*)
-c#endif
-C        the ray goes between mirror and housing
-c        RETURN
-C <2> 
-        PP(1)=YP(1)
-        PP(2)=YP(2)
-        PP(3)=YP(3)
-        PP(4)=ZP(1)
-        PP(5)=ZP(2)
-        PP(6)=ZP(3)
-C <2> 
-C        reference position on surface:
-        PP(7)=POS(1)-ZP(1)*HL-YP(1)*HY
-        PP(8)=POS(2)-ZP(2)*HL-YP(2)*HY
-        PP(9)=POS(3)-ZP(3)*HL-YP(3)*HY
-C        limits:
-        PP(10)=-HL
-        PP(11)=-HX
-        PP(12)=HL
-        PP(13)=HX
-C
-c#ifdef XDEBUG
-c        WRITE (*,*),'wALL 2'
-c        DO I=1,13
-c                WRITE(*,*) 'PP(',I,')=',PP(I)
-c        END DO
-c        CALL SRT_SETF(KSUR+2,32,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
-c
-c        WRITE(*,*) 'HX HY HL PL:',HX,HY,HL,PL
-c        WRITE(*,*) 'POS:',POS(1),',',POS(2),' ',POS(3)
-c        WRITE(*,*) 'XP:',XP(1),',',XP(2),' ',XP(3)
-c        WRITE(*,*) 'YP:',YP(1),',',YP(2),' ',YP(3)
-c        WRITE(*,*) 'ZP:',ZP(1),',',ZP(2),' ',ZP(3)
-c        WRITE(*,*)
-c#endif
-C        the ray goes between mirror and housing
-C <4> 
-        PP(1)=-YP(1)
-        PP(2)=-YP(2)
-        PP(3)=-YP(3)
-        PP(4)=ZP(1)
-        PP(5)=ZP(2)
-        PP(6)=ZP(3)
-C        reference position on surface:
-        PP(7)=POS(1)-ZP(1)*HL+YP(1)*HY
-        PP(8)=POS(2)-ZP(2)*HL+YP(2)*HY
-        PP(9)=POS(3)-ZP(3)*HL+YP(3)*HY
-C        limits:
-        PP(10)=-HL
-        PP(11)=-HX
-        PP(12)=HL
-        PP(13)=HX
-C
-c#ifdef XDEBUG
-c        WRITE (*,*),'wALL 4'
-c        DO I=1,13
-c                WRITE(*,*) 'PP(',I,')=',PP(I)
-c        END DO
-c
-c        WRITE(*,*) 'HX HY HL PL:',HX,HY,HL,PL
-c        WRITE(*,*) 'POS:',POS(1),',',POS(2),' ',POS(3)
-c        WRITE(*,*) 'XP:',XP(1),',',XP(2),' ',XP(3)
-c        WRITE(*,*) 'YP:',YP(1),',',YP(2),' ',YP(3)
-c        WRITE(*,*) 'ZP:',ZP(1),',',ZP(2),' ',ZP(3)
-c        WRITE(*,*)
-c#endif
-C        the ray goes between mirror and housing
-c
-        CALL SRT_SETF(KSUR+4,5,13,PP,IDEFB,0,KSUR+1,-1,ISTAT)
-C
+c	The ray goes through the zero or the last slot. They
+C       represent a space between mirror and housing,
+c	but this feature is to be written later
+		RETURN
         ENDIF
 c
 C

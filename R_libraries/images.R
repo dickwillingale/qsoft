@@ -37,7 +37,7 @@ qr_circles<-function(x,y,r,lty=par("lty"),lwd=par("lwd"),col=par("col")) {
         usr<-par()$usr
         del<-min(usr[2]-usr[1],usr[4]-usr[3])/100
         for(i in 1:length(x)) {
-                nth<-max(8,trunc((2*pi*r[i]/del)))
+                nth<-max(36,trunc((2*pi*r[i]/del)))
                 th<-seq(from=-pi,to=pi,length=nth)
                 polygon(x[i]+r[i]*cos(th),y[i]+r[i]*sin(th),lty=lty,
                 lwd=lwd,border=col)

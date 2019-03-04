@@ -59,12 +59,12 @@
 	DOUBLE PRECISION PP(16),HX,HY,HL,THETA,DTHETA,RCURP,RCURH
 	DOUBLE PRECISION DX,DY,DZ,DDX,DDY,DDZ,THETAJ,THETAP,THETAH,DV
 	DOUBLE PRECISION FL,PL,RP,RAD,RMIN,DR,DA,DC1,DB1,DC2,DB2,WFR
-        DOUBLE PRECISION DBS,DBC,SCA,YPR,RIQ,SP,RWI
+        DOUBLE PRECISION DBS,DBC,SCA,YPR,RIQ,BIQ,RWI
 	DOUBLE PRECISION A2J,WALL,DELTA,HGRID,GX,GY,RAP,RIB,ROFF,DQ
 	DOUBLE PRECISION RMOD,PMOD,TMOD,WMOD,HMOD,XX,YY,RAN(4),TT,DC,DB
 	DOUBLE PRECISION CMOD,GMOD,YYY
 	DOUBLE PRECISION TFOV,GDEP,GBIT
-	INTEGER IX,IY,I,KSUR,IQ,IP,IMOD,ICURV
+	INTEGER IX,IY,I,KSUR,IQ,IB,IP,IMOD,ICURV
 	LOGICAL HIT
 C
 	IF(ISTAT.NE.0) RETURN
@@ -74,7 +74,7 @@ C Aperture to join distance
 	A2J=PC(4)
 C Find module corresponding to impact position in aperture - module index IMOD
 	CALL SRT_FINDSPO(PC(8),PC(9),IMOD,RMOD,PMOD,TMOD,WMOD,HMOD,PL,
-     +	CMOD,GMOD,RAP,WALL,RIB,RWI,WFR,RIQ,SP,XX,YY)
+     +	CMOD,GMOD,RAP,WALL,RIB,RWI,WFR,RIQ,BIQ,XX,YY)
 C
 	IF(IMOD.GT.0) THEN
 C Radial and azimuthal width of pore aperture
@@ -124,7 +124,7 @@ C to grid)
 		CALL SRT_PLNA(DIR,HPOS,CVRN,CAX,CAR,PC,0,9,HIT,POS,RNM,ISTAT)
 C Find module again to get new impact position
 		CALL SRT_FINDSPO(PC(8),PC(9),IMOD,RMOD,PMOD,TMOD,WMOD,HMOD,
-     +		PL,CMOD,GMOD,RAP,WALL,RIB,RWI,WFR,RIQ,SP,XX,YY)
+     +		PL,CMOD,GMOD,RAP,WALL,RIB,RWI,WFR,RIQ,BIQ,XX,YY)
 C Check inside frame
 		WMOD=WMOD-2.0*WFR
 		HMOD=HMOD-2.0*WFR
@@ -302,8 +302,9 @@ C Dimensions of pore
 	HX=DA*0.5
 	HY=DR*0.5
 	HL=PL*0.5
-C Get surface quality of pore reflecting wall
+C Get surface quality of pore reflecting wall and non-reflecting walls
 	IQ=INT(RIQ)
+	IB=INT(BIQ)
 C Set vector parameters for pore aperture
 	PP(1)=ZP(1)
 	PP(2)=ZP(2)
@@ -336,7 +337,7 @@ C This is an absorbing wall
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-	CALL SRT_SETF(KSUR+1,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+1,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 C This is the reflecting surface modelled as a cylinder
 	PP(1)=ZP(1)
 	PP(2)=ZP(2)
@@ -396,7 +397,7 @@ C This is an absorbing wall
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-	CALL SRT_SETF(KSUR+5,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+5,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 C This is an absorbing wall
 	PP(1)=-YP(1)
 	PP(2)=-YP(2)
@@ -411,7 +412,7 @@ C This is an absorbing wall
         PP(11)=-HX
         PP(12)=HL
         PP(13)=HX
-	CALL SRT_SETF(KSUR+6,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+6,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 C Now 2nd surface part of pore
 	HL=PL*0.5/GMOD
 C Find distance for vertex of 2nd surface from Principal plane
@@ -472,7 +473,7 @@ C This is an absorbing wall
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-	CALL SRT_SETF(KSUR+1,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+1,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 C This is reflecting surface modelled as a cylinder
 	PP(1)=ZP(1)
 	PP(2)=ZP(2)
@@ -526,7 +527,7 @@ C This is an absorbing wall
         PP(11)=-HY
         PP(12)=HL
         PP(13)=HY
-	CALL SRT_SETF(KSUR+3,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+3,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 C This is an absorbing wall
 	PP(1)=-YP(1)
 	PP(2)=-YP(2)
@@ -541,5 +542,5 @@ C This is an absorbing wall
         PP(11)=-HX
         PP(12)=HL
         PP(13)=HX
-	CALL SRT_SETF(KSUR+4,5,13,PP,0,0,KSUR+1,-1,ISTAT)
+	CALL SRT_SETF(KSUR+4,5,13,PP,0,IB,KSUR+1,-1,ISTAT)
 	END

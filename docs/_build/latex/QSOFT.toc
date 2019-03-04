@@ -23,10 +23,11 @@
 \contentsline {section}{\numberline {7.6}Surface Quality, Reflectivity and Scattering}{41}{section.7.6}
 \contentsline {section}{\numberline {7.7}X-ray Telescopes, Lens and Prism}{42}{section.7.7}
 \contentsline {section}{\numberline {7.8}Ray Tracing and Saving Rays}{42}{section.7.8}
-\contentsline {section}{\numberline {7.9}xsrt.functions}{43}{section.7.9}
+\contentsline {section}{\numberline {7.9}xsrt.functions}{44}{section.7.9}
 \contentsline {chapter}{\numberline {8}Adding New Functions}{63}{chapter.8}
 \contentsline {section}{\numberline {8.1}Module Source Code}{63}{section.8.1}
 \contentsline {section}{\numberline {8.2}The Ray Tracing Routines}{64}{section.8.2}
 \contentsline {section}{\numberline {8.3}New Surface Elements}{66}{section.8.3}
-\contentsline {chapter}{Python Module Index}{69}{section*.105}
-\contentsline {chapter}{Index}{71}{section*.106}
+\contentsline {chapter}{\numberline {9}Authors}{69}{chapter.9}
+\contentsline {chapter}{Python Module Index}{71}{section*.105}
+\contentsline {chapter}{Index}{73}{section*.106}

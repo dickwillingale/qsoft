@@ -47,7 +47,6 @@ Each surface element type is specified by an index as listed in this table:
 29  plane    MPOtest  normal      pore             single       plna       11
 30  plane    SPOarr   normal      pore             multiple     plna       9   
 31  sphere   Schmidt  normal      slot             multiple     sle        5   
-32  plane    Schmidt  normal      slot             multiple     plns       1   
 ==  =======  =======  ==========  ===============  ===========  =========  ====
 
 Each of these surface types has a subroutine SRT\_SUnn associated with

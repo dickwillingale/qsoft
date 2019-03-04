@@ -766,7 +766,7 @@ def sipore(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
     xsrtfor.qrt_sipore(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
     rm,pm,tm,wm,hm,am,cm,gm,wfr,a2j,idf,iq)
 def spoarr(pcen,pnorm,raxis,flen,a2j,
-    rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,wfr,siq,idf):
+    rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,wfr,siq,biq,idf):
     """Set up Silicon Pore Optics Wolter I array
 
     Args:
@@ -790,6 +790,7 @@ def spoarr(pcen,pnorm,raxis,flen,a2j,
         rwi:       array of module pore rib thickness
         wrf:       array of module frame widths (surrounding module aperture)
         siq:       array of surface quality indices
+        biq:       array of non-reflecting surface quality indices
         idf:       deformation index
 
     Deformation:
@@ -802,7 +803,7 @@ def spoarr(pcen,pnorm,raxis,flen,a2j,
         |   6 width mm along axial edges of module in which figure degrades
     """
     xsrtfor.qrt_spoarr(pcen,pnorm,raxis,flen,a2j,
-    rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,idf)
+    rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,biq,idf)
 def aperture(idd,idf,ap,an,ar,alim,nsurf):
     """Set up an aperture stop
 
@@ -842,6 +843,23 @@ def aperture(idd,idf,ap,an,ar,alim,nsurf):
     No deformation is used for **id=8**.
     """
     xsrtfor.qrt_aperture(idd,idf,ap,an,ar,alim,nsurf)
+def aparray(ap,an,ar,xhw,yhw):
+    """Set up an array of rectangular apertures
+
+    Args:
+        ap:    positions of aperture centres
+        an:    normals to aperture planes
+        ar:    reference axes in aperture planes
+        xhw:   half widths in reference axes
+        yhw:   half widths in other axes
+
+    The apertures are tested in sequence until a ray is found to go through.
+    Control then jumps to the next surface after the apertures.
+    """
+    apt=np.transpose(ap)
+    ant=np.transpose(an)
+    art=np.transpose(ar)
+    xsrtfor.qrt_aparray(apt,ant,art,xhw,yhw)
 def elips(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq):
     """Set up elliptical grazing indidence mirror
 

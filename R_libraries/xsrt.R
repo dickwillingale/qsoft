@@ -363,7 +363,7 @@ qrt_sipore<-function(pcen,pnorm,raxis,flen,rpitch,apitch,wall,
 	invisible()
 }
 qrt_spoarr<-function(pcen,pnorm,raxis,flen,a2j,
-	rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,idf) {
+	rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,biq,idf) {
 	.Fortran("qrt_spoarr",
 	as.double(pcen),
 	as.double(pnorm),
@@ -385,6 +385,7 @@ qrt_spoarr<-function(pcen,pnorm,raxis,flen,a2j,
 	as.double(rwi),
 	as.double(wfr),
 	as.double(siq),
+	as.double(biq),
 	as.integer(idf))
 	invisible()
 }
@@ -398,6 +399,17 @@ qrt_aperture<-function(id,idf,ap,an,ar,alim,nsurf) {
 	as.integer(length(alim)),
 	as.double(alim),
 	as.integer(nsurf))
+	invisible()
+}
+qrt_aparray<-function(ap,an,ar,xhw,yhw) {
+	na<- length(xhw)
+	.Fortran("qrt_aparray",
+	as.integer(na),
+	as.double(ap),
+	as.double(an),
+	as.double(ar),
+	as.double(xhw),
+	as.double(yhw))
 	invisible()
 }
 qrt_elips<-function(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq) {

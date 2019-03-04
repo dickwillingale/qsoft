@@ -148,7 +148,7 @@
   \item sqmpoarr() (in module xsrt), \hyperpage{57}
   \item sqpore() (in module xsrt), \hyperpage{58}
   \item srchmin() (in module images), \hyperpage{24}
-  \item srtlist() (in module xsrt), \hyperpage{58}
+  \item srtlist() (in module xsrt), \hyperpage{59}
   \item srtreset() (in module xsrt), \hyperpage{59}
   \item surface() (in module xsrt), \hyperpage{59}
 
@@ -160,7 +160,7 @@
   \indexspace
   \bigletter W
   \item w1nest() (in module xsrt), \hyperpage{60}
-  \item wolter2() (in module xsrt), \hyperpage{60}
+  \item wolter2() (in module xsrt), \hyperpage{61}
 
   \indexspace
   \bigletter X

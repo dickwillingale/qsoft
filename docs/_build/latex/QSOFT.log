@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.14)  5 DEC 2018 14:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.14)  21 DEC 2018 09:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1130,16 +1130,16 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
  (./QSOFT.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
-)
-\tf@toc=\write6
-\openout6 = `QSOFT.toc'.
-
 
 [1
 
-] [2
+])
+\tf@toc=\write6
+\openout6 = `QSOFT.toc'.
 
-] [1] [2
+ [2] [1
+
+] [2
 
 ]
 Chapter 1.
@@ -1202,40 +1202,50 @@ Underfull \vbox (badness 10000) detected at line 2847
 ]
 Chapter 8.
 [63]
-Underfull \hbox (badness 6559) in paragraph at lines 5209--5212
+Underfull \hbox (badness 6559) in paragraph at lines 5214--5217
 []\T1/ptm/m/n/10 This copies the share-able li-braries and def-i-ni-tion script
 s to the di-rec-to-ries $QSOFT/python_modules,
  []
 
-[64] [65] [66] [67] [68
+[64] [65] [66]
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 6107
+.
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
+[67] [68]
+Chapter 9.
+[69
 
-] [69
-
-
-] (./QSOFT.ind [70
-
+] [70
 
 ] [71
 
-] [72])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 6147.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 6147.
+
+] (./QSOFT.ind [72
+
+
+] [73
+
+] [74])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 6217.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 6217.
  (./QSOFT.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 6147.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 6147.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 6217.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 6217.
 
 Package rerunfilecheck Info: File `QSOFT.out' has not changed.
-(rerunfilecheck)             Checksum: CEFAC947C3CA8F5DCEEA0677A13C414B;4829.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 6147.
+(rerunfilecheck)             Checksum: 82DFB69759CD8605F01DC1BE8D06D0D5;4908.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 6217.
  ) 
 Here is how much of TeX's memory you used:
- 13926 strings out of 493014
- 194510 string characters out of 6133350
- 333753 words of memory out of 5000000
- 16939 multiletter control sequences out of 15000+600000
- 52152 words of font info for 76 fonts, out of 8000000 for 9000
+ 13954 strings out of 493014
+ 194925 string characters out of 6133350
+ 333815 words of memory out of 5000000
+ 16960 multiletter control sequences out of 15000+600000
+ 52445 words of font info for 77 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 37i,12n,45p,545b,602s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,48p,545b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
@@ -1247,10 +1257,10 @@ s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
 elvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/ut
 mb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
 /usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on QSOFT.pdf (76 pages, 271015 bytes).
+Output written on QSOFT.pdf (78 pages, 276911 bytes).
 PDF statistics:
- 814 PDF objects out of 1000 (max. 8388607)
- 712 compressed objects within 8 object streams
- 222 named destinations out of 1000 (max. 500000)
- 269 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 832 PDF objects out of 1000 (max. 8388607)
+ 728 compressed objects within 8 object streams
+ 225 named destinations out of 1000 (max. 500000)
+ 277 words of extra memory for PDF output out of 10000 (max. 10000000)
 

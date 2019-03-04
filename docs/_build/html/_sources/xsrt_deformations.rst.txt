@@ -24,5 +24,10 @@ particular deformation and must be the first call. The component matricies or
 function parameters are then set using calls to xsrt.defmat() or
 xsrt.defparxy().
 
+If the deformation index, **it**, is -ve then uses **abs(it)** but expects a
+2nd deformation to be defined which will be added to the current deformation.
+By using a succession of -ve deformation indices a series of deformations can
+be added together.
+
 A deformation applied to the source() spreads the point source into a pixel
 array. See **Source of Rays**.

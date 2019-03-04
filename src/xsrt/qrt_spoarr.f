@@ -1,6 +1,6 @@
 *+QRT_SPOARR Set up array of  Si pore optics modules
         SUBROUTINE QRT_SPOARR(PCEN,PNORM,RAXIS,FLEN,A2J,NMOD,
-     +  RM,PM,TM,WM,HM,AM,CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,IDF)
+     +  RM,PM,TM,WM,HM,AM,CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,BIQ,IDF)
 *PCEN      input   position of centre of aperture (above join plane)
 *PNORM     input   normal at centre of aperture
 *RAXIS     input   reference axis at centre of aperture
@@ -21,10 +21,11 @@
 *RWI       input   array of module pore rib thickness (mm)
 *WFR       input   array of module frame widths (mm)
 *SIQ       input   array of module reflecting surface quality indices
+*BIQ       input   array of module non-reflecting surface quality indices
 *IDF       input   deformation index
 Cf2py  intent(in) PCEN,PNORM,RAXIS,FLEN,NMOD
 Cf2py  intent(in) RM,PM,TM,WM,HM,AM,CM,GM
-Cf2py  intent(in) RPITCH,WALL,APITCH,RWI,SIQ,WFR,A2J,IDF
+Cf2py  intent(in) RPITCH,WALL,APITCH,RWI,SIQ,BIQ,WFR,A2J,IDF
         IMPLICIT NONE
         DOUBLE PRECISION PCEN(3),PNORM(3),RAXIS(3)
         DOUBLE PRECISION FLEN,A2J
@@ -33,7 +34,7 @@ Cf2py  intent(in) RPITCH,WALL,APITCH,RWI,SIQ,WFR,A2J,IDF
         DOUBLE PRECISION WM(NMOD),HM(NMOD),AM(NMOD)
         DOUBLE PRECISION CM(NMOD),GM(NMOD)
         DOUBLE PRECISION RPITCH(NMOD),APITCH(NMOD),WALL(NMOD)
-        DOUBLE PRECISION RWI(NMOD),SIQ(NMOD),WFR(NMOD)
+        DOUBLE PRECISION RWI(NMOD),SIQ(NMOD),BIQ(NMOD),WFR(NMOD)
 *-Author Dick Willingale 2018-Mar-26
         INTEGER IDEF(2),J,NTHIS,NP,MXP
         PARAMETER (MXP=500)
@@ -79,7 +80,7 @@ C force reference axis to be at 90 degrees to normal
         CALL SRT_VNRM(PP(7),ISTAT)
 C Set constellation common
         CALL SRT_SETSPOCOM(NMOD,RM,PM,TM,WM,HM,AM,
-     +  CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,ISTAT)
+     +  CM,GM,RPITCH,WALL,APITCH,RWI,WFR,SIQ,BIQ,ISTAT)
 C Set parameters in common for plane with radial/cart+return limits,
 C type=30
         CALL SRT_SETF(0,30,NP,PP,IDEF,0,0,-1,ISTAT)
