@@ -12,6 +12,12 @@
 	DOUBLE PRECISION SX,SY,SXX,SXY,RN,DEN
 	INTEGER NW,K,J
 C
+        IF(NP.LT.3) THEN
+                DO J=1,NP
+                      GR(J)=0.0
+                ENDDO
+                RETURN
+        ENDIF
 	NW=MAX(NSMOOTH/2,3)
 	DO J=1,NP
 C Find gradient by least squares fit over a range

@@ -47,6 +47,9 @@ C
 		DO K=IPAR(J)+9,IPAR(J)+MPAR(J)-1,5
 			WRITE(IU,1004) (PAR(I),I=K,MIN(K+4,IPAR(J)+MPAR(J)-1))
 		ENDDO
+                IF(ISURS(J).EQ.28) THEN
+			CALL SRT_LISTMPOARR(IU)
+		ENDIF
 	ENDDO
 	WRITE(IU,*) 'Deformations'
 	NDEF=0
