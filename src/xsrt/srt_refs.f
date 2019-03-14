@@ -26,7 +26,7 @@ C 	P(IP+1)	specific roughness A**2 mm
 C		if -ve then rms figure gradient error radius
 C	P(IP+2)	minimum surface frequency for roughness mm-1
 C	P(IP+3)	surface roughness power law index
-C	P(IP+4)	unused
+C	P(IP+4)	efficiency of reflection wrt theory
 C	P(IP+5)	unused
 C	P(IP+6)	unused
 C 	P(IP+7)	alpha, real part of dielectric constant
@@ -37,7 +37,7 @@ C 	P(IP+1)	specific roughness A**2 mm
 C		if -ve then rms figure gradient error radius
 C	P(IP+2)	minimum surface frequency for roughness mm-1
 C	P(IP+3)	surface roughness power law index
-C	P(IP+4)	unused
+C	P(IP+4)	efficiency of reflection wrt lookup table
 C	P(IP+5)	unused
 C	P(IP+6)	unused
 C	P(IP+7) unused
@@ -80,7 +80,7 @@ C 	If all parameters 0 then perfect reflecting surface
 	DOUBLE PRECISION VI(3),VD(3)
 	DOUBLE PRECISION DSPACE,DHUB,DBYR,DBYA,VP(3),ORDER
 	DOUBLE PRECISION XX,YY
-	DOUBLE PRECISION HUB(3),TIS
+	DOUBLE PRECISION HUB(3),TIS,EFF
 	INTEGER IP,NP,J,IABS
 C
 	IF(ISTAT.NE.0) RETURN
@@ -105,6 +105,7 @@ C save wavelength in ray quality (1)
 	SPECROUGH=PAR(IP+1)
 	BREAKROUGH=PAR(IP+2)
 	RINDROUGH=PAR(IP+3)
+        EFF=PAR(IP+4)
 C Find incidence angle 
 	CALL SRT_VDOT(DIR,DNM,COSA)
 	ANGL=ACOS(COSA)
@@ -265,7 +266,7 @@ C Use Fresnels equations to calculate reflectivities
 		CALL SRT_FRNL(GRAZ,PAR(IP+7),PAR(IP+8),RSI,RPI)
 C		write(*,*) graz,par(ip+7),par(ip+8),rsi,rpi
 		REF=(RSI+RPI)*0.5
-		QRY(2)=QRY(2)*REF
+		QRY(2)=QRY(2)*REF*EFF
 	ELSEIF(ISQP(1,ISU).EQ.2.OR.ISQP(1,ISU).EQ.4) THEN
 C Use look-up table to estimate reflectivity
 		NP=(ISQP(3,ISU)-9)/2
@@ -275,7 +276,7 @@ C Use look-up table to estimate reflectivity
 C New version of table has angles in degrees
 		ANGL=ANGL*180.0/PI
 		CALL SRT_RELK(ANGL,NP,PAR(IP+9),REF)
-		QRY(2)=QRY(2)*REF
+		QRY(2)=QRY(2)*REF*EFF
 	ENDIF
 	IF(IABS.EQ.1) THEN
 		QRY(2)=0.0

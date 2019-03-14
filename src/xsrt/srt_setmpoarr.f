@@ -16,7 +16,7 @@
 *SQ	input	reflecting surface quality index for pores
 *BU	input	bias angle x radians
 *BV	input	bias angle y radians
-*BZ	input	spare parameter!
+*BZ	input	efficiency of reflection wrt theory (1 reflection in pore)
 *SP	input	spare parameter!
 *ISTAT	in/out	status 0 OK
       	IMPLICIT NONE

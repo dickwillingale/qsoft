@@ -23,7 +23,8 @@
 1012    FORMAT(9X,'surface quality    ',4(1X,G12.5))
 1013    FORMAT(9X,'bias angle error x ',4(1X,G12.5))
 1014    FORMAT(9X,'bias angle error y ',4(1X,G12.5))
-1015    FORMAT(9X,'spare               ',4(1X,G12.5))
+1015    FORMAT(9X,'efficiency         ',4(1X,G12.5))
+1016    FORMAT(9X,'spare              ',4(1X,G12.5))
 C Number of MPOs
         WRITE(IU,*)
         WRITE(IU,1000) nrofelts
@@ -56,9 +57,10 @@ C Surface quality
 C Bias angles
                 WRITE(IU,1013) (ulist(J),J=I,II)
                 WRITE(IU,1014) (vlist(J),J=I,II)
-C Spare parameters
+C Efficiency wrt theory
                 WRITE(IU,1015) (zlist(J),J=I,II)
-                WRITE(IU,1015) (slist(J),J=I,II)
+C Spare parameter
+                WRITE(IU,1016) (slist(J),J=I,II)
         ENDDO
         WRITE(IU,*)
         END

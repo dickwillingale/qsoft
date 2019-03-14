@@ -21,6 +21,7 @@
 *ANGS	input	array of angles
 *REFS	input	array of reflectivities
 *ISTAT	in/out	returned status
+* Included reflection efficiency wrt theory or lookup table 2019-Mar-14 RW
 *-Author Dick Willingale 2012-Apr-30
 	INCLUDE 'SRT_COM'
 	INTEGER NPN,NPI,J,J1,J2
@@ -50,6 +51,10 @@ C Set parameters
 	PAR(NPI+2)=FM
 	PAR(NPI+3)=FI
 	PAR(NPI+4)=GD
+        IF(IT.EQ.1.OR.IT.EQ.2) THEN
+C For reflection set efficiency wrt to 1.0
+            PAR(NPI+4)=1.0
+	ENDIF
 	PAR(NPI+5)=DHUB
 	PAR(NPI+6)=ORDER
 	PAR(NPI+7)=ALPHA

@@ -54,6 +54,8 @@ C PC(8) and PC(9) are the local intersection point on spherical surface
         IF(IAPER.GT.0) THEN
 C Set surface quality for this MPO IQ as integer
                 IQ=INT(DIQ)
+C BZ returns efficiency of MPO wrt theory for 1 reflection in pore
+		CALL SRT_SETE(IQ,BZ,ISTAT)
 C Set polar coordinates on plate
                 RPLATE=SQRT(XPLATE**2+YPLATE**2)
                 TPLATE=ATAN2(YPLATE,XPLATE)
@@ -157,8 +159,8 @@ C DE -ve chess-board pattern of tilt errors
                         DY=DY+DE*SIN(TPLATE)*QQQ*RMOD
                 ELSE
                         TTT=2.0*PI/15.0
-                        PPP=SIN(TTT*XPLATE+TTT*YPLATE/8)
-     +                        *SIN(TTT*YPLATE+TTT*XPLATE/8)
+                        PPP=SIN(TTT*XPLATE+TTT*YPLATE/8.0)
+     +                        *SIN(TTT*YPLATE+TTT*XPLATE/8.0)
                         PPP=SIGN(ABS(PPP)**2.0,PPP)
                         DX=DX+DE*PPP*RMOD*SIN(RPLATE*TTT)
                         DY=DY+DE*PPP*RMOD*COS(RPLATE*TTT)

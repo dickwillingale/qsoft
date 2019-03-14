@@ -20,7 +20,7 @@
 *SQ	output	MPO reflecting surface quality index
 *BU	output	MPO bias angle x radians
 *BV	output	MPO bias angle y radians
-*BZ	output	spare MPO parameter
+*BZ	output	MPO efficiency wrt to theory for 1 reflection in pore
 *SP	outout	spare MPO parameter
 *XX,YY	output	local coordinates of ray position
 *-Author Dick Willingale 2017-Oct-23
