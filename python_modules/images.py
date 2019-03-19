@@ -474,14 +474,17 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     | **ahe**:     half energy area (sq pixels)
     | **aw9**:     W90 (90% width) area (sq pixels)
     | **fpeak**:   flux in peak pixel
+    | **fit**:     results from fitting the quadrant distribution
     |
+    | The fitted parameters in fit.x are x[0] normalisation, x[1] width G pixels
+    | x[2] eta brighness of cross-arms wrt spot, x[3] King index alpha 
     | The position of the beam is the current position within the image.
     | Use function setpos() to set the current position.
     """
     a=imagesfor.qri_lecbeam(arr,s,h,blev,bvar,nt)
     b=bdata()
     b.qua=a[0]
-    a.quan=a[1]
+    b.quan=a[1]
     b.nsam=a[2]
     b.bflux=a[3]
     b.bsigma=a[4]
@@ -494,10 +497,51 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     b.ahew=a[11]
     b.aw90=a[12]
     b.fpeak=a[13]
+    def quafun(x,y,p):
+        """Lobster eye quadrant using King function (modified Lorentzian)
+
+        Args:
+            x:          array of x values
+            y:          array of x values
+            p:          array of fitting parameters
+
+        | par 0: normalisation (value at peak)
+        | par 1: width of King profile G (not quite FWHM)
+        | par 2: eta strength of cross-arm wrt central spot
+        | par 3: power index alpha (1 for Lorentzian)
+
+        Returns:
+            function evaluated at x,y
+        """
+        eg=p[2]*p[1]/h
+        x1=1/np.power(1+np.square(x*2.0/p[1]),p[3])
+        x2=eg*(1-np.square(x/h))
+        y1=1/np.power(1+np.square(y*2.0/p[1]),p[3])
+        y2=eg*(1-np.square(y/h))
+        return (x1*y1+x1*y2+x2*y1+x2*y2)*p[0]/np.square(1+eg)
+    zqua=b.qua
+    zqua.shape=(nt,nt)
+    nqua=b.quan
+    nqua.shape=(nt,nt)
+    def quastat(p):
+        stat=0.0
+        for i in range(nt):
+            xqua=i+0.5
+            for j in range(nt):
+                if nqua[i,j]>0:
+                    yqua=j+0.5
+                    mm=quafun(xqua,yqua,p)
+                    stat=stat+np.square(zqua[i,j]-mm)/mm
+        return stat
+    delstat= chi2.isf(0.1,2)
+    derr=np.array([False,False,False,False])
+    spars=np.array([zqua[0,0],b.hew,1.0,1.0])
+    lpars=np.array([zqua[0,0]/10,b.hew/10,0.1,0.1])
+    upars=np.array([zqua[0,0]*10,b.hew*10,10.0,5.0])
+    b.fit=srchmin(spars,lpars,upars,quastat,delstat,derr)
     return b
 def lecimage(s,h,b,xcen,ycen,nx,ny):
     """Create an image array of the lobster eye cross-beam
-
     Args:
         s:      size of cross-beam square area in pixels
         h:      height of cross-arm triangle in pixels (=2d/L)
@@ -518,7 +562,7 @@ def lecimage(s,h,b,xcen,ycen,nx,ny):
     """
     a=imagesfor.qri_lecimage(s,h,b,xcen,ycen,nx,ny)
     return a
-def lepsf(s,h,g,eta,xcen,ycen,nx,ny):
+def lepsf(s,h,g,eta,alp,xcen,ycen,nx,ny):
     """Create an image of the lobster eye PSF
 
     Args:
@@ -526,6 +570,7 @@ def lepsf(s,h,g,eta,xcen,ycen,nx,ny):
         h:      height of cross-arm triangle in pixels (=2d/L)
         g:      width of Lorentzian central spot in pixels
         eta:    cross-arm to peak ratio at centre
+        alp:    index (1 for Lorentzian)
         xcen:   centre of PSF (see below for coords. system)
         ycen:   centre of PSF (see below for coords. system)
         nx:     first dimension of array
@@ -540,7 +585,7 @@ def lepsf(s,h,g,eta,xcen,ycen,nx,ny):
         | Centre of bottom left pixel is therefore 0.5,0.5
         | Centre of top right pixel is nx-0.5,ny-0.5
     """
-    a=imagesfor.qri_lepsf(s,h,g,eta,xcen,ycen,nx,ny)
+    a=imagesfor.qri_lepsf(s,h,g,eta,alp,xcen,ycen,nx,ny)
     return a
 def lebin(xe,ye,s,h,g,eta,nx,ny):
     """Create an image from an event list binning using lobster eye psf

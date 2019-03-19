@@ -590,10 +590,11 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
 	 #par[1] peak value
          #par[2] G width of Lorentzian central spot
          #par[3] eta strength of cross-arm wrt central spot
+	 #oar[4] index (1 for Lorentzian)
          eg<- par[3]*par[2]/hqua
-	 x1<-1/(1+(xp*2.0/par[2])^2)
+	 x1<-1/(1+(xp*2.0/par[2])^2)^par[4]
 	 x2<-eg*(1-(xp/hqua)^2)
-         y1<-1/(1+(yp*2.0/par[2])^2)
+         y1<-1/(1+(yp*2.0/par[2])^2)^par[4]
 	 y2<-eg*(1-(yp/hqua)^2)
          return((x1*y1+x1*y2+x2*y1+x2*y2)*par[1]/(1+eg)^2)
         }
@@ -608,10 +609,10 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
         xqua<- (1:nt)-0.5
         yqua<- xqua
         hqua<- h
-        spars<- c(a$qua[1],a$hew,1.0)
-        lpars<- c(a$qua[1]/10,a$hew/10,0.1)
-        upars<- c(a$qua[1]*10,a$hew*10,10.0)
-        derr<- c(F,F,F)
+        spars<- c(a$qua[1],a$hew,1.0,1.0)
+        lpars<- c(a$qua[1]/10,a$hew/10,0.1,0.1)
+        upars<- c(a$qua[1]*10,a$hew*10,10.0,5.0)
+        derr<- c(F,F,F,F)
         f<- qr_srchmin(spars,lpars,upars,quastat,delstat,derr)
         mod<- outer(xqua,yqua,quafun,f$par)
 	dim(mod)<- c(nt,nt)
@@ -621,7 +622,8 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
 	nsam=a$nsam,bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
 	fsigma=a$fsigma,peak=a$peak,cen=a$cen,
 	hew=a$hew,w90=a$w90,ahew=a$ahew,aw90=a$aw90,fpeak=a$fpeak,
-	norm=f$par[1],G=f$par[2],eta=f$par[3],xqua=xqua,yqua=yqua,mod=mod))
+	norm=f$par[1],G=f$par[2],eta=f$par[3],alpha=f$par[4],
+	xqua=xqua,yqua=yqua,mod=mod))
 }
 qri_lecimage<-function(s,h,b,xcen,ycen,nx,ny) {
 	b<-.Fortran("qri_lecimage",
@@ -636,12 +638,13 @@ qri_lecimage<-function(s,h,b,xcen,ycen,nx,ny) {
 	dim(b$arr)<-c(nx,ny)
 	invisible(b$arr)
 }
-qri_lepsf<-function(s,h,g,eta,xcen,ycen,nx,ny) {
+qri_lepsf<-function(s,h,g,eta,alp,xcen,ycen,nx,ny) {
 	b<-.Fortran("qri_lepsf",
 	as.double(s),
 	as.double(h),
 	as.double(g),
 	as.double(eta),
+	as.double(alp),
 	as.double(xcen),
 	as.double(ycen),
 	as.integer(nx),

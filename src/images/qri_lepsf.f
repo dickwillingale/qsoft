@@ -1,14 +1,15 @@
 *+QRI_LEPSF Create an image of the lobster eye PSF
-        SUBROUTINE QRI_LEPSF(S,H,G,ETA,XCEN,YCEN,NELS1,NELS2,ARRAY)
+        SUBROUTINE QRI_LEPSF(S,H,G,ETA,ALP,XCEN,YCEN,NELS1,NELS2,ARRAY)
         IMPLICIT NONE
         INTEGER NELS1,NELS2
-        DOUBLE PRECISION S,H,G,ETA,XCEN,YCEN,ARRAY(NELS1,NELS2)
-Cf2py  intent(in) S,H,G,ETA,XCEN,YCEN,NELS1,NELS2
+        DOUBLE PRECISION S,H,G,ETA,ALP,XCEN,YCEN,ARRAY(NELS1,NELS2)
+Cf2py  intent(in) S,H,G,ETA,ALP,XCEN,YCEN,NELS1,NELS2
 Cf2py  intent(out) ARRAY
 *S           input        size of square patch area in pixels
 *H           input        height of cross-arm triangle in pixels (=2d/L)
 *G           input        width of Lorentzian central spot pixels
 *ETA         input        cross-arm to peak ratio at centre
+*ALP         input        index (1 for Lorenztian)
 *XCEN        input        centre of PSF (see below for coords. system)
 *YCEN        input        centre of PSF (see below for coords. system)
 *NELS1       input        first dimension of array
@@ -41,8 +42,8 @@ C Loop around pixels
             XP=(DBLE(K)-0.5)
             XR=ABS(XP-XCEN)
             IF((XR.LT.SM).AND.(YR.LT.SM)) THEN
-              XB=1.0/((XR/G2)**2+1.0)+EG*(1.0-(XR/H)**2)
-              YB=1.0/((YR/G2)**2+1.0)+EG*(1.0-(YR/H)**2)
+              XB=1.0/((XR/G2)**2+1.0)**ALP+EG*(1.0-(XR/H)**2)
+              YB=1.0/((YR/G2)**2+1.0)**ALP+EG*(1.0-(YR/H)**2)
               ARRAY(K,J)=XB*YB/(1.0+EG)**2
             ELSE
               ARRAY(K,J)=0.0
