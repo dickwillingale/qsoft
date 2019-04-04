@@ -21,7 +21,7 @@ qrt_detector.f  qrt_mirror.f    qrt_shift.f     qrt_trace.f \
 qrt_fresnel.f   qrt_sipore.f    qrt_w1nest.f \
 qrt_bfield.f    qrt_bdipole.f   qrt_prtathena.f qrt_eltmxt.f \
 qrt_elips.f	qrt_sqmpoarr.f  qrt_spoarr.f \
-qrt_sle.f qrt_defparxy.f qrt_aparray.f
+qrt_sle.f qrt_defparxy.f qrt_aparray.f qrt_kingrand.f
 # Internal object library source files
 LSOURCES = \
 srt_cnic.f      srt_cnin.f      srt_dalr.f      srt_dfrm.f      srt_didi.f \
@@ -52,7 +52,7 @@ srt_setkbscom.f srt_findmod.f   srt_sfindmod.f srt_setconcom.f \
 srt_sqmpoarr.f srt_findmpo.f srt_setmpoarr.f \
 srt_defparxy.f srt_dfrmsine.f srt_setslecom.f \
 srt_slefslot.f srt_slemakeconstellation.f srt_sle.f srt_listmpoarr.f \
-srt_sete.f \
+srt_sete.f srt_kingrand.f \
 sys_gauss.f sys_srand.f sys_drand.f sys_dran0.f  sys_getlun.f 
 
 CSOURCES = stray_xray_psf.c

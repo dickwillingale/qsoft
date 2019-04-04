@@ -21,7 +21,7 @@
 *BU	output	MPO bias angle x radians
 *BV	output	MPO bias angle y radians
 *BZ	output	MPO efficiency wrt to theory for 1 reflection in pore
-*SP	outout	spare MPO parameter
+*SP	outout	MPO tilt error index
 *XX,YY	output	local coordinates of ray position
 *-Author Dick Willingale 2017-Oct-23
 	INCLUDE 'SRT_COM'

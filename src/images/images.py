@@ -306,8 +306,9 @@ def sqbeam(arr,hbeam,blev,bvar):
     | Fits performed if bvar!=0.
     | Parameters are saved in the lists fitx and fity
     |   0: peak value (no error range calculated)
-    |   1: peak X pixel position (no error range calculated)
+    |   1: peak X or Y pixel position (no error range calculated)
     |   2: Lorentzian width including 90% upper and lower bounds
+    |   3: power index (1 for Lorentzian)
     | The position of the sqbeam is the current position within the image.
     | Use function setpos() to set the current position.
     """
@@ -475,9 +476,17 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     | **aw9**:     W90 (90% width) area (sq pixels)
     | **fpeak**:   flux in peak pixel
     | **fit**:     results from fitting the quadrant distribution
+    | **norm**:    fitted peak value
+    | **G**:       fitted peak value Lorentzian width G pixels
+    | **eta**      fitted ratio of cross-arms to peak
+    | **alpha**    fitted index (1 for Lorentzian)
     |
-    | The fitted parameters in fit.x are x[0] normalisation, x[1] width G pixels
-    | x[2] eta brighness of cross-arms wrt spot, x[3] King index alpha 
+    | The fitted parameters can also be found in fit.x
+    | x[0] normalisation
+    | x[1] width G pixels
+    | x[2] eta brighness of cross-arms wrt spot
+    | x[3] King index alpha 
+    |
     | The position of the beam is the current position within the image.
     | Use function setpos() to set the current position.
     """
@@ -539,6 +548,10 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     lpars=np.array([zqua[0,0]/10,b.hew/10,0.1,0.1])
     upars=np.array([zqua[0,0]*10,b.hew*10,10.0,5.0])
     b.fit=srchmin(spars,lpars,upars,quastat,delstat,derr)
+    b.norm=b.fit.x[0]
+    b.G=b.fit.x[1]
+    b.eta=b.fit.x[2]
+    b.alpha=b.fit.x[3]
     return b
 def lecimage(s,h,b,xcen,ycen,nx,ny):
     """Create an image array of the lobster eye cross-beam

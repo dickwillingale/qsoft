@@ -17,6 +17,18 @@ def rseed(iseed):
         iseed:      integer seed
     """
     xsrtfor.qr_rseed(iseed)
+def kingrand(alpha,nr):
+    """Get samples from a modified Cauchy distribution (King profile)
+
+    Args:
+        alpha:       index of modified Cauchy distribution
+        nr:          number of samples to return
+
+    Returns:
+        | array of random samples from distribution
+    """
+    ran=np.array([nr])
+    return xsrtfor.qrt_kingrand(alpha,ran)
 # Proton/electron path tracing
 class field: pass
 def bfield(dm,pdx,pdy,pdz,ddx,ddy,ddz,px,py,pz):
@@ -722,8 +734,8 @@ def sqmpoarr(pcen,pnorm,raxis,rcur,hwid,idf,ar):
       | SQ     reflecting surface quality index for pores
       | BU     bias angle x radians
       | BV     bias angle y radians
-      | BZ     spare parameter!
-      | SP     spare parameter!
+      | BZ     MPO efficiency
+      | SP     MPO tilt error index
 
     Deformation:
       | matrix (5,nmpo) specifying 5 deformations for each MPO
@@ -733,8 +745,9 @@ def sqmpoarr(pcen,pnorm,raxis,rcur,hwid,idf,ar):
       |    3 Gaussian rms pore rotation errors (about pore axis) radians
       |    4 pore shear error amplitude mm within multifibre structure 
       |    5 +ve Gaussian rms pore tilt/figure error radians (x2.37=FWHM)
-      |      -ve Cauchy (Lorentzian) pore tilt/figure errors radians (x2=FWHM)
+      |      -ve Modified Cauchy pore tilt/figure errors radians (x2=FWHM)
       |      both applied independently in 2 tilt axes
+      |      When tilt error index 1 then Lorentzian, otherwise King profile
     """
     xsrtfor.qrt_sqmpoarr(pcen,pnorm,raxis,rcur,hwid,idf,ar)
 def sipore(pcen,pnorm,raxis,flen,rpitch,apitch,wall,

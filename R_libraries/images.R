@@ -622,6 +622,7 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
 	nsam=a$nsam,bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
 	fsigma=a$fsigma,peak=a$peak,cen=a$cen,
 	hew=a$hew,w90=a$w90,ahew=a$ahew,aw90=a$aw90,fpeak=a$fpeak,
+	fit=f,
 	norm=f$par[1],G=f$par[2],eta=f$par[3],alpha=f$par[4],
 	xqua=xqua,yqua=yqua,mod=mod))
 }

@@ -39,6 +39,8 @@
         DOUBLE PRECISION SYS_DRAND,PPP
         DOUBLE PRECISION RPLATE,TPLATE,XPLATE,YPLATE,DDD,RMP,WPL,QQQ,TTT
         DOUBLE PRECISION BU,BV,BZ
+	DOUBLE PRECISION SRT_KINGRAND
+	EXTERNAL SRT_KINGRAND
         INTEGER IXF,IYF,IIF
         INTEGER NANUL,NSEC,IAPER
         INTEGER IX,IY,I,KSUR,IQ,NWAFFLE,IP
@@ -179,7 +181,7 @@ C Include shear errors intrinsic to the slump using DS scaling
      +                SIGN(1.0D0,TAN(TPLATE))*DDD
                 DSHR=DC/(PITCH-WALL)
 C DB +ve rms amplitude Gaussian pore tilt/figure errors (2.36*DB=FWHM)
-C DB -ve amplitude Cauchy pore tilt/figure errors (2*DB=FWHM)
+C DB -ve amplitude Modified Cauchy pore tilt/figure errors (2*DB=FWHM)
                 IDEF(2)=5
                 CALL SRT_IDFRM(IDEF,IAPER,1,DB,DDX,DDY,ISTAT)
                 IF(DB.GT.0.0) THEN
@@ -187,8 +189,11 @@ C DB -ve amplitude Cauchy pore tilt/figure errors (2*DB=FWHM)
                         DX=DX+RAN(1)*DB*RMOD
                         DY=DY+RAN(2)*DB*RMOD
                 ELSE
-                        DX=DX+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
-                        DY=DY+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
+C                        DX=DX+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
+C                        DY=DY+DB*TAN((SYS_DRAND()-0.5)*PI)*RMOD
+			IF(SP.EQ.0) SP=1.0
+                        DX=DX+DB*SRT_KINGRAND(SP)*RMOD
+                        DY=DY+DB*SRT_KINGRAND(SP)*RMOD
                 ENDIF
         ENDIF
 C Apply displacements to change effective centre of sphere
