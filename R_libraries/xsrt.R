@@ -412,6 +412,19 @@ qrt_aparray<-function(ap,an,ar,xhw,yhw) {
 	as.double(yhw))
 	invisible()
 }
+qrt_bafflearray<-function(ap,an,ar,rmin,rmax,amin,amax) {
+	na<- length(xhw)
+	.Fortran("qrt_bafflearray",
+	as.integer(na),
+	as.double(ap),
+	as.double(an),
+	as.double(ar),
+	as.double(rmin),
+	as.double(rmax),
+	as.double(amin),
+	as.double(amax))
+	invisible()
+}
 qrt_elips<-function(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq) {
 	.Fortran("qrt_elips",
 	as.double(org),

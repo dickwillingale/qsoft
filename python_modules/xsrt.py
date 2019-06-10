@@ -873,6 +873,26 @@ def aparray(ap,an,ar,xhw,yhw):
     ant=np.transpose(an)
     art=np.transpose(ar)
     xsrtfor.qrt_aparray(apt,ant,art,xhw,yhw)
+def bafflearray(ap,an,ar,rmin,rmax,amin,amax):
+    """Set up an array of baffle elements
+
+    Args:
+        ap:    positions of aperture centres
+        an:    normals to aperture planes
+        ar:    reference axes in aperture planes
+        rmin:  minimum radius of sectors
+        rmax:  maximum radius of sectors
+        amin:  minimum azimuth of sectors (radians)
+        amax:  maximum azimuth of sectors (radians)
+
+    The sector elements are tested in sequence until the ray is found to hit
+    an elements or miss all elements
+    Control then jumps to the next surface after the apertures.
+    """
+    apt=np.transpose(ap)
+    ant=np.transpose(an)
+    art=np.transpose(ar)
+    xsrtfor.qrt_bafflearray(apt,ant,art,rmin,rmax,amin,amax)
 def elips(org,axs,cen,xmin,xmax,amin,amax,smb,rab,ide,iq):
     """Set up elliptical grazing indidence mirror
 

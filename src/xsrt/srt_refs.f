@@ -92,9 +92,10 @@ C
 	ENDIF
 	IP=ISQP(2,ISU)
 	IF(IP.EQ.0.OR.IP.GT.MAXPAR) THEN
-		WRITE(*,*) 'SRT_REFS error - parameter index out of range'
+		WRITE(*,*) 'SRT_REFS error - parameter index out of range', 
+     +          IP,MAXPAR
 		ISTAT=1
-		RETURN
+                RETURN
 	ENDIF
 C
 	IABS=0
