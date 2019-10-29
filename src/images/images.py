@@ -448,13 +448,14 @@ def beam(arr,rbeam,blev,bvar):
     else:
         b.fit=False
     return b
-def lecbeam(arr,s,h,blev,bvar,nt):
+def lecbeam(arr,s,h,g,blev,bvar,nt):
     """Analysis of source above background in a lobster eye cross-beam
    
     Args:
         arr:     image array
         s:       size of cross-beam square area in pixels
         h:       height of cross-arm quadrant in pixels (=2d/L)
+        g:       fractional length of cross-arm (length=g*2d/L)
         blev:    average background level per pixel (to be subtracted)
         bvar:    variance on blev (-ve for counting statistics)
         nt:      dimension of output quadrant flux distribution in pixels
@@ -471,9 +472,9 @@ def lecbeam(arr,s,h,blev,bvar,nt):
     | **peak**:    source x,y peak position
     | **cen**:     source x,y centroid position
     | **hew**:     half energy width (pixels)
-    | **w90**:     W90 (90% width) (pixels)
+    | **w33**:     W33 33% width (pixels)
     | **ahe**:     half energy area (sq pixels)
-    | **aw9**:     W90 (90% width) area (sq pixels)
+    | **aw33**:    AW33 33% width area (sq pixels)
     | **fpeak**:   flux in peak pixel
     | **fit**:     results from fitting the quadrant distribution
     | **norm**:    fitted peak value

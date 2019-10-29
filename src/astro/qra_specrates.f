@@ -1,4 +1,4 @@
-*+QRA_SPECRATES use lookup table to predict count rates for sprectral function
+*+QRA_SPECRATES        use lookup table to predict count rates for sprectral function
         SUBROUTINE QRA_SPECRATES(p1,p2,p3,nr,rates,istat)
         implicit none
         integer nr,istat
@@ -40,7 +40,7 @@ C Get lookup table
                         j2=j1+nr-1
                         READ(IU,*,IOSTAT=IERR) (table(j),j=j1,j2)
                         if(ierr.ne.0) then
-                                write(*,*)'IOERR - reading '//tablefile
+                               write(*,*) 'IOERR - reading '//tablefile
                                 istat=1
                                 return
                         endif
@@ -52,23 +52,21 @@ C is=1 Band function
 C p1        alpha                low photon index  (with sign)
 C p2        amb                change in index alpha-beta (with sign)
 C p3        ecut                exponential cut-off energy
-             call qra_specinterp(p1,p2,log10(p3),amin,amax,bmin,bmax,
+               call qra_specinterp(p1,p2,log10(p3),amin,amax,bmin,bmax,
      +                cmin,cmax,na,nb,nc,table,nr,rates)
              elseif(is.eq.2) then
 C is=2 broken power law
 C p1        gamma1                low photon index (no sign)
 C p2        gamma2-gamma1        change in photon index (no sign)
 C p3        ebr                break energy
-                call qra_specinterp(-p1,-p1+p2,log10(p3),amin,amax,
-     +                bmin,bmax,
+          call qra_specinterp(-p1,-p1+p2,log10(p3),amin,amax,bmin,bmax,
      +                cmin,cmax,na,nb,nc,table,nr,rates)
              elseif(is.eq.3) then
 C is=3 truncated  power law
 C p1        gamma                photon index (with sign)
 C p2        et                low trunction energy keV
 C p3        ec                high cut-off energy keV
-                call qra_specinterp(p1,log10(p2),log10(p3),amin,
-     +                 amax,bmin,
+            call qra_specinterp(p1,log10(p2),log10(p3),amin,amax,bmin,
      +                 bmax,cmin,cmax,na,nb,nc,table,nr,rates)
              elseif(is.eq.4) then
 C is=4 smoothed broken power law
@@ -76,11 +74,10 @@ C p1        gamma1                low photon index (with sign)
 C p2        si                smoothing index
 C p3        eb                break energy
 C Note gamma2=1.0 fixed
-                call qra_specinterp(p1,p2,log10(p3),amin,amax,
-     +                bmin,bmax,
+             call qra_specinterp(p1,p2,log10(p3),amin,amax,bmin,bmax,
      +                cmin,cmax,na,nb,nc,table,nr,rates)
         endif
-        end
+            end
         SUBROUTINE QRA_SPECINTERP(a,b,c,amin,amax,bmin,bmax,cmin,cmax,
      +        na,nb,nc,table,nr,rates)
         integer na,nb,nc,nr
@@ -150,7 +147,7 @@ C Linear interpolate using corners of cell
                         r5=table(i,ia,ib1,ic1)
                         r6=table(i,ia1,ib1,ic1)
                         if(r1.gt.0.0.and.r2.gt.0.0.and.r3.gt.0.0.
-     +                  and.r4.gt.0.0.and.r5.gt.0.0.and.r6.gt.0.0) then
+     +                and.r4.gt.0.0.and.r5.gt.0.0.and.r6.gt.0.0) then
                                      r1=log10(r1)
                                 r2=log10(r2)
                                 r3=log10(r3)

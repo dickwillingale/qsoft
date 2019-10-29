@@ -64,6 +64,8 @@
 	DOUBLE PRECISION RMOD,PMOD,TMOD,WMOD,HMOD,XX,YY,RAN(4),TT,DC,DB
 	DOUBLE PRECISION CMOD,GMOD,YYY
 	DOUBLE PRECISION TFOV,GDEP,GBIT
+        DOUBLE PRECISION SRT_KINGRAND
+        EXTERNAL SRT_KINGRAND
 	INTEGER IX,IY,I,KSUR,IQ,IB,IP,IMOD,ICURV
 	LOGICAL HIT
 C
@@ -178,6 +180,10 @@ C Grazing angle of hyperbola (2nd surface)
 C Find Y reference axis at local origin on aperture
 	CALL SRT_VCRS(CAX,CAR,VY)
 	CALL SRT_VNRM(VY,ISTAT)
+	if(istat.ne.0) then
+	write(*,*) "VY",VY(1),VY(2),VY(3)
+		istat=0
+	endif
 C Find position of pore centre on join plane
 	POS(1)=CVR(1)-CAX(1)*(A2J+DELTA)+X*CAR(1)+Y*VY(1)
 	POS(2)=CVR(2)-CAX(2)*(A2J+DELTA)+X*CAR(2)+Y*VY(2)
@@ -205,26 +211,35 @@ C Also note that the derivatives are not used
 		CALL SRT_IDFRM(IDEF,IMOD,1,DC,DDX,DDY,ISTAT)
 		IDEF(2)=6
 		CALL SRT_IDFRM(IDEF,IMOD,1,DQ,DDX,DDY,ISTAT)
-		CALL SYS_GAUSS(4,RAN,0.0D0,1.0D0,ISTAT)
 C Scale in-plane and out-of-plane figure errors according to distance
 C from centre of plate towards the axial edges of the plate
-                IF(DQ.GT.0.0) THEN
-		  YPR=ABS(YY)-DQ*0.5
-		  IF(YPR.GT.0.0) THEN
+                IF(DQ.GE.0.0) THEN
+		  CALL SYS_GAUSS(4,RAN,0.0D0,1.0D0,ISTAT)
+		  IF(DQ.GT.0.0) THEN
+		    YPR=ABS(YY)-DQ*0.5
+		    IF(YPR.GT.0.0) THEN
 C When YPR=20 mm get factor of 10 increase in figure errors
-                    SCA=1.0+0.0225*YPR**2
+                      SCA=1.0+0.0225*YPR**2
+		    ELSE
+		      SCA=1.0
+		    ENDIF
 		  ELSE
 		    SCA=1.0
 		  ENDIF
+C For DQ.ge.0 we use Gaussian slope errors
+                  DB=DB*SCA
+                  DC=DC*SCA
+		  DB1=RAN(1)*DB
+		  DB2=RAN(2)*DB
+		  DC1=RAN(3)*DC+TMOD
+		  DC2=RAN(4)*DC+TMOD
 		ELSE
-		  SCA=1.0
+C If DQ -ve then use modified Lorentzian error with index -DQ
+		  DB1=SRT_KINGRAND(-DQ)*DB
+		  DB2=SRT_KINGRAND(-DQ)*DB
+		  DC1=SRT_KINGRAND(-DQ)*DC+TMOD
+		  DC2=SRT_KINGRAND(-DQ)*DC+TMOD
 		ENDIF
-                DB=DB*SCA
-                DC=DC*SCA
-		DB1=RAN(1)*DB
-		DB2=RAN(2)*DB
-		DC1=RAN(3)*DC+TMOD
-		DC2=RAN(4)*DC+TMOD
 	ELSE
 		DX=0.0
 		DY=0.0
@@ -245,10 +260,18 @@ C Find direction of pore axis including deformations
 	ZP(2)=Z*CAX(2)+(X-DX+DBC+DV)*CAR(2)+(Y-DY+DBS)*VY(2)
 	ZP(3)=Z*CAX(3)+(X-DX+DBC+DV)*CAR(3)+(Y-DY+DBS)*VY(3)
 	CALL SRT_VNRM(ZP,ISTAT)
+C	if(istat.ne.0) then
+C		write(*,*) "pore axis"
+C		istat=0
+C	endif
 C Now set up axes tangential to surface at pore centre
 C Note that there is no pore centred at the origin so can use the cross product
 	CALL SRT_VCRS(CAX,ZP,XP)
 	CALL SRT_VNRM(XP,ISTAT)
+C	if(istat.ne.0) then
+C		write(*,*) "tangent pore axis"
+C		istat=0
+C	endif
 	CALL SRT_VCRS(ZP,XP,YP)
 C Apply out-of-plane figure error and module rotation by rotating pore
 	IF(DC1.NE.0.0) THEN
@@ -424,6 +447,10 @@ C Find direction of 2nd pore axis
 	ZP(2)=Z*CAX(2)+(X-DX+DBC+DV)*CAR(2)+(Y-DY+DBS)*VY(2)
 	ZP(3)=Z*CAX(3)+(X-DX+DBC+DV)*CAR(3)+(Y-DY+DBS)*VY(3)
 	CALL SRT_VNRM(ZP,ISTAT)
+C	if(istat.ne.0) then
+C		write(*,*) "2nd pore axis"
+C		istat=0
+C	endif
 C Shift pore position to give a small gap between 1st and 2nd pore
 	POS(1)=POS(1)-WALL*CAX(1)
 	POS(2)=POS(2)-WALL*CAX(2)
@@ -432,6 +459,10 @@ C Now set up axes tangential to surface at pore centre
 C Note that there is no pore centred at the origin so can use the cross product
 	CALL SRT_VCRS(CAX,ZP,XP)
 	CALL SRT_VNRM(XP,ISTAT)
+C	if(istat.ne.0) then
+C		write(*,*) "2nd pore tangent"
+C		istat=0
+C	endif
 	CALL SRT_VCRS(ZP,XP,YP)
 C Apply out-of-plane figure error by rotating pore
 	IF(DC2.NE.0.0) THEN

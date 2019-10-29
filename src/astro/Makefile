@@ -15,7 +15,10 @@ FSOURCES = qrx_init.f qr_init.f \
 qra_habs.f qra_cosmo.f \
 qrx_ismtau.f     qrx_iismtau.f    qrx_igmtau.f     qrx_iigmtau.f \
 qrx_setabund.f   qrx_lyftau.f     qrx_lyftauvz.f   qrx_iigmtauvz.f \
-qra_kcorrb.f qra_bandint.f   qra_band.f qrx_brems.f
+qra_kcorrb.f qra_bandint.f   qra_band.f qrx_brems.f \
+qra_grbloadlc.f qra_grbsetfit.f qra_grbchisq.f  qra_grbgetfit.f \
+qra_grbgetnpars.f qra_grbrates.f qra_grbmodlc.f qra_grbloadpars.f \
+qra_specrates.f
 
 # Internal object library source files
 LSOURCES = \

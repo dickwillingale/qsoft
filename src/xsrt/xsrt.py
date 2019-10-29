@@ -814,6 +814,9 @@ def spoarr(pcen,pnorm,raxis,flen,a2j,
         |   4 Gaussian rms in-plane figure error radians
         |   5 Gaussian rms out-of-plane figure error radians
         |   6 width mm along axial edges of module in which figure degrades
+        |   if 6 is -ve then don't degrade figure along axial edges but
+        |   implement 4 and 5 amplitudes of modified Lorentzian errors using
+        |   -ve of 6 as the index (typical -1.4 will give index of 1.4)
     """
     xsrtfor.qrt_spoarr(pcen,pnorm,raxis,flen,a2j,
     rm,pm,tm,wm,hm,am,cm,gm,rpitch,wall,apitch,rwi,wfr,siq,biq,idf)

@@ -386,10 +386,10 @@ qri_zoomimage<-function(ima,xl,yl,zl) {
 	if(is.null(ima$ylab)) yla<-"" else yla<-ima$ylab
 	plot.new()
 	plot.window(xl,yl,asp=1,xaxs="i",yaxs="i")
-#,xaxs="i",yaxs="i")
 	#plot.window(xl,yl)
 	clut<-qr_collut(paste(Sys.getenv("QSOFT"),"/data/lut6.dat",sep=""))
 	image(ima$xp,ima$yp,ima$data_array,zl,add=TRUE,col=clut,
+	xlim=xl,ylim=yl,
 	useRaster=TRUE,asp=1)
 	title(xlab=xla,ylab=yla)
 	box(which="outer")
@@ -561,13 +561,14 @@ qri_beam<-function(arr,rbeam,blev,bvar) {
 	fwhmc=a$fwhmc,hewc=a$hewc,w90c=a$w90c,
 	fit=f))
 }
-qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
+qri_lecbeam<-function(arr,s,h,g,blev,bvar,nt) {
 	a<-.Fortran("qri_lecbeam",
 	as.integer(dim(arr)[1]),
 	as.integer(dim(arr)[2]),
 	as.double(arr),
 	as.double(s),
 	as.double(h),
+	as.double(g),
 	as.double(blev),
 	as.double(bvar),
 	as.integer(nt),
@@ -581,9 +582,9 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
 	peak=double(length=2),
 	cen=double(length=2),
 	hew=double(length=1),
-	w90=double(length=1),
+	w33=double(length=1),
 	ahew=double(length=1),
-	aw90=double(length=1),
+	aw33=double(length=1),
 	fpeak=double(length=1))
 # functions for fitting the lobster eye quadrant
         quafun<- function(xp,yp,par) {
@@ -621,7 +622,7 @@ qri_lecbeam<-function(arr,s,h,blev,bvar,nt) {
 	return(list(qua=a$qua,
 	nsam=a$nsam,bflux=a$bflux,bsigma=a$bsigma,flux=a$flux,
 	fsigma=a$fsigma,peak=a$peak,cen=a$cen,
-	hew=a$hew,w90=a$w90,ahew=a$ahew,aw90=a$aw90,fpeak=a$fpeak,
+	hew=a$hew,w33=a$w33,ahew=a$ahew,aw33=a$aw33,fpeak=a$fpeak,
 	fit=f,
 	norm=f$par[1],G=f$par[2],eta=f$par[3],alpha=f$par[4],
 	xqua=xqua,yqua=yqua,mod=mod))
